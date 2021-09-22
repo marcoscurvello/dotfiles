@@ -2,14 +2,6 @@
 ############
 ### zsh script to clear xcode caches and project
 ###
-###      Works from Xcode 9.3 to Xcode 11.6
-###
-### last date I tested: (7/24/2020)
-###
-###   Move this script to /usr/bin/local so this will be the default usage:
-###      cd myXcodeWorkspace/
-###      xclean
-###
 ############
 
 # clean up function
@@ -21,8 +13,8 @@ function cleanXcode() {
 	xcodebuild -alltargets clean
 	rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang/ModuleCache"
 	rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang.$(whoami)/ModuleCache"
-	rm -rf ~/Library/Developer/Xcode/DerivedData/*
-	rm -rf ~/Library/Caches/com.apple.dt.Xcode/*
+	rm -rf "${HOME}/Library/Developer/Xcode/DerivedData/*"
+	rm -rf "${HOME}/Library/Caches/com.apple.dt.Xcode/*"
 	xed "$TARGET" .
 }
 

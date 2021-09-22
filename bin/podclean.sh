@@ -8,10 +8,10 @@ function cleanCocoapods() {
     rm -rf "${HOME}/Library/Caches/CocoaPods\ Pods"
     rm -rf "${HOME}/Library/Developer/Xcode/DerivedData"
     rm -rf "${HOME}/Library/Caches/CocoaPods"
+    rm -rf "`pwd`/Pods/"
     pod cache clean --all
-    pod update
     pod deintegrate
-    pod install
+    pod install --repo-update
 }
 
 # ensures that you are inside a Xcode 
