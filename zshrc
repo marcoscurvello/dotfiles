@@ -163,21 +163,9 @@ SPACESHIP_PROMPT_ORDER=($SPACESHIP_PROMPT_ORDER $SPACESHIP_TIME)
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git zsh-autosuggestions sudo web-search dirhistory jsontools)
 
 # User configuration
-
-function resetXcode() {
-  killall Xcode
-	xcrun -k
-	xcodebuild -alltargets clean
-	rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang/ModuleCache"
-	rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang.$(whoami)/ModuleCache"
-	rm -rf ~/Library/Developer/Xcode/DerivedData/*
-	rm -rf ~/Library/Caches/com.apple.dt.Xcode/*
-	open /Applications/Xcode.app
-}
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -208,6 +196,7 @@ alias dev="cd ~/Developer"
 
 # XCODE
 alias resetXcode="./xclean.sh"
+alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 
 # GIT
 # alias gpof=
@@ -224,14 +213,13 @@ alias crapi="cd ~/Developer/farfetch/connectedretail-api"
 alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
 
 # Helpers
-alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 alias myip="curl http://ipecho.net/plain; echo"
 alias flushdns="sudo killall -HUP mDNSResponder"
+alias copydir=`pwd | tr -d '\n ' | pbcopy`
+alias src='source ~/.zshrc'
+alias ls="exa -l"
+alias lsa="exa -lah"
 
 # Scripts
 source $ZSH/oh-my-zsh.sh
 source ~/.iterm2_shell_integration.zsh
-
-
-alias ls="exa -l"
-alias lsa="exa -lah"
