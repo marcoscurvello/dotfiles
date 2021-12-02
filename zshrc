@@ -54,7 +54,7 @@ SPACESHIP_PROMPT_ORDER=(
 
 SPACESHIP_RPROMPT_ORDER=(
   # xcode         # Xcode section
-  swift         # Swift section
+  # swift         # Swift section
   time          # Time stamps section
   exec_time     # Execution time
   line_sep      # Line break
@@ -163,7 +163,11 @@ SPACESHIP_PROMPT_ORDER=($SPACESHIP_PROMPT_ORDER $SPACESHIP_TIME)
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions sudo web-search dirhistory jsontools)
+plugins=(
+  git
+  zsh-autosuggestions
+  jsontools
+)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -195,13 +199,10 @@ alias dot="cd ~/.dotfiles"
 alias dev="cd ~/Developer"
 
 # XCODE
-alias resetXcode="./xclean.sh"
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 
 # GIT
-# alias gpof=
 alias branch="git symbolic-ref --short HEAD"
-alias gpf="git push origin -f"
 
 # FF
 alias ff="cd ~/Developer/farfetch"
@@ -213,13 +214,15 @@ alias crapi="cd ~/Developer/farfetch/connectedretail-api"
 alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
 
 # Helpers
-alias myip="curl http://ipecho.net/plain; echo"
+alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
+alias ip="curl http://ipecho.net/plain; echo"
 alias flushdns="sudo killall -HUP mDNSResponder"
-alias copydir=`pwd | tr -d '\n ' | pbcopy`
-alias src='source ~/.zshrc'
-alias ls="exa -l"
-alias lsa="exa -lah"
+alias cdir="pwd | tr -d '\n ' | pbcopy"
+alias src="source ~/.zshrc"
 
 # Scripts
 source $ZSH/oh-my-zsh.sh
 source ~/.iterm2_shell_integration.zsh
+
+# exa
+alias ls="exa -lah"
