@@ -202,7 +202,8 @@ alias dev="cd ~/Developer"
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 
 # GIT
-alias branch="git symbolic-ref --short HEAD"
+alias branch="git symbolic-ref --short HEAD | tr -d \\n"
+alias cpbranch="git symbolic-ref --short HEAD | tr -d \\n | pbcopy"
 
 # FF
 alias ff="cd ~/Developer/farfetch"
@@ -214,10 +215,10 @@ alias crapi="cd ~/Developer/farfetch/connectedretail-api"
 alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
 
 # Helpers
+alias pwdir="pwd | tr -d \\n | pbcopy"
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 alias ip="curl http://ipecho.net/plain; echo"
 alias flushdns="sudo killall -HUP mDNSResponder"
-alias cdir="pwd | tr -d '\n ' | pbcopy"
 alias src="source ~/.zshrc"
 
 # Scripts
