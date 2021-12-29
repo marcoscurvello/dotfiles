@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+# eval "$(rbenv init - zsh)"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/marcos.curvello/.oh-my-zsh"
@@ -8,16 +9,12 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 
-eval "$(rbenv init - zsh)"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="clean"
 
 # SPACESHIP PROMPT
-
 ZSH_THEME="spaceship"
 
 SPACESHIP_PROMPT_ORDER=(
@@ -25,7 +22,6 @@ SPACESHIP_PROMPT_ORDER=(
   dir           # Current directory section
   host          # Hostname section
   git           # Git section (git_branch + git_status)
-  hg            # Mercurial section (hg_branch  + hg_status)
   package       # Package version
   node          # Node.js section
   elixir        # Elixir section
@@ -48,27 +44,24 @@ SPACESHIP_PROMPT_ORDER=(
   vi_mode       # Vi-mode indicator
   jobs          # Background jobs indicator
   exit_code     # Exit code sectio
-  ruby          # Ruby sectionn
+  ruby          # Ruby section
   char          # Prompt character
 )
 
 SPACESHIP_RPROMPT_ORDER=(
-  # xcode         # Xcode section
-  # swift         # Swift section
   time          # Time stamps section
   exec_time     # Execution time
-  line_sep      # Line break
 )
 
 # PROMPT
-SPACESHIP_PROMPT_DEFAULT_PREFIX=""
+SPACESHIP_PROMPT_DEFAULT_PREFIX=" "
 
 # RIGHT PROMPT
 SPACESHIP_RPROMPT_ADD_NEWLINE=true
 
 # CHAR
-SPACESHIP_CHAR_SUFFIX=" "
-SPACESHIP_CHAR_SYMBOL="$"
+# SPACESHIP_CHAR_SUFFIX=" "
+# SPACESHIP_CHAR_SYMBOL="$"
 
 # USER
 SPACESHIP_USER_SHOW=always
@@ -91,25 +84,18 @@ SPACESHIP_DIR_TRUNC='1' # show only last directory
 SPACESHIP_GIT_SYMBOL="" # disable git prefix
 SPACESHIP_GIT_BRANCH_PREFIX="" # disable branch prefix too
 # Wrap git in `git:(...)`
-SPACESHIP_GIT_PREFIX='%B%F{cyan}(%f%b'
-SPACESHIP_GIT_SUFFIX='%B%F{cyan}) %f%b'
+SPACESHIP_GIT_PREFIX="%B%F{cyan}(%f%b"
+SPACESHIP_GIT_SUFFIX="%B%F{cyan}) %f%b"
 SPACESHIP_GIT_BRANCH_SUFFIX="" # remove space after branch name
 # Unwrap git status from `[...]`
-SPACESHIP_GIT_STATUS_PREFIX=""
-SPACESHIP_GIT_STATUS_SUFFIX=""
+# SPACESHIP_GIT_STATUS_PREFIX=""
+# SPACESHIP_GIT_STATUS_SUFFIX=""
 
 SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_TIME_SHOW=true
-# SPACESHIP_GIT_PREFIX=""
 
-SPACESHIP_PROMPT_ORDER=($SPACESHIP_PROMPT_ORDER $SPACESHIP_TIME)
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# SPACESHIP_PROMPT_ORDER=($SPACESHIP_PROMPT_ORDER)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -167,6 +153,12 @@ plugins=(
   git
   zsh-autosuggestions
   jsontools
+  bundler
+  dotenv
+  macos
+  rake
+  rbenv
+  ruby
 )
 
 # User configuration
@@ -191,8 +183,6 @@ plugins=(
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias .="open ."
 alias dot="cd ~/.dotfiles"
@@ -202,8 +192,13 @@ alias dev="cd ~/Developer"
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 
 # GIT
-alias branch="git symbolic-ref --short HEAD | tr -d \\n"
+alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
+alias origin="git remote -v | grep origin | head -n1 | awk '{ print $2 }'"
+alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
+
 alias cpbranch="git symbolic-ref --short HEAD | tr -d \\n | pbcopy"
+alias cporigin="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
+alias cpupstream="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
 
 # FF
 alias ff="cd ~/Developer/farfetch"
