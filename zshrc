@@ -17,8 +17,26 @@ export PATH="/usr/local/sbin:$PATH"
 # SPACESHIP PROMPT
 ZSH_THEME="spaceship"
 
+
+# GIT
+# User email helper function
+spaceship_git_useremail() {
+  spaceship::is_git || return
+
+    local useremail
+
+    useremail="$(git config user.email)"
+
+    if [[ -n $useremail ]]; then
+      spaceship::section \
+        "magenta" \
+        "$useremail"
+        fi
+}
+
 SPACESHIP_PROMPT_ORDER=(
   user          # Username section
+  git_useremail # Git user.email
   dir           # Current directory section
   host          # Hostname section
   git           # Git section (git_branch + git_status)
@@ -54,14 +72,14 @@ SPACESHIP_RPROMPT_ORDER=(
 )
 
 # PROMPT
-SPACESHIP_PROMPT_DEFAULT_PREFIX=" "
+SPACESHIP_PROMPT_DEFAULT_PREFIX=""
 
 # RIGHT PROMPT
 SPACESHIP_RPROMPT_ADD_NEWLINE=true
 
 # CHAR
-# SPACESHIP_CHAR_SUFFIX=" "
-# SPACESHIP_CHAR_SYMBOL="$"
+SPACESHIP_CHAR_SUFFIX=" "
+SPACESHIP_CHAR_SYMBOL="$"
 
 # USER
 SPACESHIP_USER_SHOW=always
@@ -75,13 +93,13 @@ SPACESHIP_USER_SUFFIX=":" # remove space before host
 # SPACESHIP_HOST_SUFFIX=") "
 
 # DIR
-SPACESHIP_DIR_PREFIX='' # disable directory prefix, cause it's not the first section
+SPACESHIP_DIR_PREFIX=":" # disable directory prefix, cause it's not the first section
 SPACESHIP_DIR_SUFFIX='%B%F{cyan}:%f%b' # disable directory prefix, cause it's not the first section
 SPACESHIP_DIR_TRUNC='1' # show only last directory
 
 # GIT
 # Disable git symbol
-SPACESHIP_GIT_SYMBOL="" # disable git prefix
+SPACESHIP_GIT_SYMBOL=":" # disable git prefix
 SPACESHIP_GIT_BRANCH_PREFIX="" # disable branch prefix too
 # Wrap git in `git:(...)`
 SPACESHIP_GIT_PREFIX="%B%F{cyan}(%f%b"
