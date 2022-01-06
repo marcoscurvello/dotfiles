@@ -17,7 +17,6 @@ export PATH="/usr/local/sbin:$PATH"
 # SPACESHIP PROMPT
 ZSH_THEME="spaceship"
 
-
 # GIT
 # User email helper function
 spaceship_git_useremail() {
