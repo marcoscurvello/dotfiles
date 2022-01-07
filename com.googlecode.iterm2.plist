@@ -1793,7 +1793,7 @@
 	<key>FocusFollowsMouse</key>
 	<true/>
 	<key>FocusOnRightOrMiddleClick</key>
-	<false/>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideTab</key>
@@ -2045,6 +2045,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Blend</key>
+			<real>1</real>
 			<key>Blinking Cursor</key>
 			<true/>
 			<key>Blur</key>
@@ -2072,18 +2074,20 @@
 			<integer>80</integer>
 			<key>Command</key>
 			<string></string>
+			<key>Cursor Boost</key>
+			<real>0.01</real>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.91647690534591675</real>
+				<real>0.5607843137254902</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.91648870706558228</real>
+				<real>0.96862745098039216</real>
 				<key>Red Component</key>
-				<real>0.91646724939346313</real>
+				<real>0.35686274509803922</real>
 			</dict>
 			<key>Cursor Guide Color</key>
 			<dict>
@@ -2679,7 +2683,7 @@
 			<key>Tags</key>
 			<array/>
 			<key>Terminal Type</key>
-			<string>xterm</string>
+			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
 			<integer>3</integer>
 			<key>Transparency</key>
@@ -3389,6 +3393,8 @@
 	<integer>5</integer>
 	<key>TerminalVMargin</key>
 	<integer>5</integer>
+	<key>ThreeFingerEmulates</key>
+	<true/>
 	<key>UseBorder</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
