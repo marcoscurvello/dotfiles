@@ -9,6 +9,10 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 
+# Load custom font glyphs
+source ~/.local/share/fonts/i_oct.sh
+source ~/.local/share/fonts/i_dev.sh
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -28,7 +32,7 @@ spaceship_git_useremail() {
 
     if [[ -n $useremail ]]; then
       spaceship::section \
-        "magenta" \
+        "green" \
         "$useremail"
         fi
 }
@@ -40,79 +44,77 @@ SPACESHIP_PROMPT_ORDER=(
   host          # Hostname section
   git           # Git section (git_branch + git_status)
   package       # Package version
-  node          # Node.js section
-  elixir        # Elixir section
-  golang        # Go section
   php           # PHP section
-  rust          # Rust section
-  haskell       # Haskell Stack section
-  julia         # Julia section
   docker        # Docker section
   aws           # Amazon Web Services section
   gcloud        # Google Cloud Platform section
   venv          # virtualenv section
   conda         # conda virtualenv section
   pyenv         # Pyenv section
-  dotnet        # .NET section
-  ember         # Ember.js section
-  kubectl       # Kubectl context section
   terraform     # Terraform workspace section
   battery       # Battery level and status
   vi_mode       # Vi-mode indicator
   jobs          # Background jobs indicator
   exit_code     # Exit code sectio
-  ruby          # Ruby section
+  line_sep      # Line break
   char          # Prompt character
 )
 
 SPACESHIP_RPROMPT_ORDER=(
+  ruby          # Ruby section
+  node          # Node.js section
   time          # Time stamps section
   exec_time     # Execution time
 )
 
 # PROMPT
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_PROMPT_ADD_NEWLINE="false"
 SPACESHIP_PROMPT_DEFAULT_PREFIX=""
 
+
 # RIGHT PROMPT
-SPACESHIP_RPROMPT_ADD_NEWLINE=true
+SPACESHIP_RPROMPT_ADD_NEWLINE=false
 
 # CHAR
-SPACESHIP_CHAR_SUFFIX=" "
-SPACESHIP_CHAR_SYMBOL="$"
+SPACESHIP_CHAR_SUFFIX=""
+SPACESHIP_CHAR_SYMBOL="$i_oct_zap"
 
 # USER
 SPACESHIP_USER_SHOW=always
 SPACESHIP_USER_PREFIX="" # remove `with` before username
 SPACESHIP_USER_SUFFIX=":" # remove space before host
 
-# HOST
-# Result will look like this:
-#   username@:(hostname)
-# SPACESHIP_HOST_PREFIX="@:("
-# SPACESHIP_HOST_SUFFIX=") "
-
 # DIR
-SPACESHIP_DIR_PREFIX=":" # disable directory prefix, cause it's not the first section
-SPACESHIP_DIR_SUFFIX='%B%F{cyan}:%f%b' # disable directory prefix, cause it's not the first section
-SPACESHIP_DIR_TRUNC='1' # show only last directory
+SPACESHIP_DIR_PREFIX=":"
+SPACESHIP_DIR_SUFFIX="" # disable directory prefix, cause it's not the first section
+# SPACESHIP_DIR_TRUNC='1' # show only last directory
 
 # GIT
 # Disable git symbol
-SPACESHIP_GIT_SYMBOL=":" # disable git prefix
-SPACESHIP_GIT_BRANCH_PREFIX="" # disable branch prefix too
-# Wrap git in `git:(...)`
-SPACESHIP_GIT_PREFIX="%B%F{cyan}(%f%b"
+SPACESHIP_GIT_SYMBOL=":"
+SPACESHIP_GIT_PREFIX="%B%F{cyan}:(%f%b"
 SPACESHIP_GIT_SUFFIX="%B%F{cyan}) %f%b"
-SPACESHIP_GIT_BRANCH_SUFFIX="" # remove space after branch name
-# Unwrap git status from `[...]`
-# SPACESHIP_GIT_STATUS_PREFIX=""
-# SPACESHIP_GIT_STATUS_SUFFIX=""
 
-SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_TIME_SHOW=true
+## Branch
+SPACESHIP_GIT_BRANCH_PREFIX=""
+SPACESHIP_GIT_BRANCH_SUFFIX=" "
 
-# SPACESHIP_PROMPT_ORDER=($SPACESHIP_PROMPT_ORDER)
+## Status
+SPACESHIP_GIT_STATUS_PREFIX=""
+SPACESHIP_GIT_STATUS_SUFFIX=""
+SPACESHIP_GIT_STATUS_AHEAD="$i_oct_arrow_up "
+SPACESHIP_GIT_STATUS_BEHIND="$i_oct_arrow_down "
+SPACESHIP_GIT_STATUS_DIVERGED="$i_oct_diff"
+SPACESHIP_GIT_STATUS_ADDED="%B%F{green} $i_oct_diff_added %f%b"
+SPACESHIP_GIT_STATUS_DELETED="$i_oct_trashcan"
+SPACESHIP_GIT_STATUS_MODIFIED="$i_oct_diff_modified "
+SPACESHIP_GIT_STATUS_UNTRACKED="%B%F{green} $i_oct_question %f%b"
+SPACESHIP_GIT_STATUS_STASHED="$i_oct_database"
+SPACESHIP_GIT_STATUS_UNMERGED="⏸"
+
+# LANGS
+SPACESHIP_RUBY_SYMBOL="$i_oct_ruby "
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -201,9 +203,24 @@ plugins=(
 # For a full list of active aliases, run `alias`.
 #
 
+# SYSTEM
 alias .="open ."
 alias dot="cd ~/.dotfiles"
 alias dev="cd ~/Developer"
+alias pwdir="pwd | tr -d \\n | pbcopy"
+alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
+alias ip="curl http://ipecho.net/plain; echo"
+alias flushdns="sudo killall -HUP mDNSResponder"
+alias src="source ~/.zshrc"
+
+# FF
+alias ff="cd ~/Developer/farfetch"
+alias ffios="cd ~/Developer/farfetch/farfetch-ios"
+alias plp="cd ~/Developer/farfetch/farfetch-ios/libs/slices/plp"
+alias pdp="cd ~/Developer/farfetch/farfetch-ios/libs/slices/pdp"
+alias ffcu="cd ~/Developer/farfetch/component-ui-kit-ios"
+alias crapi="cd ~/Developer/farfetch/connectedretail-api"
+alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
 
 # XCODE
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
@@ -212,28 +229,11 @@ alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
 alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
 alias origin="git remote -v | grep origin | head -n1 | awk '{ print $2 }'"
 alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
-
 alias cpbranch="git symbolic-ref --short HEAD | tr -d \\n | pbcopy"
 alias cporigin="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
 alias cpupstream="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
 
-# FF
-alias ff="cd ~/Developer/farfetch"
-alias ffios="cd ~/Developer/farfetch/farfetch-ios"
-alias plp="cd ~/Developer/farfetch/farfetch-ios/libs/slices/plp"
-alias pdp="cd ~/Developer/farfetch/farfetch-ios/libs/slices/pdp"
-alias comp="cd ~/Developer/farfetch/component-ui-kit-ios"
-alias crapi="cd ~/Developer/farfetch/connectedretail-api"
-alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
-
-# Helpers
-alias pwdir="pwd | tr -d \\n | pbcopy"
-alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
-alias ip="curl http://ipecho.net/plain; echo"
-alias flushdns="sudo killall -HUP mDNSResponder"
-alias src="source ~/.zshrc"
-
-# Scripts
+# SCRIPTS
 source $ZSH/oh-my-zsh.sh
 source ~/.iterm2_shell_integration.zsh
 
