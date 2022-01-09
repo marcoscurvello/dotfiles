@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # eval "$(rbenv init - zsh)"
@@ -9,112 +16,10 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 
-# Load custom font glyphs
-source ~/.local/share/fonts/i_oct.sh
-source ~/.local/share/fonts/i_dev.sh
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-
-# SPACESHIP PROMPT
-ZSH_THEME="spaceship"
-
-# GIT
-# User email helper function
-spaceship_git_useremail() {
-  spaceship::is_git || return
-
-    local useremail
-
-    useremail="$(git config user.email)"
-
-    if [[ -n $useremail ]]; then
-      spaceship::section \
-        "green" \
-        "$useremail"
-        fi
-}
-
-SPACESHIP_PROMPT_ORDER=(
-  user          # Username section
-  git_useremail # Git user.email
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  package       # Package version
-  php           # PHP section
-  docker        # Docker section
-  aws           # Amazon Web Services section
-  gcloud        # Google Cloud Platform section
-  venv          # virtualenv section
-  conda         # conda virtualenv section
-  pyenv         # Pyenv section
-  terraform     # Terraform workspace section
-  battery       # Battery level and status
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  exit_code     # Exit code sectio
-  line_sep      # Line break
-  char          # Prompt character
-)
-
-SPACESHIP_RPROMPT_ORDER=(
-  ruby          # Ruby section
-  node          # Node.js section
-  time          # Time stamps section
-  exec_time     # Execution time
-)
-
-# PROMPT
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_PROMPT_ADD_NEWLINE="false"
-SPACESHIP_PROMPT_DEFAULT_PREFIX=""
-
-
-# RIGHT PROMPT
-SPACESHIP_RPROMPT_ADD_NEWLINE=false
-
-# CHAR
-SPACESHIP_CHAR_SUFFIX=""
-SPACESHIP_CHAR_SYMBOL="$i_oct_zap"
-
-# USER
-SPACESHIP_USER_SHOW=always
-SPACESHIP_USER_PREFIX="" # remove `with` before username
-SPACESHIP_USER_SUFFIX=":" # remove space before host
-
-# DIR
-SPACESHIP_DIR_PREFIX=":"
-SPACESHIP_DIR_SUFFIX="" # disable directory prefix, cause it's not the first section
-# SPACESHIP_DIR_TRUNC='1' # show only last directory
-
-# GIT
-# Disable git symbol
-SPACESHIP_GIT_SYMBOL=":"
-SPACESHIP_GIT_PREFIX="%B%F{cyan}:(%f%b"
-SPACESHIP_GIT_SUFFIX="%B%F{cyan}) %f%b"
-
-## Branch
-SPACESHIP_GIT_BRANCH_PREFIX=""
-SPACESHIP_GIT_BRANCH_SUFFIX=" "
-
-## Status
-SPACESHIP_GIT_STATUS_PREFIX=""
-SPACESHIP_GIT_STATUS_SUFFIX=""
-SPACESHIP_GIT_STATUS_AHEAD="$i_oct_arrow_up "
-SPACESHIP_GIT_STATUS_BEHIND="$i_oct_arrow_down "
-SPACESHIP_GIT_STATUS_DIVERGED="$i_oct_diff"
-SPACESHIP_GIT_STATUS_ADDED="%B%F{green} $i_oct_diff_added %f%b"
-SPACESHIP_GIT_STATUS_DELETED="$i_oct_trashcan"
-SPACESHIP_GIT_STATUS_MODIFIED="$i_oct_diff_modified "
-SPACESHIP_GIT_STATUS_UNTRACKED="%B%F{green} $i_oct_question %f%b"
-SPACESHIP_GIT_STATUS_STASHED="$i_oct_database"
-SPACESHIP_GIT_STATUS_UNMERGED="⏸"
-
-# LANGS
-SPACESHIP_RUBY_SYMBOL="$i_oct_ruby "
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -239,3 +144,14 @@ source ~/.iterm2_shell_integration.zsh
 
 # exa
 alias ls="exa -lah"
+
+
+# Load custom font glyphs
+source ~/.local/share/fonts/i_oct.sh
+source ~/.local/share/fonts/i_dev.sh
+
+# Powerlevel10k
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
