@@ -5,11 +5,11 @@
 tap 'homebrew/cask'
 
 # 'brew install'
-brew 'spaceship'
-brew 'rbenv'
-brew 'fastlane'
 brew 'exa'
+brew 'fastlane'
 brew 'git-delta'
+brew 'rbenv'
+brew 'romkatv/powerlevel10k/powerlevel10k'
 
 # 'brew casks'
 cask "xcodes"
