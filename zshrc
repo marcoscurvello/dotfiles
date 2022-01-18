@@ -129,6 +129,7 @@ alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTest
 
 # XCODE
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
+alias pps="rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/*"
 
 # GIT
 alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
