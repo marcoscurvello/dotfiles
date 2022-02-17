@@ -143,6 +143,7 @@ alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
 alias cpbranch="git symbolic-ref --short HEAD | tr -d \\n | pbcopy"
 alias cporigin="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
 alias cpupstream="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
+alias ghist="git log --pretty=format:'%C(green)%h %C(red)%cd %C(yellow)%<(11,mtrunc)%an %C(white)%s' --date=short"
 
 # SCRIPTS
 source $ZSH/oh-my-zsh.sh
