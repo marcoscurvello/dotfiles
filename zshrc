@@ -124,13 +124,13 @@ alias flushdns="sudo killall -HUP mDNSResponder"
 alias src="source ~/.zshrc"
 
 # FF
-alias ff="cd ~/Developer/farfetch"
-alias ffios="cd ~/Developer/farfetch/farfetch-ios"
-alias plp="cd ~/Developer/farfetch/farfetch-ios/libs/slices/plp"
-alias pdp="cd ~/Developer/farfetch/farfetch-ios/libs/slices/pdp"
-alias ffcu="cd ~/Developer/farfetch/component-ui-kit-ios"
-alias crapi="cd ~/Developer/farfetch/connectedretail-api"
-alias ffsnaps="open ~/Developer/farfetch/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
+alias ff="cd ~/Developer/ff"
+alias ffios="cd ~/Developer/ff/farfetch-ios"
+alias plp="cd ~/Developer/ff/farfetch-ios/libs/slices/plp"
+alias pdp="cd ~/Developer/ff/farfetch-ios/libs/slices/pdp"
+alias ffcu="cd ~/Developer/ff/component-ui-kit-ios"
+alias crapi="cd ~/Developer/ff/connectedretail-api"
+alias ffsnaps="open ~/Developer/ff/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
 
 # XCODE
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
