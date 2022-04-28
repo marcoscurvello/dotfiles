@@ -10,6 +10,7 @@ brew 'fastlane'
 brew 'git-delta'
 brew 'rbenv'
 brew 'romkatv/powerlevel10k/powerlevel10k'
+brew 'xclogparser'
 
 # 'brew casks'
 cask "xcodes"
