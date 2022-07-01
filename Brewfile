@@ -13,8 +13,9 @@ brew 'romkatv/powerlevel10k/powerlevel10k'
 brew 'xclogparser'
 
 # 'brew casks'
+cask "iterm2"
 cask "xcodes"
 cask "devutils"
 cask "docker"
-cask 'rectangle'
+cask "rectangle"
 cask "keepingyouawake"
