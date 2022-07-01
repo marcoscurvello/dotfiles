@@ -16,4 +16,5 @@ brew 'xclogparser'
 cask "xcodes"
 cask "devutils"
 cask "docker"
+cask 'rectangle'
 cask "keepingyouawake"
