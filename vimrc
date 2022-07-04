@@ -37,12 +37,12 @@ let mapleader=","
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+@REM call plug#begin('~/.vim/plugged')
 
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+@REM Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Initialize plugin system
-call plug#end()
+@REM call plug#end()
 
 " ================ Turn Off Swap Files ==============
 

@@ -158,9 +158,8 @@ source ~/.local/share/fonts/i_oct.sh
 source ~/.local/share/fonts/i_dev.sh
 
 # Powerlevel10k
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #### FIG ENV VARIABLES ####
