@@ -1,8 +1,3 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -20,6 +15,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/Library/Python/3.8/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -111,17 +107,15 @@ plugins=(
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
 
 # SYSTEM
 alias .="open ."
 alias dot="cd ~/.dotfiles"
 alias dev="cd ~/Developer"
+alias srczsh="source ~/.zshrc"
 alias pwdir="pwd | tr -d \\n | pbcopy"
-alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
-alias ip="curl http://ipecho.net/plain; echo"
 alias flushdns="sudo killall -HUP mDNSResponder"
-alias src="source ~/.zshrc"
+alias ip="curl http://ipecho.net/plain; echo"
 
 # FF
 alias ff="cd ~/Developer/ff"
@@ -152,8 +146,7 @@ source ~/.iterm2_shell_integration.zsh
 # exa
 alias ls="exa -lah"
 
-
-# Load custom font glyphs
+# Load Custom Font-Glyphs
 source ~/.local/share/fonts/i_oct.sh
 source ~/.local/share/fonts/i_dev.sh
 
@@ -162,7 +155,5 @@ source ~/.local/share/fonts/i_dev.sh
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+# To customize prompt, run `p10k configure` or edit ~/.p10kzsh.
+[[ ! -f ~/.p10kzsh ]] || source ~/.p10kzsh
