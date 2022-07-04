@@ -14,6 +14,7 @@ brew 'xclogparser'
 
 # 'brew casks'
 cask "iterm2"
+cask "proxyman"
 cask "xcodes"
 cask "devutils"
 cask "docker"
