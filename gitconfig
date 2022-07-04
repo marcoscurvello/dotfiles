@@ -3,6 +3,7 @@
 	name = Marcos Curvello
 [core]
 	excludesfile = /Users/marcos.curvello/.gitignore_global
+	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
