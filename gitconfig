@@ -1,0 +1,44 @@
+[user]
+	email = mrcurvello@gmail.com
+	name = Marcos Curvello
+[core]
+	excludesfile = /Users/marcos.curvello/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+#driver for merging Xcode project files
+[merge "mergepbx"]
+    name = Xcode project files merger
+    driver = /Users/marcos.curvello/Developer/mergepbx %O %A %B
+[commit]
+	template = /Users/marcos.curvello/.stCommitMsg
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = Dracula
+    plus-style = syntax "#003800"
+    minus-style = syntax "#3f0001"
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = cyan box ul
+[delta "line-numbers"]
+    line-numbers-left-style = cyan
+    line-numbers-right-style = cyan
+    line-numbers-minus-style = 124
+    line-numbers-plus-style = 28
+[interactive]
+    diffFilter = delta --color-only
+	
+[push]
+	default = current
+[init]
+	defaultBranch = main
