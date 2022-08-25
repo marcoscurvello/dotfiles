@@ -120,6 +120,8 @@ alias ip="curl http://ipecho.net/plain; echo"
 # FF
 alias ff="cd ~/Developer/ff"
 alias ffios="cd ~/Developer/ff/farfetch-ios"
+alias ffios0="cd ~/Developer/ff/farfetch-ios-0"
+alias ffworks="cd ~/Developer/ff/framework-ios"
 alias plp="cd ~/Developer/ff/farfetch-ios/libs/slices/plp"
 alias pdp="cd ~/Developer/ff/farfetch-ios/libs/slices/pdp"
 alias ffcu="cd ~/Developer/ff/component-ui-kit-ios"
@@ -127,7 +129,7 @@ alias crapi="cd ~/Developer/ff/connectedretail-api"
 alias ffsnaps="open ~/Developer/ff/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
 
 # XCODE
-alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData"
+alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData/*"
 alias pps="rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/*"
 
 # GIT
