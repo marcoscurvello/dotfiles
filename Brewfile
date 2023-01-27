@@ -9,6 +9,7 @@ brew 'exa'
 brew 'fastlane'
 brew 'git-delta'
 brew 'rbenv'
+brew 'pyenv'
 brew 'romkatv/powerlevel10k/powerlevel10k'
 brew 'xclogparser'
 
