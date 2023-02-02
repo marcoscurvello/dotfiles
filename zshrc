@@ -15,15 +15,16 @@ export NVM_DIR="$HOME/.nvm"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-# eval "$(rbenv init - zsh)"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/marcos.curvello/.oh-my-zsh"
 export PATH="$HOME/.rbenv/bin:$PATH"
+export ZSH="/Users/marcos.curvello/.oh-my-zsh"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.pyenv/bin:$PATH"
+
+eval "$(rbenv init -)" 
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -90,7 +91,6 @@ plugins=(
   dotenv
   macos
   rake
-  rbenv
   ruby
 )
 
@@ -150,6 +150,9 @@ alias cporigin="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr
 alias cpupstream="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
 alias ghist="git log --pretty=format:'%C(green)%h %C(red)%cd %C(yellow)%<(11,mtrunc)%an %C(white)%s' --date=short"
 
+# Ruby
+alias rbenv-doc="curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-doctor | bash"
+
 # SCRIPTS
 source $ZSH/oh-my-zsh.sh
 source ~/.iterm2_shell_integration.zsh
@@ -160,6 +163,8 @@ alias ls="exa -lah"
 # Load Custom Font-Glyphs
 source ~/.local/share/fonts/i_oct.sh
 source ~/.local/share/fonts/i_dev.sh
+source /Applications/google-cloud-sdk/path.zsh.inc
+source /Applications/google-cloud-sdk/completion.zsh.inc
 
 # Powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
