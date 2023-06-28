@@ -12,6 +12,7 @@ brew 'rbenv'
 brew 'pyenv'
 brew 'romkatv/powerlevel10k/powerlevel10k'
 brew 'xclogparser'
+brew 'jq'
 
 # 'brew casks'
 cask "iterm2"
