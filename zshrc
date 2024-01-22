@@ -142,6 +142,7 @@ alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData/*"
 alias pps="rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/*"
 
 # GIT
+alias gs="git status"
 alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
 alias origin="git remote -v | grep origin | head -n1 | awk '{ print $2 }'"
 alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
