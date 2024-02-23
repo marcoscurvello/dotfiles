@@ -10,15 +10,15 @@ brew 'fastlane'
 brew 'git-delta'
 brew 'rbenv'
 brew 'pyenv'
-brew 'romkatv/powerlevel10k/powerlevel10k'
+brew 'powerlevel10k'
 brew 'xclogparser'
 brew 'jq'
+brew 'aircrack-ng'
 
 # 'brew casks'
 cask "iterm2"
 cask "proxyman"
 cask "xcodes"
-cask "devutils"
 cask "docker"
 cask "rectangle"
 cask "keepingyouawake"
