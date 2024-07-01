@@ -8,3 +8,4 @@
     ~/.vimrc: vimrc
     ~/.zshrc: zshrc
     ~/.p10k.zsh: p10kzsh
+    ~/.gitconfig: gitconfig
