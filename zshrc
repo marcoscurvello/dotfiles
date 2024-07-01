@@ -18,7 +18,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Path to your oh-my-zsh installation.
 export PATH="$HOME/.rbenv/bin:$PATH"
-export ZSH="/Users/marcos.curvello/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
@@ -85,7 +85,6 @@ eval "$(rbenv init -)"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  zsh-autosuggestions
   jsontools
   bundler
   dotenv
@@ -126,17 +125,6 @@ alias pwdir="pwd | tr -d \\n | pbcopy"
 alias flushdns="sudo killall -HUP mDNSResponder"
 alias ip="curl http://ipecho.net/plain; echo"
 
-# FF
-alias ff="cd ~/Developer/ff"
-alias ffios="cd ~/Developer/ff/farfetch-ios"
-alias ffios0="cd ~/Developer/ff/farfetch-ios-0"
-alias ffworks="cd ~/Developer/ff/framework-ios"
-alias plp="cd ~/Developer/ff/farfetch-ios/libs/slices/plp"
-alias pdp="cd ~/Developer/ff/farfetch-ios/libs/slices/pdp"
-alias ffcu="cd ~/Developer/ff/component-ui-kit-ios"
-alias crapi="cd ~/Developer/ff/connectedretail-api"
-alias ffsnaps="open ~/Developer/ff/component-ui-kit-ios/ComponentUIKitTests/SnapshotTests/ReferenceImages_64/ComponentUIKitTests.DiscoverSnapshotTests"
-
 # XCODE
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData/*"
 alias pps="rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/*"
@@ -151,26 +139,28 @@ alias cporigin="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr
 alias cpupstream="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
 alias ghist="git log --pretty=format:'%C(green)%h %C(red)%cd %C(yellow)%<(11,mtrunc)%an %C(white)%s' --date=short"
 
+# BEDROCK
+alias brck="cd ~/Developer/bedrock/"
+alias rock="cd ~/Developer/bedrock/app-bedrock-ios"
+
 # Ruby
 alias rbenv-doc="curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-doctor | bash"
 
 # SCRIPTS
 source $ZSH/oh-my-zsh.sh
-source ~/.iterm2_shell_integration.zsh
+# source ~/.iterm2_shell_integration.zsh
 
 # exa
-alias ls="exa -lah"
+alias ls="eza -lah"
 
 # Load Custom Font-Glyphs
-source ~/.local/share/fonts/i_oct.sh
-source ~/.local/share/fonts/i_dev.sh
-source /Applications/google-cloud-sdk/path.zsh.inc
-source /Applications/google-cloud-sdk/completion.zsh.inc
+# source ~/.local/share/fonts/i_oct.sh
+# source ~/.local/share/fonts/i_dev.sh
 
 # Powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10kzsh.
-[[ ! -f ~/.p10kzsh ]] || source ~/.p10kzsh
+# ZSH AUTOSUGGESTIONS
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh

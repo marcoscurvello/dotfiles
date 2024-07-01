@@ -5,14 +5,15 @@
 tap 'homebrew/cask'
 
 # 'brew install'
-brew 'exa'
+brew 'eza'
+brew 'jq'
 brew 'fastlane'
 brew 'git-delta'
 brew 'rbenv'
 brew 'pyenv'
 brew 'powerlevel10k'
+brew 'zsh-autosuggestions'
 brew 'xclogparser'
-brew 'jq'
 brew 'aircrack-ng'
 
 # 'brew casks'
