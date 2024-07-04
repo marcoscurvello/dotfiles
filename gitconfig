@@ -1,21 +1,15 @@
 [user]
-	email = mrcurvello@gmail.com
 	name = Marcos Curvello
+	email = mrcurvello@gmail.com
 [core]
-	excludesfile = /Users/marcos.curvello/.gitignore_global
 	editor = vim
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-#driver for merging Xcode project files
-[merge "mergepbx"]
-    name = Xcode project files merger
-    driver = /Users/marcos.curvello/Developer/mergepbx %O %A %B
-[commit]
-	template = /Users/marcos.curvello/.stCommitMsg
+[merge]
+    tool = vscode
+[mergetool "vscode"]
+  # Comment: Original way before three-way merge shown commented out
+  #    cmd = code --wait $MERGED
+  # Comment: For "Three-way merge"
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [pager]
     diff = delta
     log = delta
@@ -38,8 +32,10 @@
     line-numbers-plus-style = 28
 [interactive]
     diffFilter = delta --color-only
-	
 [push]
 	default = current
 [init]
 	defaultBranch = main
+[alias]
+    undo = reset --soft HEAD^
+    fsck = fsck --unreachable | grep commit | cut -d" " -f3 | xargs git log --merges --no-walk
