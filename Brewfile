@@ -15,6 +15,9 @@ brew 'powerlevel10k'
 brew 'zsh-autosuggestions'
 brew 'xclogparser'
 brew 'aircrack-ng'
+brew 'xcbeautify'
+brew 'swiftlint'
+brew 'gh'
 
 # 'brew casks'
 cask "iterm2"
