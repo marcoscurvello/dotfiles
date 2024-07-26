@@ -119,25 +119,21 @@ plugins=(
 alias .="open ."
 alias dot="cd ~/.dotfiles"
 alias dev="cd ~/Developer"
-alias mc="cd ~/Developer/marcoscurvello.github.io"
 alias srczsh="source ~/.zshrc"
 alias pwdir="pwd | tr -d \\n | pbcopy"
 alias flushdns="sudo killall -HUP mDNSResponder"
-alias ip="curl http://ipecho.net/plain; echo"
+alias myip="curl http://ipecho.net/plain; echo"
 
 # XCODE
 alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData/*"
 alias pps="rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/*"
 
 # GIT
-alias gs="git status"
 alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
 alias origin="git remote -v | grep origin | head -n1 | awk '{ print $2 }'"
 alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
 alias cpbranch="git symbolic-ref --short HEAD | tr -d \\n | pbcopy"
-alias cporigin="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
-alias cpupstream="git remote -v | grep origin | head -n1 | awk '{ print $2 }' | tr -d \\n | pbcopy"
-alias ghist="git log --pretty=format:'%C(green)%h %C(red)%cd %C(yellow)%<(11,mtrunc)%an %C(white)%s' --date=short"
+alias ghist="git log --pretty=format:'%C(green)%h %C(red)%cd %C(yellow)%<(20,mtrunc)%an %C(white)%s' --date=short"
 
 # BEDROCK
 alias brck="cd ~/Developer/bedrock/"
@@ -148,9 +144,8 @@ alias rbenv-doc="curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bi
 
 # SCRIPTS
 source $ZSH/oh-my-zsh.sh
-# source ~/.iterm2_shell_integration.zsh
 
-# exa
+# EXA
 alias ls="eza -lah"
 
 # Load Custom Font-Glyphs
@@ -159,7 +154,7 @@ alias ls="eza -lah"
 
 # Powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ZSH AUTOSUGGESTIONS
