@@ -1,0 +1,4 @@
+ghist() {
+  local days=${1:-7}  # Default to 7 days if no argument is provided
+  git log --pretty=format:'%C(green)%h %C(red)%cd %C(yellow)%<(20,trunc)%an %C(white)%s' --date=short --since="$days days ago"
+}

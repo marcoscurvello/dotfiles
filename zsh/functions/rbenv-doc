@@ -1,0 +1,5 @@
+rbenv-doc() {
+  echo "Running rbenv doctor..."
+  curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-doctor | bash
+  echo "rbenv doctor check complete."
+}

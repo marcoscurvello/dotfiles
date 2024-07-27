@@ -1,0 +1,77 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Consolidated PATH exports
+export PATH="/opt/homebrew/bin:$HOME/.rbenv/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$HOME/.pyenv/bin:$PATH"
+
+# Pyenv and rbenv initialization
+eval "$(pyenv init -)"
+eval "$(rbenv init -)"
+
+# NVM configuration with lazy loading
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && alias nvm='unalias nvm && . "$NVM_DIR/nvm.sh" && nvm'
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+
+# Set name of the theme to load
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Plugins
+plugins=(
+  git
+  jsontools
+  bundler
+  dotenv
+  macos
+  rake
+  ruby
+)
+
+# Load oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+# Custom functions
+fpath=($HOME/.zsh/functions $fpath)
+autoload -U $HOME/.zsh/functions/*(:t)
+
+# User configuration
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
+
+# Aliases
+# SYSTEM
+alias .="open ."
+alias dot="cd ~/.dotfiles"
+alias dev="cd ~/Developer"
+
+# XCODE
+alias dd="rm -rf ~/Library/Developer/Xcode/DerivedData/*"
+alias pps="rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/*"
+
+# GIT
+alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
+alias origin="git remote -v | grep origin | head -n1 | awk '{ print $2 }'"
+alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
+
+# EZA
+alias ls="eza -lah"
+
+# Load private aliases if the file exists
+[[ -f ~/.zsh_private_aliases ]] && source ~/.zsh_private_aliases
+
+# Powerlevel10k
+source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# ZSH AUTOSUGGESTIONS
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh

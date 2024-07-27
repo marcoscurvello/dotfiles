@@ -5,11 +5,15 @@
 - clean: ['~']
 
 - link:
+    ~/.Library/Developer/Xcode/UserData/FontAndColorThemes: xcode/FontAndColorThemes
     ~/.vimrc: vimrc
-    ~/.zshrc: zshrc
     ~/.p10k.zsh: p10kzsh
     ~/.gitconfig: gitconfig
-    ~/.Library/Developer/Xcode/UserData/FontAndColorThemes: xcode/FontAndColorThemes
+    ~/.zshrc: zsh/zshrc
+    ~/.zsh/functions:
+      path: zsh/functions
+      create: true
 
 - shell:
+    - [git submodule update --init --recursive, Installing submodules]
     - [mkdir -p ~/.Library/Developer/Xcode/UserData, Creating Xcode UserData directory]

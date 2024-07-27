@@ -1,0 +1,4 @@
+flushdns() {
+  sudo killall -HUP mDNSResponder
+  echo "DNS cache flushed."
+}

@@ -1,0 +1,4 @@
+pwdir() {
+  pwd | tr -d '\n' | pbcopy
+  echo "Current directory path copied to clipboard."
+}

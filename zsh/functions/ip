@@ -1,0 +1,4 @@
+ip() {
+  local ip=$(curl -s http://ipecho.net/plain)
+  echo "Your public IP address is: $ip"
+}
