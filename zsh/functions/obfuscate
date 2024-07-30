@@ -1,0 +1,47 @@
+#!/bin/zsh
+
+obfuscate() {
+    local OBFUSCATOR_KEY=$1
+    local STRING_TO_BE_OBFUSCATED=$2
+
+    if [[ -z $OBFUSCATOR_KEY || -z $STRING_TO_BE_OBFUSCATED ]]; then
+        echo "❌ Obfuscation failed..."
+        echo "Usage: obfuscate OBFUSCATOR_KEY \"TEXT_TO_BE_OBFUSCATED\""
+        return 1
+    fi
+
+    echo "✓ Obfuscation initiated..."
+    echo "OBFUSCATOR_KEY: $OBFUSCATOR_KEY"
+    echo "STRING_TO_BE_OBFUSCATED: $STRING_TO_BE_OBFUSCATED"
+    echo "################################# \n"
+    
+    local SHA1HashKey=$(echo -n $OBFUSCATOR_KEY | shasum | cut -b 1-40)
+    local obfuscationTargetHex=$(echo -n $STRING_TO_BE_OBFUSCATED | xxd -p | tr -d '\n')
+    local SHA1HashKeyLength=${#SHA1HashKey}
+    local obfuscationTargetHexLength=${#obfuscationTargetHex}
+    
+    local obfuscatedString=""
+    local xorArray=()
+
+    for ((i = 0; i < obfuscationTargetHexLength; i += 2)); do
+        local obfuscatorSHA1Position=$((i % SHA1HashKeyLength))
+        local obfuscatorHashChar=${SHA1HashKey:$obfuscatorSHA1Position:2}
+        local targetStringChar=${obfuscationTargetHex:$i:2}
+        
+        local xorResult=$((0x$obfuscatorHashChar ^ 0x$targetStringChar))
+        local xorResultHex=$(printf "%02x" $xorResult)
+        
+        obfuscatedString+=$xorResultHex
+        xorArray+=("0x$xorResultHex")
+        
+        echo "$obfuscatorHashChar XOR $targetStringChar = $xorResultHex"
+    done
+
+    echo "\nResult: $obfuscatedString"
+    echo "XOR Result: ${(j:, :)xorArray}"
+}
+
+# Call the function if script is executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    obfuscate "$@"
+fi
