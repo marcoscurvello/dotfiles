@@ -1,0 +1,103 @@
+cleanxcode() {
+  local clean_all=true
+  local clean_derived_data=false
+  local clean_module_cache=false
+  local clean_xcode_cache=false
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      --derived-data) clean_derived_data=true; clean_all=false ;;
+      --module-cache) clean_module_cache=true; clean_all=false ;;
+      --xcode-cache) clean_xcode_cache=true; clean_all=false ;;
+      *) echo "Unknown option: $1"; return 1 ;;
+    esac
+    shift
+  done
+
+  # Check if in Xcode project directory
+  if ! _is_xcode_project; then
+    echo "⨯ Xcode workspace or project not found"
+    return 1
+  fi
+
+  # Confirmation
+  if ! _confirm_action; then
+    echo "Operation cancelled."
+    return 0
+  fi
+
+  # Check if Xcode is running
+  if pgrep -x "Xcode" > /dev/null; then
+    echo "⚠️  Xcode is currently running. Please close it before proceeding."
+    return 1
+  fi
+
+  local space_before=$(df -k . | tail -1 | awk '{print $4}')
+
+  # Cleaning functions
+  _clean_xcode_processes() {
+    echo "Terminating Xcode processes..."
+    pkill -int com.apple.CoreSimulator.CoreSimulatorService
+    killall Xcode
+    xcrun -k
+  }
+
+  _clean_build() {
+    echo "Cleaning build folder..."
+    xcodebuild -alltargets clean
+  }
+
+  _clean_derived_data() {
+    echo "Cleaning DerivedData..."
+    find "${HOME}/Library/Developer/Xcode/DerivedData" -mindepth 1 -maxdepth 1 -print -delete
+  }
+
+  _clean_module_cache() {
+    echo "Cleaning Module Cache..."
+    find "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang/ModuleCache" -mindepth 1 -maxdepth 1 -print -delete
+    find "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang.$(whoami)/ModuleCache" -mindepth 1 -maxdepth 1 -print -delete
+  }
+
+  _clean_xcode_cache() {
+    echo "Cleaning Xcode Cache..."
+    find "${HOME}/Library/Caches/com.apple.dt.Xcode" -mindepth 1 -maxdepth 1 -print -delete
+  }
+
+  # Execute cleaning based on arguments or clean all if no specific argument
+  $clean_all && _clean_xcode_processes
+  $clean_all && _clean_build
+  { $clean_all || $clean_derived_data; } && _clean_derived_data
+  { $clean_all || $clean_module_cache; } && _clean_module_cache
+  { $clean_all || $clean_xcode_cache; } && _clean_xcode_cache
+
+  local space_after=$(df -k . | tail -1 | awk '{print $4}')
+  local space_freed=$((space_after - space_before))
+  
+  echo "Cleaning complete. Space freed: $(_format_size $space_freed)"
+}
+
+_is_xcode_project() {
+  local workspace=(*.xcworkspace(N))
+  local project=(*.xcodeproj(N))
+  [[ -n "$workspace" ]] || [[ -n "$project" ]]
+}
+
+_confirm_action() {
+  local response
+  echo "This will clean Xcode caches and may remove important files."
+  read -q "response?Are you sure you want to proceed? (y/n) "
+  echo
+  [[ "$response" =~ ^[Yy]$ ]]
+}
+
+_format_size() {
+  local size=$1
+  if (( size < 1024 )); then
+    echo "${size}K"
+  elif (( size < 1048576 )); then
+    echo "$((size / 1024))M"
+  else
+    echo "$((size / 1048576))G"
+  fi
+}
