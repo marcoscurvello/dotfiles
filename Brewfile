@@ -18,6 +18,7 @@ brew 'aircrack-ng'
 brew 'xcbeautify'
 brew 'swiftlint'
 brew 'gh'
+brew 'bat'
 
 # 'brew casks'
 cask "iterm2"
