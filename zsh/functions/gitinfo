@@ -1,5 +1,0 @@
-gitinfo() {
-  echo "Current branch: $(git symbolic-ref --short HEAD 2>/dev/null)"
-  echo "Origin URL: $(git remote get-url origin 2>/dev/null)"
-  echo "Upstream URL: $(git remote get-url upstream 2>/dev/null 2>/dev/null)"
-}
