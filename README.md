@@ -21,6 +21,17 @@ cd ~/.dotfiles
 ./install
 ```
 
+## Customization
+
+You can customize these dotfiles to suit your needs:
+
+- Add your own aliases in `~/.zsh_aliases`
+- Add your own functions in `~/.zsh/functions/`
+- Modify `~/.zshrc` for Zsh-specific configurations
+- Adjust `~/.gitconfig` for Git configurations
+
+Remember to re-run `./install` after making changes to ensure everything is properly linked.
+
 Note: The installation script will symlink the appropriate files to your home directory. Make sure to backup your existing dotfiles before running the installation.
 
 
