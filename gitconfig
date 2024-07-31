@@ -3,12 +3,11 @@
 	email = mrcurvello@gmail.com
 [core]
 	editor = vim
+[color]
+    ui = auto
 [merge]
     tool = vscode
 [mergetool "vscode"]
-  # Comment: Original way before three-way merge shown commented out
-  #    cmd = code --wait $MERGED
-  # Comment: For "Three-way merge"
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [pager]
     diff = delta
@@ -34,8 +33,16 @@
     diffFilter = delta --color-only
 [push]
 	default = current
+[fetch]
+    prune = true
 [init]
 	defaultBranch = main
 [alias]
     undo = reset --soft HEAD^
     fsck = fsck --unreachable | grep commit | cut -d" " -f3 | xargs git log --merges --no-walk
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+
+
+
+
