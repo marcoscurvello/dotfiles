@@ -1,27 +1,27 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# ENABLE POWERLEVEL10K INSTANT PROMPT
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Path to your oh-my-zsh installation.
+# OH-MY-ZSH
 export ZSH="$HOME/.oh-my-zsh"
 
-# PATH exports
+# PATH EXPORTS
 export PATH="/opt/homebrew/bin:$HOME/.rbenv/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$HOME/.pyenv/bin:$PATH"
 
-# RBENV and PYENV lazy loading
+# RBENV & PYENV
 rbenv() { eval "$(command rbenv init -)"; rbenv "$@"; }
 pyenv() { eval "$(command pyenv init -)"; pyenv "$@"; }
 
-# NVM configuration with lazy loading
+# NVM CONFIGURATION WITH LAZY LOADING
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && alias nvm='unalias nvm && . "$NVM_DIR/nvm.sh" && nvm'
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
-# Set name of the theme to load
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# ZSH THEME
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+# ZSH PLUGINS
 plugins=(
   git
   jsontools
@@ -32,10 +32,10 @@ plugins=(
   ruby
 )
 
-# User configuration
+# USER CONFIGURATION
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
+# ENVIRONMENT LANGUAGE
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -48,10 +48,10 @@ export LANG=en_US.UTF-8
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Load oh-my-zsh
+# OH-MY-ZSH
 source $ZSH/oh-my-zsh.sh
 
-# Custom functions
+# CUSTOM FUNCTIONS
 fpath=($HOME/.zsh/functions $fpath)
 autoload -U $HOME/.zsh/functions/*(:t)
 
@@ -60,15 +60,15 @@ autoload -U $HOME/.zsh/functions/*(:t)
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-# SYSTEM
+# CD
 alias .="open ."
 alias dot="cd ~/.dotfiles"
 alias dev="cd ~/Developer"
 
 # GIT
 alias branch="git symbolic-ref --short HEAD | tr -d ' \n'"
-alias origin="git remote -v | grep origin | head -n1 | awk '{ print $2 }'"
-alias upstream="git remote -v | grep upstream | head -n1 | awk '{ print $2 }'"
+alias origin="git remote -v | grep origin | head -n1 | awk '{print $2}' | pbcopy"
+alias upstream="git remote -v | grep upstream | head -n1 | awk '{print $2}' | pbcopy"
 
 # EXA
 alias ls="eza -lah"
@@ -76,11 +76,10 @@ alias ls="eza -lah"
 # BAT
 alias cat="bat --paging=never"
 
-# Private aliases
+# PRIVATE
 [[ -f ~/.zsh_private_aliases ]] && source ~/.zsh_private_aliases
 
-# Powerlevel10k
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# POWERLEVEL10K
 source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
