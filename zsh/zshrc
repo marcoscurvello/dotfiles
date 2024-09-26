@@ -7,11 +7,12 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 
 # PATH EXPORTS
-export PATH="/opt/homebrew/bin:$HOME/.rbenv/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$HOME/.pyenv/bin:$PATH"
-
+export PATH="$HOME/.rbenv/shims:/opt/homebrew/bin:$HOME/.rbenv/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$HOME/.pyenv/bin:$PATH"
 # RBENV & PYENV
-rbenv() { eval "$(command rbenv init -)"; rbenv "$@"; }
-pyenv() { eval "$(command pyenv init -)"; pyenv "$@"; }
+# pyenv() { eval "$(command pyenv init -)"; pyenv "$@"; } lazy loading
+# rbenv() { eval "$(command rbenv init -)"; rbenv "$@"; } lazy loading
+eval "$(rbenv init -)"
+eval "$(pyenv init -)"
 
 # NVM CONFIGURATION WITH LAZY LOADING
 export NVM_DIR="$HOME/.nvm"
