@@ -10,6 +10,7 @@
     ~/.p10k.zsh: p10kzsh
     ~/.gitconfig: gitconfig
     ~/.zshrc: zsh/zshrc
+    ~/.aerospace.toml: aerospace.toml
     ~/.zsh/functions:
       path: zsh/functions
       create: true

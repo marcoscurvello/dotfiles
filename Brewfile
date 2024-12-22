@@ -3,6 +3,7 @@
 
 # 'brew tap'
 tap 'homebrew/cask'
+tap 'FelixKratz/formulae'
 
 # 'brew install'
 brew 'eza'
@@ -19,6 +20,7 @@ brew 'xcbeautify'
 brew 'swiftlint'
 brew 'gh'
 brew 'bat'
+brew 'borders'
 
 # 'brew casks'
 cask "iterm2"
@@ -28,3 +30,4 @@ cask "docker"
 cask "rectangle"
 cask "keepingyouawake"
 cask "visual-studio-code"
+cask "nikitabobko/tap/aerospace"
