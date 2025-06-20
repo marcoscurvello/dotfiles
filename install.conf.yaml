@@ -14,7 +14,10 @@
     ~/.zsh/functions:
       path: zsh/functions
       create: true
+    ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
+    ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - [mkdir -p ~/.Library/Developer/Xcode/UserData, Creating Xcode UserData directory]
+    - [mkdir -p "~/Library/Application Support/Code/User", Creating VS Code User directory]

@@ -201,9 +201,14 @@ run = ['move-node-to-workspace P']
 [[on-window-detected]]
 if.app-id = 'com.apple.dt.Xcode'
 run = ['move-node-to-workspace X']
+
 [[on-window-detected]]
 if.app-id = 'com.apple.iphonesimulator'
-run = ['move-node-to-workspace X']
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-id = 'com.marcoscurvello.SimInspector'
+run = ['move-node-to-workspace 2']
 
 # Utilities
 [[on-window-detected]]

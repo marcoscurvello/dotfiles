@@ -1,0 +1,258 @@
+[
+  // Custom keybindings for enhanced productivity
+  
+  // Terminal shortcuts
+  {
+    "key": "cmd+j",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "cmd+shift+j",
+    "command": "workbench.action.terminal.new"
+  },
+  
+  // File navigation
+  {
+    "key": "cmd+p",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+shift+p",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "key": "cmd+shift+e",
+    "command": "workbench.view.explorer"
+  },
+  {
+    "key": "cmd+shift+f",
+    "command": "workbench.view.search"
+  },
+  {
+    "key": "cmd+shift+g",
+    "command": "workbench.view.scm"
+  },
+  {
+    "key": "cmd+shift+d",
+    "command": "workbench.view.debug"
+  },
+  {
+    "key": "cmd+shift+x",
+    "command": "workbench.view.extensions"
+  },
+  
+  // Editor shortcuts
+  {
+    "key": "alt+up",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+down",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+shift+k",
+    "command": "editor.action.deleteLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+enter",
+    "command": "editor.action.insertLineAfter",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+shift+enter",
+    "command": "editor.action.insertLineBefore",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  
+  // Multi-cursor
+  {
+    "key": "cmd+d",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "cmd+shift+l",
+    "command": "editor.action.selectHighlights",
+    "when": "editorFocus"
+  },
+  
+  // Code formatting
+  {
+    "key": "shift+alt+f",
+    "command": "editor.action.formatDocument",
+    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+k cmd+f",
+    "command": "editor.action.formatSelection",
+    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  
+  // Panel management
+  {
+    "key": "cmd+w",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "cmd+shift+w",
+    "command": "workbench.action.closeWindow"
+  },
+  {
+    "key": "cmd+k cmd+w",
+    "command": "workbench.action.closeAllEditors"
+  },
+  
+  // Split editor
+  {
+    "key": "cmd+\\",
+    "command": "workbench.action.splitEditor"
+  },
+  {
+    "key": "cmd+k cmd+\\",
+    "command": "workbench.action.splitEditorOrthogonal"
+  },
+  
+  // Focus navigation
+  {
+    "key": "cmd+1",
+    "command": "workbench.action.focusFirstEditorGroup"
+  },
+  {
+    "key": "cmd+2",
+    "command": "workbench.action.focusSecondEditorGroup"
+  },
+  {
+    "key": "cmd+3",
+    "command": "workbench.action.focusThirdEditorGroup"
+  },
+  
+  // Search and replace
+  {
+    "key": "cmd+f",
+    "command": "actions.find"
+  },
+  {
+    "key": "cmd+h",
+    "command": "editor.action.startFindReplaceAction"
+  },
+  {
+    "key": "cmd+shift+h",
+    "command": "workbench.action.replaceInFiles"
+  },
+  
+  // Git shortcuts
+  {
+    "key": "cmd+shift+g g",
+    "command": "git.openChange"
+  },
+  {
+    "key": "cmd+shift+g s",
+    "command": "git.stage"
+  },
+  {
+    "key": "cmd+shift+g u",
+    "command": "git.unstage"
+  },
+  {
+    "key": "cmd+shift+g c",
+    "command": "git.commit"
+  },
+  {
+    "key": "cmd+shift+g p",
+    "command": "git.push"
+  },
+  
+  // Toggle settings
+  {
+    "key": "cmd+shift+i",
+    "command": "editor.action.toggleTabFocusMode"
+  },
+  {
+    "key": "cmd+k z",
+    "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "cmd+k v",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  
+  // Quick fixes and refactoring
+  {
+    "key": "cmd+.",
+    "command": "editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "f2",
+    "command": "editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+  },
+  
+  // Navigation
+  {
+    "key": "f12",
+    "command": "editor.action.revealDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus"
+  },
+  {
+    "key": "alt+f12",
+    "command": "editor.action.peekDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus"
+  },
+  {
+    "key": "shift+f12",
+    "command": "editor.action.goToReferences",
+    "when": "editorHasReferenceProvider && editorTextFocus"
+  },
+  
+  // Debugging
+  {
+    "key": "f5",
+    "command": "workbench.action.debug.start",
+    "when": "debuggersAvailable && !inDebugMode"
+  },
+  {
+    "key": "f5",
+    "command": "workbench.action.debug.continue",
+    "when": "inDebugMode"
+  },
+  {
+    "key": "shift+f5",
+    "command": "workbench.action.debug.stop",
+    "when": "inDebugMode"
+  },
+  {
+    "key": "f9",
+    "command": "editor.debug.action.toggleBreakpoint",
+    "when": "debuggersAvailable && editorTextFocus"
+  },
+  {
+    "key": "f10",
+    "command": "workbench.action.debug.stepOver",
+    "when": "debugState == 'stopped'"
+  },
+  {
+    "key": "f11",
+    "command": "workbench.action.debug.stepInto",
+    "when": "debugState == 'stopped'"
+  },
+  {
+    "key": "shift+f11",
+    "command": "workbench.action.debug.stepOut",
+    "when": "debugState == 'stopped'"
+  }
+]
