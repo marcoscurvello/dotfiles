@@ -2,17 +2,28 @@
 	name = Marcos Curvello
 	email = mrcurvello@gmail.com
 [core]
-	editor = vim
+	editor = code --wait
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+	pager = delta
 [merge]
     tool = vscode
 [mergetool "vscode"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [delta]
-    features = side-by-side line-numbers decorations hyperlinks
+    features = line-numbers decorations side-by-side
     syntax-theme = Dracula
     plus-style = syntax "#003800"
     minus-style = syntax "#3f0001"
     hyperlinks-style = none
+    whitespace-error-style = 22 reverse
+    navigate = true
+    light = false
+    tabs = 4
+    tab-width = 4
+    keep-plus-minus-markers = false
+    wrap-max-lines = unlimited
+    inspect-raw-lines = false
+    max-line-length = 2048
 [delta "decorations"]
     commit-decoration-style = bold yellow box ul
     file-style = bold yellow
@@ -37,10 +48,51 @@
     prune = true
 [init]
 	defaultBranch = main
+[diff]
+    colorMoved = default
+    algorithm = histogram
+    wsErrorHighlight = all
+[status]
+    showUntrackedFiles = all
+[rebase]
+    autoStash = true
 [alias]
+    # Short aliases
+    gs = status
+    gd = diff
+    gds = diff --staged
+    ga = add
+    gc = commit
+    gco = checkout
+    gb = branch
+    
+    # Advanced aliases
     undo = reset --soft HEAD^
-    fsck = fsck --unreachable | grep commit | cut -d" " -f3 | xargs git log --merges --no-walk
+    amend = commit --amend --no-edit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = !gitk
+    
+    # Whitespace-aware diff aliases
+    dw = diff --word-diff=color --ws-error-highlight=all
+    dsw = diff --staged --word-diff=color --ws-error-highlight=all
+    
+    # Show all whitespace like IDEs
+    gdw = diff --ws-error-highlight=all --color-words
+    gdsw = diff --staged --ws-error-highlight=all --color-words
+    
+    # Plain diff without delta (fallback for problematic files)
+    gdp = !git -c core.pager=less diff --color=always
+    gdsp = !git -c core.pager=less diff --staged --color=always
+    
+    # Log aliases
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    logs = log --oneline --decorate --graph
+    logfull = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    
+    # Cleanup aliases
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
+    fsck = fsck --unreachable | grep commit | cut -d" " -f3 | xargs git log --merges --no-walk
 
 
 

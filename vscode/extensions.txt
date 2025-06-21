@@ -1,0 +1,71 @@
+# Essential VS Code Extensions
+# This file lists recommended extensions for the development environment
+# Install all with: cat extensions.txt | grep -v "^#" | xargs -L1 code --install-extension
+
+# Language Support
+ms-vscode.vscode-typescript-next
+ms-python.python
+ms-vscode.cpptools
+vadimcn.vscode-lldb
+sswg.swift-lang
+
+# Git & Version Control
+GitLab.gitlab-workflow
+GitHub.copilot
+GitHub.vscode-pull-request-github
+eamodio.gitlens
+
+# Themes & Icons
+ms-vscode.theme-monokai-dimmed
+PKief.material-icon-theme
+zhuangtongfa.material-theme
+dracula-theme.theme-dracula
+
+# Code Quality & Formatting
+esbenp.prettier-vscode
+ms-vscode.vscode-eslint
+bradlc.vscode-tailwindcss
+formulahendry.auto-rename-tag
+streetsidesoftware.code-spell-checker
+
+# Productivity & Navigation
+ms-vscode.vscode-json
+redhat.vscode-yaml
+yzhang.markdown-all-in-one
+ms-vscode.hexeditor
+alefragnani.bookmarks
+gruntfuggly.todo-tree
+
+# Remote Development & Containers
+ms-vscode-remote.remote-containers
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
+
+# iOS/Swift Development
+swift-server.swift-lang
+vknabel.vscode-apple-swift-format
+
+# Web Development
+ms-vscode.vscode-typescript-next
+formulahendry.auto-close-tag
+bradlc.vscode-tailwindcss
+ms-vscode.vscode-css-peek
+
+# Utilities
+ms-vscode.live-server
+ms-vscode.vscode-json
+redhat.vscode-xml
+ms-dotnettools.vscode-dotnet-runtime
+
+# Database
+ms-mssql.mssql
+ms-ossdata.vscode-postgresql
+
+# Docker & DevOps
+ms-azuretools.vscode-docker
+ms-kubernetes-tools.vscode-kubernetes-tools
+hashicorp.terraform
+
+# Note: Some extensions might require specific setup or have platform requirements
+# Extensions with ms-vscode prefix are Microsoft official extensions
+# GitHub Copilot requires a subscription and authentication
