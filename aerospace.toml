@@ -34,8 +34,8 @@ outer.right =      [{ monitor.'built-in' = 3 }, { monitor.main = 6 }, 6]
 # 'move-workspace-to-monitor' doesn't work for workspaces with assigments, so we only assign the ones we don't want to move
 [workspace-to-monitor-force-assignment]
 M = ['secondary', 'main']
-P = ['main']
-U = ['secondary', 'main']
+# P = ['main']
+# U = ['secondary', 'main']
 
 #####################
 ### Main mode settings 
@@ -204,7 +204,7 @@ run = ['move-node-to-workspace X']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iphonesimulator'
-run = ['move-node-to-workspace 2']
+run = ['layout floating', 'move-node-to-workspace 3']
 
 [[on-window-detected]]
 if.app-id = 'com.marcoscurvello.SimInspector'
