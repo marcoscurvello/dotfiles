@@ -1,6 +1,9 @@
 ## Brewfile
 ##
 
+# JankyBorders formulae tap
+brew tap FelixKratz/formulae
+
 # Essential CLI Tools
 brew 'bat'              # Better cat with syntax highlighting
 brew 'eza'              # Modern ls replacement
