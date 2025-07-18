@@ -107,6 +107,29 @@ install_packages() {
         log_info "Installing Homebrew packages..."
         brew bundle --file=Brewfile
         log_success "All packages installed successfully"
+        
+        # Verify critical packages
+        log_info "Verifying package installation..."
+        local missing_packages=()
+        
+        # Check for critical Zsh packages
+        if ! brew list powerlevel10k &> /dev/null; then
+            missing_packages+=("powerlevel10k")
+        fi
+        if ! brew list zsh-autosuggestions &> /dev/null; then
+            missing_packages+=("zsh-autosuggestions")
+        fi
+        if ! brew list zsh-syntax-highlighting &> /dev/null; then
+            missing_packages+=("zsh-syntax-highlighting")
+        fi
+        
+        if [[ ${#missing_packages[@]} -gt 0 ]]; then
+            log_warning "Some packages failed to install: ${missing_packages[*]}"
+            log_info "Attempting to install missing packages..."
+            for pkg in "${missing_packages[@]}"; do
+                brew install "$pkg" || log_error "Failed to install $pkg"
+            done
+        fi
     else
         log_warning "Brewfile not found, skipping package installation"
     fi
@@ -277,9 +300,9 @@ main() {
     check_xcode_tools
     install_homebrew
     clone_dotfiles
+    configure_shell    # Install Oh My Zsh BEFORE linking dotfiles
     install_packages
     run_dotbot
-    configure_shell
     configure_git
     configure_vscode
     configure_macos

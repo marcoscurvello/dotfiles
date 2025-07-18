@@ -6,8 +6,20 @@ fi
 # OH-MY-ZSH
 export ZSH="$HOME/.oh-my-zsh"
 
+# HOMEBREW PREFIX DETECTION
+if [[ -d "/opt/homebrew" ]]; then
+  # Apple Silicon
+  export HOMEBREW_PREFIX="/opt/homebrew"
+elif [[ -d "/usr/local/Homebrew" ]]; then
+  # Intel Mac
+  export HOMEBREW_PREFIX="/usr/local"
+else
+  # Fallback
+  export HOMEBREW_PREFIX="/usr/local"
+fi
+
 # PATH EXPORTS
-export PATH="/opt/homebrew/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$PATH"
+export PATH="$HOMEBREW_PREFIX/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$PATH"
 
 
 # RBENV & PYENV - Lazy loading for faster startup
