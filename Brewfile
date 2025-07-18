@@ -49,6 +49,9 @@ cask "keepingyouawake"            # Prevent sleep
 brew 'borders'                    # JankyBorders window borders
 cask "nikitabobko/tap/aerospace"  # Tiling window manager
 
+# Media
+cask "imagemagick"
+
 # Network & API
 cask "proxyman"                   # HTTP debugging
 
