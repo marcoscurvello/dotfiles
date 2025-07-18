@@ -72,8 +72,8 @@ setopt HIST_IGNORE_SPACE
 source $ZSH/oh-my-zsh.sh
 
 # CUSTOM FUNCTIONS
-fpath=($HOME/.zsh/functions $fpath)
-autoload -U $HOME/.zsh/functions/*(:t)
+fpath=($HOME/.dotfiles/zsh/functions $fpath)
+autoload -U $HOME/.dotfiles/zsh/functions/*(:t)
 
 # Set personal aliases, overriding those provided by oh-my-`zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
