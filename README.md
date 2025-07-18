@@ -38,11 +38,13 @@
 
 ### One-Command Installation
 ```bash
-# Clone and setup everything
-curl -fsSL https://raw.githubusercontent.com/marcoscurvello/dotfiles/main/setup.sh | bash
+# This will install Homebrew, clone the repo, install all packages, and configure everything
+curl -fsSL https://raw.githubusercontent.com/marcoscurvello/dotfiles/main/setup | bash
 ```
 
 ### Manual Installation
+If you prefer to see what's happening at each step:
+
 ```bash
 # 1. Clone the repository
 git clone https://github.com/marcoscurvello/dotfiles.git ~/.dotfiles
@@ -50,9 +52,13 @@ git clone https://github.com/marcoscurvello/dotfiles.git ~/.dotfiles
 # 2. Navigate to dotfiles directory
 cd ~/.dotfiles
 
-# 3. Run the installation
-./install
+# 3. Run the FULL setup script (not just ./install)
+./setup
 ```
+
+
+
+> **Note** : Running `./setup` will install Homebrew, all packages, and configure your environment. You can also run `./install` after modifying any configuration files to update symlinks without reinstalling everything.
 
 ## 📋 What Gets Installed
 
@@ -102,14 +108,15 @@ Add new shell functions to `~/.dotfiles/zsh/functions/`. Examples included:
 
 ### Customizing Configurations
 1. Edit files in the `~/.dotfiles` directory
-2. Run `./install` to apply changes
+2. Run `./install` to update symlinks only OR `./setup` for full reinstallation
 3. Restart your terminal or source configs
 
 ## 🗂️ Repository Structure
 
 ```
 ~/.dotfiles/
-├── install                 # Main installation script
+├── setup                   # Complete installation script (Homebrew, packages, configs)
+├── install                 # Dotbot runner (creates symlinks only)
 ├── install.conf.yaml       # Dotbot configuration
 ├── Brewfile                # Homebrew dependencies
 ├── zsh/
@@ -170,16 +177,6 @@ source ~/.zshrc
 - [Dotbot Documentation](https://github.com/anishathalye/dotbot)
 - [Git Delta Features](https://github.com/dandavison/delta)
 - [iTerm2 Customization](https://iterm2.com/documentation.html)
-
-## 🤝 Contributing
-
-Found an issue or have an improvement? 
-
-1. Fork this repository
-2. Create a feature branch
-3. Make your changes
-4. Test on a fresh macOS installation (VM recommended)
-5. Submit a pull request
 
 ## 🙏 Acknowledgements
 
