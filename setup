@@ -135,11 +135,53 @@ install_packages() {
     fi
 }
 
+# Backup existing dotfiles
+backup_existing_dotfiles() {
+    log_step "Backing up existing dotfiles..."
+    
+    local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
+    local files_to_backup=(
+        "$HOME/.zshrc"
+        "$HOME/.vimrc"
+        "$HOME/.gitconfig"
+        "$HOME/.p10k.zsh"
+        "$HOME/.aerospace.toml"
+        "$HOME/Library/Preferences/com.googlecode.iterm2.plist"
+    )
+    
+    local need_backup=false
+    for file in "${files_to_backup[@]}"; do
+        if [[ -e "$file" && ! -L "$file" ]]; then
+            need_backup=true
+            break
+        fi
+    done
+    
+    if $need_backup; then
+        log_info "Creating backup directory: $backup_dir"
+        mkdir -p "$backup_dir"
+        
+        for file in "${files_to_backup[@]}"; do
+            if [[ -e "$file" && ! -L "$file" ]]; then
+                log_info "Backing up $(basename "$file")"
+                cp -r "$file" "$backup_dir/" || true
+            fi
+        done
+        
+        log_success "Existing dotfiles backed up to $backup_dir"
+    else
+        log_info "No existing dotfiles to backup"
+    fi
+}
+
 # Run dotbot installation
 run_dotbot() {
     log_step "Configuring dotfiles with Dotbot..."
     
     cd "$HOME/.dotfiles"
+    
+    # Backup existing dotfiles first
+    backup_existing_dotfiles
     
     if [[ -f "install" ]]; then
         log_info "Running dotbot installation..."
@@ -255,6 +297,69 @@ configure_macos() {
     log_success "macOS system preferences configured"
 }
 
+# Install fonts
+install_fonts() {
+    log_step "Installing fonts..."
+    
+    local font_dir="$HOME/.dotfiles/fonts"
+    local dest_dir="$HOME/Library/Fonts"
+    
+    if [[ -d "$font_dir" ]]; then
+        log_info "Creating font directory..."
+        mkdir -p "$dest_dir"
+        
+        # Install MesloLGS NF fonts (required for Powerlevel10k)
+        if [[ -d "$font_dir/MesloGSF" ]]; then
+            log_info "Installing MesloLGS NF fonts for Powerlevel10k..."
+            cp "$font_dir/MesloGSF/"*.ttf "$dest_dir/" 2>/dev/null || true
+        fi
+        
+        # Install Hack Nerd Fonts
+        if [[ -d "$font_dir/hacknerd" ]]; then
+            log_info "Installing Hack Nerd fonts..."
+            cp "$font_dir/hacknerd/"*.ttf "$dest_dir/" 2>/dev/null || true
+        fi
+        
+        # Install Powerline fonts
+        log_info "Installing Powerline fonts..."
+        find "$font_dir" -name "*Powerline*.otf" -exec cp {} "$dest_dir/" \; 2>/dev/null || true
+        find "$font_dir" -name "*Powerline*.ttf" -exec cp {} "$dest_dir/" \; 2>/dev/null || true
+        
+        # Install Inconsolata fonts
+        log_info "Installing Inconsolata fonts..."
+        cp "$font_dir/Inconsolata"*.otf "$dest_dir/" 2>/dev/null || true
+        
+        log_success "Fonts installed successfully"
+        log_info "You may need to restart iTerm2 to see the new fonts"
+    else
+        log_warning "Font directory not found, skipping font installation"
+    fi
+}
+
+# Configure iTerm2
+configure_iterm() {
+    log_step "Configuring iTerm2..."
+    
+    # Check if iTerm2 is installed
+    if [[ -d "/Applications/iTerm.app" ]]; then
+        log_info "iTerm2 is installed"
+        
+        # Import color schemes if available
+        local color_dir="$HOME/.dotfiles/iterm-colors"
+        if [[ -d "$color_dir" ]]; then
+            log_info "iTerm2 color schemes found in repository"
+            log_warning "Please manually import color schemes from: $color_dir"
+            log_warning "iTerm2 → Preferences → Profiles → Colors → Color Presets → Import"
+        fi
+        
+        # Note about preferences
+        log_info "iTerm2 preferences will be synced via dotfiles"
+        log_warning "You may need to restart iTerm2 for all settings to take effect"
+    else
+        log_warning "iTerm2 not found, skipping configuration"
+    fi
+}
+
 # Final setup steps
 final_setup() {
     log_step "Completing setup..."
@@ -306,6 +411,8 @@ main() {
     configure_git
     configure_vscode
     configure_macos
+    install_fonts
+    configure_iterm
     final_setup
     
     echo -e "\n${GREEN}"
