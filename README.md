@@ -38,12 +38,12 @@
 
 ### One-Command Installation
 ```bash
-# This will install Homebrew, clone the repo, install all packages, and configure everything
-curl -fsSL https://raw.githubusercontent.com/marcoscurvello/dotfiles/main/setup | bash
+# Complete setup for a new machine - installs everything
+curl -fsSL https://raw.githubusercontent.com/marcoscurvello/dotfiles/main/scripts/bootstrap.sh | bash
 ```
 
 ### Manual Installation
-If you prefer to see what's happening at each step:
+If you prefer more control:
 
 ```bash
 # 1. Clone the repository
@@ -52,13 +52,29 @@ git clone https://github.com/marcoscurvello/dotfiles.git ~/.dotfiles
 # 2. Navigate to dotfiles directory
 cd ~/.dotfiles
 
-# 3. Run the FULL setup script (not just ./install)
-./setup
+# 3. Run interactive menu (recommended)
+./dotfiles
+
+# OR run specific commands:
+./dotfiles bootstrap    # Full setup (same as curl command)
+./dotfiles update       # Update existing installation
+./dotfiles link         # Just update symlinks
 ```
 
+### 🎯 New Modular System
 
+The dotfiles now use a modular architecture. You can run individual components:
 
-> **Note** : Running `./setup` will install Homebrew, all packages, and configure your environment. You can also run `./install` after modifying any configuration files to update symlinks without reinstalling everything.
+```bash
+./dotfiles menu         # Interactive selection menu (default)
+./dotfiles bootstrap    # Complete setup for new machine
+./dotfiles update       # Update everything (git pull + brew upgrade)
+./dotfiles link         # Update configuration symlinks only
+./dotfiles brew         # Install/update Homebrew packages
+./dotfiles macos        # Apply macOS system preferences
+./dotfiles shell        # Configure shell (Zsh/Oh-My-Zsh)
+./dotfiles xcode        # Setup Xcode themes and snippets
+```
 
 ## 📋 What Gets Installed
 
@@ -108,24 +124,52 @@ Add new shell functions to `~/.dotfiles/zsh/functions/`. Examples included:
 
 ### Customizing Configurations
 1. Edit files in the `~/.dotfiles` directory
-2. Run `./install` to update symlinks only OR `./setup` for full reinstallation
+2. Run `./dotfiles link` to update symlinks
 3. Restart your terminal or source configs
+
+### Xcode Snippets
+Sync your Xcode code snippets with git:
+```bash
+# After creating/modifying snippets in Xcode
+xcode-sync
+
+# This will sync snippets to git and optionally commit them
+```
 
 ## 🗂️ Repository Structure
 
 ```
 ~/.dotfiles/
-├── setup                   # Complete installation script (Homebrew, packages, configs)
-├── install                 # Dotbot runner (creates symlinks only)
-├── install.conf.yaml       # Dotbot configuration
-├── Brewfile                # Homebrew dependencies
+├── dotfiles               # Main entry point (interactive menu + commands)
+├── scripts/               # Modular setup scripts
+│   ├── bootstrap.sh       # Complete setup for new machines
+│   ├── update.sh          # Update existing installation
+│   ├── link.sh            # Symlink management
+│   ├── brew.sh            # Homebrew package management
+│   ├── macos.sh           # macOS system preferences
+│   ├── shell.sh           # Shell configuration
+│   └── xcode.sh           # Xcode setup
+├── lib/                   # Shared libraries
+│   ├── utils.sh           # Common functions and logging
+│   └── menu.sh            # Interactive menu system
+├── install                # Legacy Dotbot runner (will be removed)
+├── setup                  # Legacy setup script (will be removed)
+├── install.conf.yaml      # Dotbot configuration
+├── Brewfile               # Homebrew dependencies
 ├── zsh/
-│   ├── zshrc               # Main Zsh configuration
-│   └── functions/          # Custom shell functions
+│   ├── zshrc              # Main Zsh configuration
+│   └── functions/         # Custom shell functions
+│       └── xcode-sync     # Sync Xcode snippets to git
+├── xcode/
+│   ├── FontAndColorThemes/# Xcode color themes
+│   ├── CodeSnippets/      # Xcode code snippets
+│   ├── KeyBindings/       # Xcode key bindings
+│   └── snippets.md        # Snippet documentation
 ├── iterm/
 │   └── com.googlecode.iterm2.plist  # iTerm2 settings
-├── xcode/
-│   └── FontAndColorThemes/          # Xcode color themes
+├── vscode/                # VS Code settings
+│   ├── settings.json
+│   └── keybindings.json
 ├── gitconfig              # Git configuration
 ├── vimrc                  # Vim configuration
 ├── p10kzsh                # Powerlevel10k configuration
