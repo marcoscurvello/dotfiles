@@ -1,0 +1,207 @@
+#!/usr/bin/env zsh
+
+# Sync Xcode snippets and settings to dotfiles repository
+xcode-sync() {
+    local dotfiles_dir="$HOME/.dotfiles"
+    local xcode_userdata="$HOME/Library/Developer/Xcode/UserData"
+    local snippets_dir="$xcode_userdata/CodeSnippets"
+    local keybindings_dir="$xcode_userdata/KeyBindings"
+    local dotfiles_snippets="$dotfiles_dir/xcode/CodeSnippets"
+    local dotfiles_keybindings="$dotfiles_dir/xcode/KeyBindings"
+    
+    # Colors for output
+    local RED='\033[0;31m'
+    local GREEN='\033[0;32m'
+    local YELLOW='\033[1;33m'
+    local BLUE='\033[0;34m'
+    local NC='\033[0m' # No Color
+    
+    echo -e "${BLUE}🔄 Syncing Xcode settings to dotfiles...${NC}"
+    
+    # Check if dotfiles directory exists
+    if [[ ! -d "$dotfiles_dir" ]]; then
+        echo -e "${RED}❌ Dotfiles directory not found at $dotfiles_dir${NC}"
+        return 1
+    fi
+    
+    # Create directories if they don't exist
+    mkdir -p "$dotfiles_snippets" "$dotfiles_keybindings"
+    
+    # Sync Code Snippets
+    if [[ -d "$snippets_dir" ]]; then
+        echo -e "\n${YELLOW}📋 Syncing code snippets...${NC}"
+        
+        # Copy new or modified snippets
+        local snippets_changed=false
+        for snippet in "$snippets_dir"/*.codesnippet; do
+            if [[ -f "$snippet" ]]; then
+                local basename=$(basename "$snippet")
+                local dest="$dotfiles_snippets/$basename"
+                
+                if [[ ! -f "$dest" ]] || ! diff -q "$snippet" "$dest" > /dev/null 2>&1; then
+                    cp "$snippet" "$dest"
+                    echo -e "  ${GREEN}✓${NC} Updated: $basename"
+                    snippets_changed=true
+                fi
+            fi
+        done
+        
+        # Check for deleted snippets
+        for snippet in "$dotfiles_snippets"/*.codesnippet; do
+            if [[ -f "$snippet" ]]; then
+                local basename=$(basename "$snippet")
+                if [[ ! -f "$snippets_dir/$basename" ]]; then
+                    rm "$snippet"
+                    echo -e "  ${RED}✗${NC} Removed: $basename"
+                    snippets_changed=true
+                fi
+            fi
+        done
+        
+        if [[ "$snippets_changed" = false ]]; then
+            echo -e "  ${GREEN}✓${NC} No changes to snippets"
+        fi
+    else
+        echo -e "${YELLOW}⚠️  No snippets directory found${NC}"
+    fi
+    
+    # Sync KeyBindings
+    if [[ -d "$keybindings_dir" ]]; then
+        echo -e "\n${YELLOW}⌨️  Syncing key bindings...${NC}"
+        
+        local keybindings_changed=false
+        for binding in "$keybindings_dir"/*.idekeybindings; do
+            if [[ -f "$binding" ]]; then
+                local basename=$(basename "$binding")
+                local dest="$dotfiles_keybindings/$basename"
+                
+                if [[ ! -f "$dest" ]] || ! diff -q "$binding" "$dest" > /dev/null 2>&1; then
+                    cp "$binding" "$dest"
+                    echo -e "  ${GREEN}✓${NC} Updated: $basename"
+                    keybindings_changed=true
+                fi
+            fi
+        done
+        
+        if [[ "$keybindings_changed" = false ]]; then
+            echo -e "  ${GREEN}✓${NC} No changes to key bindings"
+        fi
+    else
+        echo -e "${YELLOW}⚠️  No key bindings directory found${NC}"
+    fi
+    
+    # Update snippet documentation
+    echo -e "\n${YELLOW}📝 Updating snippet documentation...${NC}"
+    if command -v python3 &> /dev/null; then
+        python3 <<'EOF'
+import os
+import plistlib
+import html
+
+dotfiles_dir = os.path.expanduser("~/.dotfiles")
+snippets_dir = os.path.join(dotfiles_dir, "xcode", "CodeSnippets")
+doc_path = os.path.join(dotfiles_dir, "xcode", "snippets.md")
+
+snippets = []
+for filename in sorted(os.listdir(snippets_dir)):
+    if filename.endswith('.codesnippet'):
+        filepath = os.path.join(snippets_dir, filename)
+        try:
+            with open(filepath, 'rb') as f:
+                plist = plistlib.load(f)
+                title = plist.get('IDECodeSnippetTitle', 'Untitled')
+                prefix = plist.get('IDECodeSnippetCompletionPrefix', '')
+                language = plist.get('IDECodeSnippetLanguage', 'Unknown')
+                contents = plist.get('IDECodeSnippetContents', '')
+                summary = plist.get('IDECodeSnippetSummary', '')
+                
+                # Clean up language string
+                if '.' in language:
+                    language = language.split('.')[-1]
+                
+                snippets.append({
+                    'title': title,
+                    'prefix': prefix,
+                    'language': language,
+                    'contents': html.unescape(contents),
+                    'summary': summary
+                })
+        except Exception as e:
+            print(f"Error reading {filename}: {e}")
+
+# Group snippets by category
+debugging_snippets = [s for s in snippets if 'print' in s['title'].lower()]
+organization_snippets = [s for s in snippets if any(word in s['title'].lower() for word in ['mark', 'note', 'todo'])]
+other_snippets = [s for s in snippets if s not in debugging_snippets and s not in organization_snippets]
+
+# Write documentation
+with open(doc_path, 'w') as f:
+    f.write("# Xcode Code Snippets\n\n")
+    f.write("Quick reference for custom Xcode code snippets stored in this repository.\n\n")
+    
+    if debugging_snippets:
+        f.write("## Debugging Snippets\n\n")
+        for snippet in debugging_snippets:
+            f.write(f"### {snippet['title']}\n")
+            if snippet['prefix']:
+                f.write(f"- **Shortcut**: `{snippet['prefix']}`\n")
+            f.write(f"- **Language**: {snippet['language']}\n")
+            f.write(f"- **Code**: `{snippet['contents']}`\n")
+            if snippet['summary']:
+                f.write(f"- **Note**: {snippet['summary']}\n")
+            f.write("\n")
+    
+    if organization_snippets:
+        f.write("## Code Organization\n\n")
+        for snippet in organization_snippets:
+            f.write(f"### {snippet['title']}\n")
+            if snippet['prefix']:
+                f.write(f"- **Shortcut**: `{snippet['prefix']}`\n")
+            f.write(f"- **Language**: {snippet['language']}\n")
+            f.write(f"- **Code**: `{snippet['contents']}`\n")
+            if snippet['summary']:
+                f.write(f"- **Note**: {snippet['summary']}\n")
+            f.write("\n")
+    
+    if other_snippets:
+        f.write("## Other Snippets\n\n")
+        for snippet in other_snippets:
+            f.write(f"### {snippet['title']}\n")
+            if snippet['prefix']:
+                f.write(f"- **Shortcut**: `{snippet['prefix']}`\n")
+            f.write(f"- **Language**: {snippet['language']}\n")
+            f.write(f"- **Code**: `{snippet['contents']}`\n")
+            if snippet['summary']:
+                f.write(f"- **Note**: {snippet['summary']}\n")
+            f.write("\n")
+    
+    f.write("---\n")
+    f.write("*Note: Snippets without shortcuts can be accessed via Xcode's snippet menu.*\n")
+
+print("  ✓ Documentation updated")
+EOF
+    else
+        echo -e "  ${YELLOW}⚠️${NC} Python3 not found, skipping documentation update"
+    fi
+    
+    # Show git status
+    echo -e "\n${YELLOW}📊 Git status:${NC}"
+    cd "$dotfiles_dir"
+    git status --short xcode/
+    
+    # Ask if user wants to commit
+    echo -e "\n${BLUE}Would you like to commit these changes? (y/n)${NC}"
+    read -r response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        git add xcode/
+        git commit -m "chore: update Xcode snippets and settings"
+        echo -e "${GREEN}✓ Changes committed${NC}"
+    else
+        echo -e "${YELLOW}ℹ️  Changes staged but not committed${NC}"
+    fi
+}
+
+# Run the function if script is executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    xcode-sync
+fi

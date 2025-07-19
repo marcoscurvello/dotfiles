@@ -174,6 +174,70 @@ backup_existing_dotfiles() {
     fi
 }
 
+# Backup and merge Xcode settings
+backup_and_merge_xcode_settings() {
+    log_step "Handling Xcode settings backup and merge..."
+    
+    local xcode_userdata="$HOME/Library/Developer/Xcode/UserData"
+    local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)/xcode"
+    local dotfiles_xcode="$HOME/.dotfiles/xcode"
+    
+    # Directories to handle
+    local xcode_dirs=("CodeSnippets" "KeyBindings")
+    
+    for dir in "${xcode_dirs[@]}"; do
+        local src_dir="$xcode_userdata/$dir"
+        local dotfiles_dir="$dotfiles_xcode/$dir"
+        
+        # Skip if source doesn't exist
+        if [[ ! -d "$src_dir" ]]; then
+            continue
+        fi
+        
+        # Check if it's already a symlink (already configured)
+        if [[ -L "$src_dir" ]]; then
+            log_info "$dir is already symlinked, skipping..."
+            continue
+        fi
+        
+        # Check if we have existing files to merge
+        if [[ -d "$src_dir" ]] && [[ "$(ls -A "$src_dir" 2>/dev/null)" ]]; then
+            log_info "Found existing $dir, backing up and merging..."
+            
+            # Create backup
+            mkdir -p "$backup_dir"
+            cp -r "$src_dir" "$backup_dir/"
+            
+            # Merge snippets/keybindings
+            if [[ -d "$dotfiles_dir" ]]; then
+                # Copy any local files that don't exist in dotfiles
+                for file in "$src_dir"/*; do
+                    if [[ -f "$file" ]]; then
+                        local basename=$(basename "$file")
+                        local dotfile="$dotfiles_dir/$basename"
+                        
+                        if [[ ! -f "$dotfile" ]]; then
+                            log_info "Preserving local file: $basename"
+                            cp "$file" "$dotfile"
+                        fi
+                    fi
+                done
+            fi
+            
+            # Remove the original directory (will be replaced by symlink)
+            rm -rf "$src_dir"
+        fi
+    done
+    
+    # Handle Xcode preferences (copy, not symlink)
+    local xcode_prefs="$HOME/Library/Preferences/com.apple.dt.Xcode.plist"
+    if [[ -f "$xcode_prefs" ]]; then
+        log_info "Backing up Xcode preferences..."
+        mkdir -p "$backup_dir"
+        cp "$xcode_prefs" "$backup_dir/"
+    fi
+}
+
 # Run dotbot installation
 run_dotbot() {
     log_step "Configuring dotfiles with Dotbot..."
@@ -182,6 +246,9 @@ run_dotbot() {
     
     # Backup existing dotfiles first
     backup_existing_dotfiles
+    
+    # Backup and merge Xcode settings
+    backup_and_merge_xcode_settings
     
     if [[ -f "install" ]]; then
         log_info "Running dotbot installation..."

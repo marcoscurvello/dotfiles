@@ -7,6 +7,8 @@
 
 - link:
     ~/.Library/Developer/Xcode/UserData/FontAndColorThemes: xcode/FontAndColorThemes
+    ~/.Library/Developer/Xcode/UserData/CodeSnippets: xcode/CodeSnippets
+    ~/.Library/Developer/Xcode/UserData/KeyBindings: xcode/KeyBindings
     ~/.vimrc: vimrc
     ~/.p10k.zsh: p10kzsh
     ~/.gitconfig: gitconfig
