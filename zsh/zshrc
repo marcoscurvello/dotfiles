@@ -159,3 +159,4 @@ source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # CLAUDE TERMINAL WINDOW WRAPPER
 [[ -f ~/.config/zsh/claude-wrapper.zsh ]] && source ~/.config/zsh/claude-wrapper.zsh
+alias dotfiles="cd ~/.dotfiles && ./dotfiles"

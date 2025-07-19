@@ -92,6 +92,7 @@ main() {
     
     # Parse command line arguments
     local command="${1:-menu}"
+    local force_menu=0
     
     # Handle help flag at any position
     for arg in "$@"; do
@@ -99,13 +100,31 @@ main() {
             show_usage
             exit 0
         fi
+        if [[ "$arg" == "--force-menu" ]]; then
+            force_menu=1
+        fi
     done
     
     # Handle commands
     case "$command" in
         menu|--menu|-m|"")
             # Show interactive menu
-            exec "$DOTFILES_DIR/lib/menu.sh"
+            if [[ -t 0 ]] && [[ -t 1 ]]; then
+                # Use the zsh-compatible menu (uses bash select)
+                exec bash "$DOTFILES_DIR/lib/zsh-menu.sh"
+            else
+                log_error "No interactive terminal detected"
+                echo "This command requires an interactive terminal session."
+                echo ""
+                echo "If you're running this through a script or non-interactive shell,"
+                echo "use specific commands instead:"
+                echo "  ./dotfiles bootstrap    # First-time setup"
+                echo "  ./dotfiles update       # Update everything"
+                echo "  ./dotfiles link         # Update symlinks"
+                echo ""
+                echo "Run './dotfiles --help' for all available commands"
+                exit 1
+            fi
             ;;
         bootstrap|update|link|brew|macos|shell|xcode)
             # Run specific script

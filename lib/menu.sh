@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # Interactive menu system for dotfiles management
-source "$(dirname "${BASH_SOURCE[0]}")/utils.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Source utilities
+source "$SCRIPT_DIR/utils.sh"
 
 # Menu items and their corresponding scripts
 declare -a MENU_ITEMS=(
@@ -69,7 +73,8 @@ check_component_status() {
 
 # Display menu
 display_menu() {
-    clear
+    # Use printf instead of clear for better compatibility
+    printf '\033[2J\033[H'
     echo -e "${BOLD}╔══════════════════════════════════════════════════════╗${NC}"
     echo -e "${BOLD}║          Dotfiles Manager v2.0                       ║${NC}"
     echo -e "${BOLD}╠══════════════════════════════════════════════════════╣${NC}"
@@ -231,11 +236,29 @@ run_menu() {
     local CURRENT_ITEM=0
     init_selected_items
     
+    # Check if we're in an interactive terminal
+    if [[ ! -t 0 ]] || [[ ! -t 1 ]]; then
+        log_error "This menu requires an interactive terminal"
+        echo ""
+        echo "The interactive menu cannot run because:"
+        echo "  - STDIN is terminal: $([[ -t 0 ]] && echo yes || echo no)"
+        echo "  - STDOUT is terminal: $([[ -t 1 ]] && echo yes || echo no)"
+        echo "  - Current TTY: $(tty 2>&1)"
+        echo ""
+        echo "Try running specific commands instead:"
+        echo "  ./dotfiles bootstrap    # First-time setup"
+        echo "  ./dotfiles update       # Update everything"
+        echo "  ./dotfiles link         # Update symlinks"
+        echo ""
+        echo "Or run './dotfiles --help' for all commands"
+        exit 1
+    fi
+    
     # Disable cursor
     tput civis 2>/dev/null || true
     
     # Trap to restore cursor on exit
-    trap 'tput cnorm 2>/dev/null || true' EXIT
+    trap 'tput cnorm 2>/dev/null || true; echo ""' EXIT INT TERM
     
     while true; do
         display_menu
@@ -257,7 +280,17 @@ run_menu() {
     done
 }
 
-# If script is run directly, start the menu
-if ! is_sourced; then
+# Main function that tries to detect the best way to run the menu
+main() {
+    # Export required variables
+    export DOTFILES_DIR
+    export CURRENT_ITEM
+    
+    # Run the menu
     run_menu
+}
+
+# If script is run directly, start the menu
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
 fi
