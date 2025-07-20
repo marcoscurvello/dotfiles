@@ -14,9 +14,19 @@ xcode-sync() {
     local GREEN='\033[0;32m'
     local YELLOW='\033[1;33m'
     local BLUE='\033[0;34m'
+    local BOLD='\033[1m'
     local NC='\033[0m' # No Color
     
-    echo -e "${BLUE}🔄 Syncing Xcode settings to dotfiles...${NC}"
+    # Track changes
+    local total_changes=0
+    local snippet_changes=0
+    local keybinding_changes=0
+    
+    echo ""
+    echo -e "${BOLD}${BLUE}🔄 Xcode Sync${NC}"
+    echo -e "${BOLD}══════════════════════════════════════════${NC}"
+    echo -e "${BLUE}Syncing Xcode settings to dotfiles...${NC}"
+    echo ""
     
     # Check if dotfiles directory exists
     if [[ ! -d "$dotfiles_dir" ]]; then
@@ -29,7 +39,8 @@ xcode-sync() {
     
     # Sync Code Snippets
     if [[ -d "$snippets_dir" ]]; then
-        echo -e "\n${YELLOW}📋 Syncing code snippets...${NC}"
+        echo -e "${BOLD}${YELLOW}📋 Code Snippets${NC}"
+        echo -e "${YELLOW}────────────────────────${NC}"
         
         # Copy new or modified snippets
         local snippets_changed=false
@@ -42,6 +53,8 @@ xcode-sync() {
                     cp "$snippet" "$dest"
                     echo -e "  ${GREEN}✓${NC} Updated: $basename"
                     snippets_changed=true
+                    ((snippet_changes++))
+                    ((total_changes++))
                 fi
             fi
         done
@@ -54,6 +67,8 @@ xcode-sync() {
                     rm "$snippet"
                     echo -e "  ${RED}✗${NC} Removed: $basename"
                     snippets_changed=true
+                    ((snippet_changes++))
+                    ((total_changes++))
                 fi
             fi
         done
@@ -61,13 +76,16 @@ xcode-sync() {
         if [[ "$snippets_changed" = false ]]; then
             echo -e "  ${GREEN}✓${NC} No changes to snippets"
         fi
+        echo ""
     else
         echo -e "${YELLOW}⚠️  No snippets directory found${NC}"
+        echo ""
     fi
     
     # Sync KeyBindings
     if [[ -d "$keybindings_dir" ]]; then
-        echo -e "\n${YELLOW}⌨️  Syncing key bindings...${NC}"
+        echo -e "${BOLD}${YELLOW}⌨️  Key Bindings${NC}"
+        echo -e "${YELLOW}────────────────────────${NC}"
         
         local keybindings_changed=false
         for binding in "$keybindings_dir"/*.idekeybindings; do
@@ -79,6 +97,8 @@ xcode-sync() {
                     cp "$binding" "$dest"
                     echo -e "  ${GREEN}✓${NC} Updated: $basename"
                     keybindings_changed=true
+                    ((keybinding_changes++))
+                    ((total_changes++))
                 fi
             fi
         done
@@ -86,12 +106,16 @@ xcode-sync() {
         if [[ "$keybindings_changed" = false ]]; then
             echo -e "  ${GREEN}✓${NC} No changes to key bindings"
         fi
+        echo ""
     else
         echo -e "${YELLOW}⚠️  No key bindings directory found${NC}"
+        echo ""
     fi
     
     # Update snippet documentation
-    echo -e "\n${YELLOW}📝 Updating snippet documentation...${NC}"
+    echo -e "${BOLD}${YELLOW}📝 Documentation${NC}"
+    echo -e "${YELLOW}────────────────────────${NC}"
+    echo -e "Updating snippet documentation..."
     if command -v python3 &> /dev/null; then
         python3 <<'EOF'
 import os
@@ -178,27 +202,56 @@ with open(doc_path, 'w') as f:
     f.write("---\n")
     f.write("*Note: Snippets without shortcuts can be accessed via Xcode's snippet menu.*\n")
 
-print("  ✓ Documentation updated")
+print("  ✓ Documentation updated successfully")
 EOF
+        echo ""
     else
         echo -e "  ${YELLOW}⚠️${NC} Python3 not found, skipping documentation update"
+        echo ""
     fi
+    
+    # Summary
+    echo -e "${BOLD}${BLUE}📊 Summary${NC}"
+    echo -e "${BOLD}══════════════════════════════════════════${NC}"
+    
+    if [[ $total_changes -eq 0 ]]; then
+        echo -e "${GREEN}✓ Everything is up to date!${NC}"
+        echo ""
+        return 0
+    fi
+    
+    echo -e "${BOLD}Total changes: ${total_changes}${NC}"
+    if [[ $snippet_changes -gt 0 ]]; then
+        echo -e "  • Snippet changes: ${snippet_changes}"
+    fi
+    if [[ $keybinding_changes -gt 0 ]]; then
+        echo -e "  • Key binding changes: ${keybinding_changes}"
+    fi
+    echo ""
     
     # Show git status
-    echo -e "\n${YELLOW}📊 Git status:${NC}"
+    echo -e "${BOLD}${YELLOW}Git Status${NC}"
+    echo -e "${YELLOW}────────────────────────${NC}"
     cd "$dotfiles_dir"
     git status --short xcode/
+    echo ""
     
     # Ask if user wants to commit
-    echo -e "\n${BLUE}Would you like to commit these changes? (y/n)${NC}"
+    echo -e "${BLUE}Would you like to commit these changes? (y/n)${NC} \c"
     read -r response
+    echo ""
+    
     if [[ "$response" =~ ^[Yy]$ ]]; then
+        echo -e "Committing changes..."
         git add xcode/
         git commit -m "chore: update Xcode snippets and settings"
-        echo -e "${GREEN}✓ Changes committed${NC}"
+        echo ""
+        echo -e "${GREEN}${BOLD}✓ Sync complete! Changes committed.${NC}"
     else
-        echo -e "${YELLOW}ℹ️  Changes staged but not committed${NC}"
+        echo -e "${YELLOW}ℹ️  Changes saved but not committed.${NC}"
+        echo -e "${YELLOW}   Run 'git add xcode/' when ready to commit.${NC}"
     fi
+    echo ""
 }
 
 # Run the function if script is executed directly
