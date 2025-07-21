@@ -22,7 +22,6 @@
       create: true
     ~/Library/Application Support/Code/User/settings.json: vscode/settings.json
     ~/Library/Application Support/Code/User/keybindings.json: vscode/keybindings.json
-    ~/Library/Preferences/com.googlecode.iterm2.plist: iterm/com.googlecode.iterm2.plist
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
