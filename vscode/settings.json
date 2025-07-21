@@ -29,7 +29,7 @@
   "editor.suggest.insertMode": "replace",
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "on",
-  
+
   // Files settings
   "files.autoSave": "onWindowChange",
   "files.trimTrailingWhitespace": true,
@@ -48,9 +48,9 @@
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true
   },
-  
+
   // Workbench settings
-  "workbench.colorTheme": "Monokai Dimmed",
+  "workbench.colorTheme": "Theme",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.editor.enablePreview": false,
@@ -63,13 +63,13 @@
   "workbench.statusBar.visible": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  
+
   // Explorer settings
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.openEditors.visible": 1,
   "explorer.compactFolders": false,
-  
+
   // Search settings
   "search.exclude": {
     "**/node_modules": true,
@@ -84,7 +84,7 @@
   },
   "search.useIgnoreFiles": true,
   "search.useGlobalIgnoreFiles": true,
-  
+
   // Terminal settings
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
@@ -93,7 +93,7 @@
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.enableBell": false,
-  
+
   // Git settings
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
@@ -104,9 +104,9 @@
   "git.showPushSuccessNotification": true,
   "git.decorations.enabled": true,
   "git.openRepositoryInParentFolders": "always",
-  
+
   // Language-specific settings
-  
+
   // JavaScript/TypeScript
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -117,28 +117,28 @@
   "typescript.inlayHints.parameterNames.enabled": "all",
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-  
+
   // Swift
   "swift.path": "/usr/bin/xcrun",
   "swift.buildArguments": [
     "-Xswiftc", "-target", "-Xswiftc", "arm64-apple-macosx12.0"
   ],
-  
+
   // Python
   "python.defaultInterpreterPath": "/usr/bin/python3",
   "python.formatting.provider": "black",
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
   "python.analysis.typeCheckingMode": "basic",
-  
+
   // JSON
   "json.schemas": [],
   "json.format.enable": true,
-  
+
   // YAML
   "yaml.format.enable": true,
   "yaml.validate": true,
-  
+
   // Markdown
   "markdown.preview.fontSize": 14,
   "markdown.preview.lineHeight": 1.6,
@@ -147,14 +147,14 @@
     "editor.lineNumbers": "off",
     "editor.quickSuggestions": false
   },
-  
+
   // Extensions settings
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
   "prettier.tabWidth": 2,
   "prettier.semi": true,
   "prettier.printWidth": 80,
-  
+
   // GitHub Copilot
   "github.copilot.enable": {
     "*": true,
@@ -162,18 +162,18 @@
     "plaintext": false,
     "markdown": true
   },
-  
+
   // Performance settings
   "extensions.autoUpdate": false,
   "extensions.autoCheckUpdates": false,
   "telemetry.telemetryLevel": "off",
   "update.mode": "manual",
-  
+
   // Security settings
   "security.workspace.trust.untrustedFiles": "prompt",
   "security.workspace.trust.banner": "always",
   "security.workspace.trust.startupPrompt": "always",
-  
+
   // Integrated terminal
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.profiles.osx": {
