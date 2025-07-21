@@ -38,7 +38,7 @@ xcode-sync() {
     mkdir -p "$dotfiles_snippets" "$dotfiles_keybindings"
     
     # Sync Code Snippets
-    if [[ -d "$snippets_dir" ]]; then
+    if [[ -e "$snippets_dir" ]]; then
         echo -e "${BOLD}${YELLOW}📋 Code Snippets${NC}"
         echo -e "${YELLOW}────────────────────────${NC}"
         
@@ -83,7 +83,7 @@ xcode-sync() {
     fi
     
     # Sync KeyBindings
-    if [[ -d "$keybindings_dir" ]]; then
+    if [[ -e "$keybindings_dir" ]]; then
         echo -e "${BOLD}${YELLOW}⌨️  Key Bindings${NC}"
         echo -e "${YELLOW}────────────────────────${NC}"
         

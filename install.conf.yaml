@@ -6,9 +6,15 @@
 - clean: ['~']
 
 - link:
-    ~/Library/Developer/Xcode/UserData/FontAndColorThemes: xcode/FontAndColorThemes
-    ~/Library/Developer/Xcode/UserData/CodeSnippets: xcode/CodeSnippets
-    ~/Library/Developer/Xcode/UserData/KeyBindings: xcode/KeyBindings
+    ~/Library/Developer/Xcode/UserData/FontAndColorThemes:
+      path: xcode/FontAndColorThemes
+      create: true
+    ~/Library/Developer/Xcode/UserData/CodeSnippets:
+      path: xcode/CodeSnippets
+      create: true
+    ~/Library/Developer/Xcode/UserData/KeyBindings:
+      path: xcode/KeyBindings
+      create: true
     ~/.vimrc: vimrc
     ~/.p10k.zsh: p10kzsh
     ~/.gitconfig: gitconfig

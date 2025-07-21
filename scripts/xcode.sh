@@ -36,6 +36,13 @@ backup_and_merge_xcode_settings() {
     local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)/xcode"
     local dotfiles_xcode="$DOTFILES_DIR/xcode"
     
+    # Ensure Xcode UserData directory exists
+    if [[ ! -d "$xcode_userdata" ]]; then
+        log_info "Creating Xcode UserData directory..."
+        mkdir -p "$xcode_userdata"
+        log_success "Created $xcode_userdata"
+    fi
+    
     # Directories to handle
     local xcode_dirs=("CodeSnippets" "KeyBindings" "FontAndColorThemes")
     
