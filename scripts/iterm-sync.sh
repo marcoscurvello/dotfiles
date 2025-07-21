@@ -51,8 +51,16 @@ restore_iterm() {
         # Copy preferences from dotfiles
         cp "$DOTFILES_ITERM" "$ITERM_PREFS"
         
+        # Convert to binary format
+        plutil -convert binary1 "$ITERM_PREFS"
+        
+        # Set custom folder path
+        defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES_DIR/iterm"
+        defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+        
         # Clear preferences cache
         defaults read com.googlecode.iterm2 > /dev/null 2>&1
+        killall cfprefsd 2>/dev/null || true
         
         log_success "iTerm2 preferences restored"
         log_info "Start iTerm2 to see the changes"
