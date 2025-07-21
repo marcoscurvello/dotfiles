@@ -6,8 +6,10 @@ xcode-sync() {
     local xcode_userdata="$HOME/Library/Developer/Xcode/UserData"
     local snippets_dir="$xcode_userdata/CodeSnippets"
     local keybindings_dir="$xcode_userdata/KeyBindings"
+    local themes_dir="$xcode_userdata/FontAndColorThemes"
     local dotfiles_snippets="$dotfiles_dir/xcode/CodeSnippets"
     local dotfiles_keybindings="$dotfiles_dir/xcode/KeyBindings"
+    local dotfiles_themes="$dotfiles_dir/xcode/FontAndColorThemes"
     
     # Colors for output
     local RED='\033[0;31m'
@@ -35,7 +37,7 @@ xcode-sync() {
     fi
     
     # Create directories if they don't exist
-    mkdir -p "$dotfiles_snippets" "$dotfiles_keybindings"
+    mkdir -p "$dotfiles_snippets" "$dotfiles_keybindings" "$dotfiles_themes"
     
     # Sync Code Snippets
     if [[ -e "$snippets_dir" ]]; then
@@ -109,6 +111,39 @@ xcode-sync() {
         echo ""
     else
         echo -e "${YELLOW}⚠️  No key bindings directory found${NC}"
+        echo ""
+    fi
+    
+    # Sync Color Themes
+    if [[ -d "$themes_dir" ]]; then
+        echo -e "${BOLD}${YELLOW}🎨 Color Themes${NC}"
+        echo -e "${YELLOW}────────────────────────${NC}"
+        
+        local themes_changed=false
+        local theme_changes=0
+        
+        # Copy new or modified themes to dotfiles
+        for theme in "$themes_dir"/*.xccolortheme; do
+            if [[ -f "$theme" ]]; then
+                local basename=$(basename "$theme")
+                local dest="$dotfiles_themes/$basename"
+                
+                if [[ ! -f "$dest" ]] || ! diff -q "$theme" "$dest" > /dev/null 2>&1; then
+                    cp "$theme" "$dest"
+                    echo -e "  ${GREEN}✓${NC} Updated: $basename"
+                    themes_changed=true
+                    ((theme_changes++))
+                    ((total_changes++))
+                fi
+            fi
+        done
+        
+        if [[ "$themes_changed" = false ]]; then
+            echo -e "  ${GREEN}✓${NC} No changes to themes"
+        fi
+        echo ""
+    else
+        echo -e "${YELLOW}⚠️  No themes directory found${NC}"
         echo ""
     fi
     
@@ -226,6 +261,9 @@ EOF
     fi
     if [[ $keybinding_changes -gt 0 ]]; then
         echo -e "  • Key binding changes: ${keybinding_changes}"
+    fi
+    if [[ $theme_changes -gt 0 ]]; then
+        echo -e "  • Theme changes: ${theme_changes}"
     fi
     echo ""
     

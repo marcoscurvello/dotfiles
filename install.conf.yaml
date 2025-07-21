@@ -6,9 +6,6 @@
 - clean: ['~']
 
 - link:
-    ~/Library/Developer/Xcode/UserData/FontAndColorThemes:
-      path: xcode/FontAndColorThemes
-      create: true
     ~/Library/Developer/Xcode/UserData/CodeSnippets:
       path: xcode/CodeSnippets
       create: true

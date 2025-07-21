@@ -43,8 +43,8 @@ backup_and_merge_xcode_settings() {
         log_success "Created $xcode_userdata"
     fi
     
-    # Directories to handle
-    local xcode_dirs=("CodeSnippets" "KeyBindings" "FontAndColorThemes")
+    # Directories to handle with symlinks
+    local xcode_dirs=("CodeSnippets" "KeyBindings")
     
     for dir in "${xcode_dirs[@]}"; do
         local src_dir="$xcode_userdata/$dir"
@@ -92,6 +92,9 @@ backup_and_merge_xcode_settings() {
         fi
     done
     
+    # Handle FontAndColorThemes differently (copy instead of symlink)
+    handle_xcode_themes
+    
     # Handle Xcode preferences (backup only, no symlink)
     local xcode_prefs="$HOME/Library/Preferences/com.apple.dt.Xcode.plist"
     if [[ -f "$xcode_prefs" ]]; then
@@ -99,6 +102,51 @@ backup_and_merge_xcode_settings() {
         mkdir -p "$backup_dir"
         cp "$xcode_prefs" "$backup_dir/"
         log_info "✓ Backed up Xcode preferences"
+    fi
+}
+
+# Handle Xcode themes - copy instead of symlink to preserve local themes
+handle_xcode_themes() {
+    log_step "Handling Xcode color themes..."
+    
+    local xcode_themes="$HOME/Library/Developer/Xcode/UserData/FontAndColorThemes"
+    local dotfiles_themes="$DOTFILES_DIR/xcode/FontAndColorThemes"
+    
+    # Ensure both directories exist
+    mkdir -p "$xcode_themes" "$dotfiles_themes"
+    
+    # Copy themes from dotfiles to Xcode (preserving existing)
+    if [[ -d "$dotfiles_themes" ]] && [[ "$(ls -A "$dotfiles_themes" 2>/dev/null)" ]]; then
+        log_info "Installing themes from dotfiles..."
+        for theme in "$dotfiles_themes"/*.xccolortheme; do
+            if [[ -f "$theme" ]]; then
+                local basename=$(basename "$theme")
+                local dest="$xcode_themes/$basename"
+                
+                if [[ ! -f "$dest" ]]; then
+                    cp "$theme" "$dest"
+                    log_info "✓ Installed theme: $basename"
+                else
+                    log_info "✓ Theme already exists: $basename"
+                fi
+            fi
+        done
+    fi
+    
+    # Copy any new local themes back to dotfiles
+    if [[ -d "$xcode_themes" ]] && [[ "$(ls -A "$xcode_themes" 2>/dev/null)" ]]; then
+        log_info "Backing up local themes to dotfiles..."
+        for theme in "$xcode_themes"/*.xccolortheme; do
+            if [[ -f "$theme" ]]; then
+                local basename=$(basename "$theme")
+                local dest="$dotfiles_themes/$basename"
+                
+                if [[ ! -f "$dest" ]]; then
+                    cp "$theme" "$dest"
+                    log_info "✓ Backed up theme: $basename"
+                fi
+            fi
+        done
     fi
 }
 
