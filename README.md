@@ -166,8 +166,7 @@ vscode-sync
 ├── lib/                   # Shared libraries
 │   ├── utils.sh           # Common functions and logging
 │   └── menu.sh            # Interactive menu system
-├── install                # Legacy Dotbot runner (will be removed)
-├── setup                  # Legacy setup script (will be removed)
+├── install                # Dotbot runner for symlink management
 ├── install.conf.yaml      # Dotbot configuration
 ├── Brewfile               # Homebrew dependencies
 ├── zsh/
