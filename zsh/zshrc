@@ -109,10 +109,9 @@ alias tree="eza --tree --level=2 --icons=always"
 
 # BAT (modern cat replacement)
 alias cat="bat --paging=never --theme=default"
-alias less="bat --paging=always"
 
 # MODERN CLI TOOLS
-alias find="fd"              # Better find
+alias find="fd"               # Better find
 alias grep="rg"              # Better grep
 alias top="htop"             # Better top
 alias du="dust"              # Better du (if installed)
@@ -132,17 +131,17 @@ if command -v fzf &> /dev/null; then
     export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   fi
-  
+
   # Enhanced fzf options
   export FZF_DEFAULT_OPTS='
-    --height 40% 
-    --layout=reverse 
-    --border 
+    --height 40%
+    --layout=reverse
+    --border
     --preview "bat --style=numbers --color=always --line-range :500 {}"
     --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284
     --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf
     --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284'
-  
+
   # Load fzf key bindings and completion
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fi
@@ -158,5 +157,5 @@ source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # CLAUDE TERMINAL WINDOW WRAPPER
-[[ -f ~/.config/zsh/claude-wrapper.zsh ]] && source ~/.config/zsh/claude-wrapper.zsh
+[[ -f ~/.config/zsh/terminal-title-wrapper.zsh ]] && source ~/.config/zsh/terminal-title-wrapper.zsh
 alias dotfiles="cd ~/.dotfiles && ./dotfiles"
