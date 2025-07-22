@@ -307,35 +307,15 @@ configure_git() {
 configure_vscode() {
     log_step "Configuring VS Code..."
     
-    # Install VS Code extensions if VS Code is installed
-    if command -v code &> /dev/null; then
-        log_info "Installing VS Code extensions..."
-        
-        # Essential extensions
-        extensions=(
-            "ms-vscode.vscode-typescript-next"
-            "ms-python.python"
-            "ms-vscode.cpptools"
-            "vadimcn.vscode-lldb"
-            "sswg.swift-lang"
-            "GitLab.gitlab-workflow"
-            "GitHub.copilot"
-            "ms-vscode.theme-monokai-dimmed"
-            "PKief.material-icon-theme"
-            "formulahendry.auto-rename-tag"
-            "esbenp.prettier-vscode"
-            "ms-vscode.vscode-json"
-            "redhat.vscode-yaml"
-            "ms-vscode-remote.remote-containers"
-        )
-        
-        for extension in "${extensions[@]}"; do
-            code --install-extension "$extension" --force &> /dev/null || true
-        done
-        
-        log_success "VS Code extensions installed"
+    # Use the new vscode.sh script for setup
+    local vscode_script="$HOME/.dotfiles/scripts/vscode.sh"
+    
+    if [[ -f "$vscode_script" ]]; then
+        log_info "Running VS Code setup..."
+        bash "$vscode_script" setup
     else
-        log_warning "VS Code not found, skipping extension installation"
+        log_warning "VS Code setup script not found at $vscode_script"
+        log_info "Skipping VS Code configuration"
     fi
 }
 

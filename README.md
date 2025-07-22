@@ -1,7 +1,5 @@
 # Marcos Curvello's dotfiles
 
-> **Automated dotfiles and development environment configuration for macOS**
-
 ![screenshot of my shell prompt](https://i.imgur.com/MmA4D9A.png)
 
 
@@ -10,7 +8,7 @@
 
 ### **Core Tools & CLI**
 - **Shell**: Zsh with Oh My Zsh framework
-- **Terminal**: iTerm2 with custom color schemes (MarquinSwift, Mirage)
+- **Terminal**: iTerm2 with custom color schemes (material-design, one-dark)
 - **Theme**: Powerlevel10k for beautiful, informative prompts
 - **File Management**: eza (modern ls), bat (syntax-highlighted cat)
 - **Git**: Advanced configuration with delta for enhanced diffs
@@ -61,7 +59,7 @@ cd ~/.dotfiles
 ./dotfiles link         # Just update symlinks
 ```
 
-### 🎯 New Modular System
+### 🎯 Modular System
 
 The dotfiles now use a modular architecture. You can run individual components:
 
@@ -74,6 +72,7 @@ The dotfiles now use a modular architecture. You can run individual components:
 ./dotfiles macos        # Apply macOS system preferences
 ./dotfiles shell        # Configure shell (Zsh/Oh-My-Zsh)
 ./dotfiles xcode        # Setup Xcode themes and snippets
+./dotfiles vscode       # Backup/restore VS Code settings
 ```
 
 ## 📋 What Gets Installed
@@ -127,13 +126,27 @@ Add new shell functions to `~/.dotfiles/zsh/functions/`. Examples included:
 2. Run `./dotfiles link` to update symlinks
 3. Restart your terminal or source configs
 
-### Xcode Snippets
-Sync your Xcode code snippets with git:
+### Development Tools Sync
+
+#### Xcode
+Sync your Xcode code snippets and themes with git:
 ```bash
 # After creating/modifying snippets in Xcode
 xcode-sync
 
 # This will sync snippets to git and optionally commit them
+```
+
+#### VS Code
+Backup and restore VS Code settings without symlinks:
+```bash
+# Sync current VS Code settings to dotfiles
+vscode-sync
+
+# Or use the dotfiles command
+./dotfiles vscode status   # Check sync status
+./dotfiles vscode backup   # Backup current settings
+./dotfiles vscode restore  # Restore settings from dotfiles
 ```
 
 ## 🗂️ Repository Structure
@@ -148,7 +161,8 @@ xcode-sync
 │   ├── brew.sh            # Homebrew package management
 │   ├── macos.sh           # macOS system preferences
 │   ├── shell.sh           # Shell configuration
-│   └── xcode.sh           # Xcode setup
+│   ├── xcode.sh           # Xcode setup
+│   └── vscode.sh          # VS Code backup/restore
 ├── lib/                   # Shared libraries
 │   ├── utils.sh           # Common functions and logging
 │   └── menu.sh            # Interactive menu system
@@ -159,7 +173,8 @@ xcode-sync
 ├── zsh/
 │   ├── zshrc              # Main Zsh configuration
 │   └── functions/         # Custom shell functions
-│       └── xcode-sync     # Sync Xcode snippets to git
+│       ├── xcode-sync     # Sync Xcode snippets to git
+│       └── vscode-sync    # Sync VS Code settings to git
 ├── xcode/
 │   ├── FontAndColorThemes/# Xcode color themes
 │   ├── CodeSnippets/      # Xcode code snippets
@@ -176,43 +191,10 @@ xcode-sync
 └── aerospace.toml         # Window manager configuration
 ```
 
-## 🚨 Important Notes
 
-### Before Installation
-- **Backup existing dotfiles** - This will overwrite existing configurations
-- **Close all terminal sessions** after installation
-- **Restart your terminal** to see changes
+## 📚 Resources
 
-### Sensitive Information
-This repository is designed to be **publicly shareable**. Sensitive information should go in:
-- `~/.zsh_private_aliases` (for private shell aliases)
-- Git credentials will be prompted for separately
-- SSH keys are not managed by this repository
-
-### macOS Version Compatibility
-- **Tested on**: macOS Sonoma (14.x), Ventura (13.x)
-- **Apple Silicon**: Fully compatible with M1/M2/M3 Macs
-- **Intel Macs**: Compatible but may require architecture-specific adjustments
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-**Permission denied**
-```bash
-# Fix permissions for Homebrew
-sudo chown -R $(whoami) /opt/homebrew
-```
-
-**Zsh configuration not loading**
-```bash
-# Source the configuration manually
-source ~/.zshrc
-```
-
-## 📚 Learning Resources
-
-### Understanding the Tools
+### Tools
 - [Oh My Zsh Guide](https://github.com/ohmyzsh/ohmyzsh/wiki)
 - [Powerlevel10k Configuration](https://github.com/romkatv/powerlevel10k)
 - [AeroSpace Window Manager](https://github.com/nikitabobko/AeroSpace)

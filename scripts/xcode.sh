@@ -191,47 +191,6 @@ configure_iterm() {
     log_info "5. Select the color scheme files to import"
 }
 
-# Setup VS Code
-setup_vscode() {
-    log_step "Checking VS Code setup..."
-    
-    # Check if VS Code settings are symlinked
-    local vscode_settings="$HOME/Library/Application Support/Code/User/settings.json"
-    
-    if [[ -L "$vscode_settings" ]]; then
-        log_success "VS Code settings are symlinked"
-    else
-        log_info "VS Code settings not symlinked"
-        log_info "Run './dotfiles link' to set up VS Code"
-    fi
-    
-    # Check if code command is available
-    if command_exists code; then
-        log_success "VS Code command line tool is installed"
-        
-        # Install extensions
-        log_info "Installing VS Code extensions..."
-        local extensions=(
-            "ms-python.python"
-            "esbenp.prettier-vscode"
-            "dbaeumer.vscode-eslint"
-            "PKief.material-icon-theme"
-            "GitHub.copilot"
-        )
-        
-        for ext in "${extensions[@]}"; do
-            if code --install-extension "$ext" 2>/dev/null; then
-                log_info "✓ Installed $ext"
-            else
-                log_info "⚠ $ext may already be installed"
-            fi
-        done
-    else
-        log_info "VS Code command line tool not found"
-        log_info "Install it from VS Code: Shell Command: Install 'code' command in PATH"
-    fi
-}
-
 # Main function
 main() {
     show_header "Xcode & Development Tools Configuration"
@@ -256,9 +215,6 @@ main() {
     # Configure iTerm2
     configure_iterm
     
-    # Setup VS Code
-    setup_vscode
-    
     show_footer "Xcode Configuration Complete"
     
     # Summary
@@ -267,7 +223,6 @@ main() {
     log_info "• Xcode settings backed up and ready for symlinking"
     log_info "• Use 'xcode-sync' to sync snippets to git"
     log_info "• iTerm2 color schemes available for import"
-    log_info "• VS Code extensions installed (if available)"
 }
 
 # Run main function

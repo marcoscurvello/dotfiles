@@ -27,6 +27,7 @@ ${BOLD}COMMANDS:${NC}
     ${CYAN}macos${NC}       Apply macOS settings
     ${CYAN}shell${NC}       Configure shell (Zsh/Oh-My-Zsh)
     ${CYAN}xcode${NC}       Setup Xcode themes and snippets
+    ${CYAN}vscode${NC}      Backup/restore VS Code settings
 
 ${BOLD}OPTIONS:${NC}
     --help, -h  Show this help message
@@ -52,7 +53,7 @@ EOF
 # Validate command
 validate_command() {
     local cmd="$1"
-    local valid_commands=("menu" "bootstrap" "update" "link" "brew" "macos" "shell" "xcode")
+    local valid_commands=("menu" "bootstrap" "update" "link" "brew" "macos" "shell" "xcode" "vscode")
     
     for valid_cmd in "${valid_commands[@]}"; do
         if [[ "$cmd" == "$valid_cmd" ]]; then
@@ -126,7 +127,7 @@ main() {
                 exit 1
             fi
             ;;
-        bootstrap|update|link|brew|macos|shell|xcode)
+        bootstrap|update|link|brew|macos|shell|xcode|vscode)
             # Run specific script
             shift  # Remove command from arguments
             run_script "$command" "$@"

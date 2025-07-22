@@ -143,21 +143,10 @@ configure_git() {
 final_setup() {
     log_step "Performing final setup..."
     
-    # Install VS Code extensions if code command exists
-    if command_exists code; then
-        log_info "Installing VS Code extensions..."
-        local extensions=(
-            "ms-python.python"
-            "esbenp.prettier-vscode"
-            "dbaeumer.vscode-eslint"
-            "PKief.material-icon-theme"
-            "eamodio.gitlens"
-            "GitHub.copilot"
-        )
-        
-        for ext in "${extensions[@]}"; do
-            code --install-extension "$ext" 2>/dev/null || true
-        done
+    # Setup VS Code
+    if [[ -f "$SCRIPT_DIR/vscode.sh" ]]; then
+        source "$SCRIPT_DIR/vscode.sh"
+        setup_vscode
     fi
     
     # Create common directories

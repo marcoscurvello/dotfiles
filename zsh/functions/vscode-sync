@@ -1,0 +1,120 @@
+#!/usr/bin/env zsh
+
+# VSCode sync function - backup VSCode settings to dotfiles and optionally commit
+vscode-sync() {
+    local dotfiles_dir="$HOME/.dotfiles"
+    local vscode_script="$dotfiles_dir/scripts/vscode.sh"
+    
+    # Colors for output
+    local RED='\033[0;31m'
+    local GREEN='\033[0;32m'
+    local YELLOW='\033[1;33m'
+    local BLUE='\033[0;34m'
+    local NC='\033[0m' # No Color
+    
+    # Check if dotfiles directory exists
+    if [[ ! -d "$dotfiles_dir" ]]; then
+        echo "${RED}Error: Dotfiles directory not found at $dotfiles_dir${NC}"
+        return 1
+    fi
+    
+    # Check if vscode.sh script exists
+    if [[ ! -f "$vscode_script" ]]; then
+        echo "${RED}Error: VSCode script not found at $vscode_script${NC}"
+        return 1
+    fi
+    
+    echo "${BLUE}=== VSCode Settings Sync ===${NC}"
+    echo
+    
+    # Show current status
+    echo "${YELLOW}Checking VSCode settings status...${NC}"
+    bash "$vscode_script" status
+    echo
+    
+    # Check if there are differences
+    local settings_diff=$(diff -q "$HOME/Library/Application Support/Code/User/settings.json" "$dotfiles_dir/vscode/settings.json" 2>/dev/null)
+    local keybindings_diff=$(diff -q "$HOME/Library/Application Support/Code/User/keybindings.json" "$dotfiles_dir/vscode/keybindings.json" 2>/dev/null)
+    
+    if [[ -z "$settings_diff" && -z "$keybindings_diff" ]]; then
+        echo "${GREEN}✓ VSCode settings are already in sync${NC}"
+        return 0
+    fi
+    
+    # Backup current settings
+    echo "${YELLOW}Backing up current VSCode settings...${NC}"
+    bash "$vscode_script" backup
+    echo
+    
+    # Show what changed
+    echo "${YELLOW}Changes detected:${NC}"
+    
+    if [[ -n "$settings_diff" ]]; then
+        echo "${BLUE}settings.json has been modified${NC}"
+        # Show a brief diff
+        echo "---"
+        diff -u --color=always "$dotfiles_dir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" | head -20 || true
+        echo "---"
+    fi
+    
+    if [[ -n "$keybindings_diff" ]]; then
+        echo "${BLUE}keybindings.json has been modified${NC}"
+        # Show a brief diff
+        echo "---"
+        diff -u --color=always "$dotfiles_dir/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json" | head -20 || true
+        echo "---"
+    fi
+    
+    echo
+    
+    # Navigate to dotfiles directory
+    cd "$dotfiles_dir"
+    
+    # Check git status
+    local git_status=$(git status --porcelain vscode/ 2>/dev/null)
+    
+    if [[ -z "$git_status" ]]; then
+        echo "${GREEN}✓ No changes to commit${NC}"
+        return 0
+    fi
+    
+    # Show git status
+    echo "${YELLOW}Git status:${NC}"
+    git status --short vscode/
+    echo
+    
+    # Ask if user wants to commit
+    echo -n "${YELLOW}Would you like to commit these changes? (y/n): ${NC}"
+    read -r response
+    
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        # Stage the changes
+        git add vscode/
+        
+        # Prompt for commit message
+        echo -n "${YELLOW}Enter commit message (or press Enter for default): ${NC}"
+        read -r commit_message
+        
+        # Use default message if none provided
+        if [[ -z "$commit_message" ]]; then
+            commit_message="chore: update VSCode settings"
+        fi
+        
+        # Commit the changes
+        git commit -m "$commit_message"
+        
+        echo "${GREEN}✓ Changes committed successfully${NC}"
+        echo
+        
+        # Ask if user wants to push
+        echo -n "${YELLOW}Would you like to push to remote? (y/n): ${NC}"
+        read -r push_response
+        
+        if [[ "$push_response" =~ ^[Yy]$ ]]; then
+            git push
+            echo "${GREEN}✓ Changes pushed to remote${NC}"
+        fi
+    else
+        echo "${YELLOW}Changes not committed. You can commit them later.${NC}"
+    fi
+}
