@@ -13,7 +13,6 @@
   "editor.wordWrapColumn": 120,
   "editor.minimap.enabled": true,
   "editor.minimap.maxColumn": 120,
-  "editor.cursorBlinking": "smooth",
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.smoothScrolling": true,
   "editor.bracketPairColorization.enabled": true,
@@ -59,10 +58,15 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.limit.enabled": true,
   "workbench.editor.limit.value": 10,
-  "workbench.activityBar.visible": true,
   "workbench.statusBar.visible": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#21DE14",
+    "editorCursor.background": "#000000",
+    "terminalCursor.foreground": "#21DE14",
+    "terminalCursor.background": "#000000"
+}
 
   // Explorer settings
   "explorer.confirmDelete": false,
@@ -90,9 +94,8 @@
   "terminal.integrated.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
   "terminal.integrated.shell.osx": "/bin/zsh",
   "terminal.integrated.cursorBlinking": true,
-  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorStyle": "block",
   "terminal.integrated.scrollback": 10000,
-  "terminal.integrated.enableBell": false,
 
   // Git settings
   "git.enableSmartCommit": true,
@@ -145,7 +148,11 @@
   "[markdown]": {
     "editor.wordWrap": "on",
     "editor.lineNumbers": "off",
-    "editor.quickSuggestions": false
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
   },
 
   // Extensions settings
@@ -181,5 +188,11 @@
       "path": "zsh",
       "args": ["-l"]
     }
-  }
+  },
+  "accessibility.signals.terminalBell": {
+    "sound": "off"
+  },
+  "terminal.integrated.enableVisualBell": false,
+  "editor.cursorStyle": "block",
+  "editor.cursorWidth": 1
 }
