@@ -21,10 +21,13 @@ fi
 # PATH EXPORTS
 export PATH="$HOMEBREW_PREFIX/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$PATH"
 
+# Add rbenv shims to PATH for consistent Ruby version
+export PATH="$HOME/.rbenv/shims:$PATH"
 
 # RBENV & PYENV - Lazy loading for faster startup
 rbenv() {
-  eval "$(command rbenv init -)"
+  unset -f rbenv
+  eval "$(command rbenv init - --no-rehash)"
   rbenv "$@"
 }
 
