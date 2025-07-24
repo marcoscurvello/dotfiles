@@ -38,19 +38,35 @@ pyenv() {
 
 # NVM CONFIGURATION - Lazy loading for faster startup
 export NVM_DIR="$HOME/.nvm"
+
+# Load nvm default version into PATH without full initialization
+if [ -s "$NVM_DIR/nvm.sh" ] && [ -f "$NVM_DIR/alias/default" ]; then
+  NVM_DEFAULT_VERSION=$(cat "$NVM_DIR/alias/default")
+  # Add 'v' prefix if not present
+  [[ "$NVM_DEFAULT_VERSION" =~ ^v ]] || NVM_DEFAULT_VERSION="v$NVM_DEFAULT_VERSION"
+  NVM_DEFAULT_DIR="$NVM_DIR/versions/node/$NVM_DEFAULT_VERSION"
+  if [ -d "$NVM_DEFAULT_DIR" ]; then
+    export PATH="$NVM_DEFAULT_DIR/bin:$PATH"
+  fi
+fi
+
+# Lazy load nvm for other operations
 nvm() {
+  # Special handling for 'nvm current' which p10k uses
+  if [[ "$1" == "current" ]]; then
+    echo "$NVM_DEFAULT_VERSION"
+    return
+  fi
+  
+  # Otherwise, load full nvm
   unset -f nvm
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   nvm "$@"
 }
 
-# CLAUDE - Lazy loading via nvm
-claude() {
-  unset -f claude
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  claude "$@"
-}
+# CLAUDE - Direct execution since Node is in PATH
+# Claude Code is installed globally via Homebrew npm
 
 # ZSH THEME - Empty since we manually source powerlevel10k
 ZSH_THEME=""
