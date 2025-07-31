@@ -1,5 +1,5 @@
 #####################
-### Init settings 
+### Init settings
 #####################
 
 start-at-login = true
@@ -33,12 +33,12 @@ outer.right =      [{ monitor.'built-in' = 3 }, { monitor.main = 6 }, 6]
 
 # 'move-workspace-to-monitor' doesn't work for workspaces with assigments, so we only assign the ones we don't want to move
 [workspace-to-monitor-force-assignment]
-M = ['secondary', 'main']
+# M = ['secondary', 'main']
 # P = ['main']
 # U = ['secondary', 'main']
 
 #####################
-### Main mode settings 
+### Main mode settings
 #####################
 
 [mode.main.binding]
@@ -80,7 +80,7 @@ alt-equal = ['resize smart +30']
 alt-0 = ['balance-sizes']
 
 #####################
-### Service mode settings 
+### Service mode settings
 #####################
 
 [mode.service.binding]
@@ -91,7 +91,7 @@ r = ['flatten-workspace-tree', 'exec-and-forget noti -t aerospace -m "Reseted la
 backspace = ['close-all-windows-but-current',  'exec-and-forget noti -t aerospace -m "Closed all other windows! Back to main mode."', 'mode main']
 
 #####################
-### Move mode settings 
+### Move mode settings
 #####################
 
 [mode.move.binding]
@@ -132,7 +132,7 @@ ctrl-alt-u = ['move-node-to-workspace U', 'mode main'] # Utilities
 alt-tab = ['move-workspace-to-monitor --wrap-around next', 'mode main']
 
 #####################
-### Open mode settings 
+### Open mode settings
 #####################
 
 [mode.open.binding]
@@ -149,7 +149,7 @@ m = ['exec-and-forget open -a /Applications/Spotify.app', 'mode main']
 # o = ['exec-and-forget open -a /Applications/Obsidian.app', 'mode main']
 
 #####################
-### Callbacks settings 
+### Callbacks settings
 #####################
 
 [[on-window-detected]]
