@@ -21,6 +21,9 @@ fi
 # PATH EXPORTS
 export PATH="$HOMEBREW_PREFIX/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$PATH"
 
+# Add uv/uvx to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 # Add rbenv shims to PATH for consistent Ruby version
 export PATH="$HOME/.rbenv/shims:$PATH"
 
