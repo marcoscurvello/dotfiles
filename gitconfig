@@ -5,6 +5,8 @@
 	editor = code --wait
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 	pager = delta
+[advice]
+	skippedCherryPicks = false
 [merge]
     tool = vscode
 [mergetool "vscode"]
@@ -65,36 +67,31 @@
     gc = commit
     gco = checkout
     gb = branch
-    
+
     # Advanced aliases
     undo = reset --soft HEAD^
     amend = commit --amend --no-edit
     unstage = reset HEAD --
     last = log -1 HEAD
     visual = !gitk
-    
+
     # Whitespace-aware diff aliases
     dw = diff --word-diff=color --ws-error-highlight=all
     dsw = diff --staged --word-diff=color --ws-error-highlight=all
-    
+
     # Show all whitespace like IDEs
     gdw = diff --ws-error-highlight=all --color-words
     gdsw = diff --staged --ws-error-highlight=all --color-words
-    
+
     # Plain diff without delta (fallback for problematic files)
     gdp = !git -c core.pager=less diff --color=always
     gdsp = !git -c core.pager=less diff --staged --color=always
-    
+
     # Log aliases
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     logs = log --oneline --decorate --graph
     logfull = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    
+
     # Cleanup aliases
     cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
     fsck = fsck --unreachable | grep commit | cut -d" " -f3 | xargs git log --merges --no-walk
-
-
-
-
-
