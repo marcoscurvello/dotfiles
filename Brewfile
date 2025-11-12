@@ -33,6 +33,8 @@ brew 'zsh-syntax-highlighting'   # Zsh syntax highlighting
 brew 'xclogparser'      # Xcode log parser
 brew 'xcbeautify'       # Xcode output formatter
 brew 'swiftlint'        # Swift linter
+brew 'swiftgen'
+brew 'sourcery'
 
 # System & Network
 brew 'aircrack-ng'      # Network security tools
