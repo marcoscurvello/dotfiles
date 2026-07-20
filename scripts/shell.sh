@@ -103,6 +103,8 @@ verify_plugins() {
         "zsh-autosuggestions"
         "zsh-syntax-highlighting"
         "powerlevel10k"
+        "nodenv"
+        "node-build"
     )
     
     local missing=()

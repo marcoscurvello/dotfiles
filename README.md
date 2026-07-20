@@ -15,7 +15,7 @@
 - **Package Manager**: Homebrew with curated formula list
 
 ### **Development Tools**
-- **Version Managers**: rbenv (Ruby), pyenv (Python), nvm (Node.js)
+- **Version Managers**: rbenv (Ruby), nodenv (Node.js), pyenv (Python)
 - **iOS Development**: Xcode themes, SwiftLint, xcbeautify, xclogparser
 - **Code Editor**: VS Code with optimal settings
 - **CI/CD**: Fastlane for iOS automation
@@ -81,7 +81,7 @@ The dotfiles now use a modular architecture. You can run individual components:
 | Category | Tools |
 |----------|-------|
 | **CLI Tools** | eza, bat, jq, gh, git-delta |
-| **Development** | rbenv, pyenv, powerlevel10k, zsh-autosuggestions |
+| **Development** | rbenv, nodenv, node-build, pyenv, powerlevel10k, zsh-autosuggestions |
 | **iOS/Swift** | fastlane, xclogparser, xcbeautify, swiftlint |
 | **Network** | aircrack-ng |
 | **UI** | janky borders (window borders) |

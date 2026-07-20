@@ -22,6 +22,8 @@ brew 'git-delta'        # Better git diff
 brew 'gh'               # GitHub CLI
 brew 'fastlane'         # iOS automation
 brew 'rbenv'            # Ruby version manager
+brew 'nodenv'           # Node.js version manager
+brew 'node-build'       # Install Node.js versions for nodenv
 brew 'pyenv'            # Python version manager
 
 # Shell Enhancement
