@@ -50,6 +50,7 @@ cask "docker"                     # Containerization
 
 # Terminal & Shell
 cask "iterm2"                     # Terminal emulator
+cask "ghostty"                    # Terminal emulator
 
 # Productivity
 cask "keepingyouawake"            # Prevent sleep

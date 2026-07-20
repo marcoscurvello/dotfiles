@@ -46,7 +46,7 @@ outer.right = [{ monitor.1 = 3 }, { monitor.2 = 8 }, { monitor.3 = 2 }, 5]
 #####################
 [workspace-to-monitor-force-assignment]
 # Monitor 1 (Portrait) - Terminal, Docs, Communication
-# 1 = 1      # Terminal/iTerm - Commented out to allow moving
+# 1 = 1      # Terminal/Ghostty/iTerm - Commented out to allow moving
 # 2 = 1      # Documentation/Reference - Commented out to allow moving
 # C = 1      # Communication (Slack/Discord)
 
@@ -278,7 +278,7 @@ run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace 1'
+run = ['layout floating']
 
 # Documentation tools to portrait monitor
 [[on-window-detected]]

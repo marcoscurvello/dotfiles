@@ -12,6 +12,9 @@
     ~/Library/Developer/Xcode/UserData/KeyBindings:
       path: xcode/KeyBindings
       create: true
+    ~/Library/Application Support/com.mitchellh.ghostty/config.ghostty:
+      path: ghostty/config.ghostty
+      create: true
     ~/.vimrc: vimrc
     ~/.p10k.zsh: p10kzsh
     ~/.gitconfig: gitconfig
