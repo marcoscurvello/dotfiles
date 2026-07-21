@@ -2,6 +2,7 @@
 ### Init settings
 #####################
 
+config-version = 2
 start-at-login = true
 after-startup-command = [
     # JankyBorders with monitor-aware configuration
@@ -22,6 +23,7 @@ default-root-container-orientation = 'auto'
 
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+persistent-workspaces = ['1', '2', '3', 'B', 'C', 'M', 'P', 'X', 'U']
 on-focus-changed = [
     # Dynamic border colors based on monitor number
     'exec-and-forget focused_monitor=$(aerospace list-monitors --focused --format "%{monitor-id}"); if [[ "$focused_monitor" == "1" ]]; then borders active_color=0xffacab3c width=8.0; elif [[ "$focused_monitor" == "2" ]]; then borders active_color=0xff90ee90 width=6.0; else borders active_color=0x30ffffff width=4.0; fi',
