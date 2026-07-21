@@ -8,14 +8,14 @@
 
 ### **Core Tools & CLI**
 - **Shell**: Zsh with Oh My Zsh framework
-- **Terminal**: iTerm2 with custom color schemes (material-design, one-dark)
+- **Terminal**: iTerm2 as the default terminal, with a managed Ghostty alternative
 - **Theme**: Powerlevel10k for beautiful, informative prompts
 - **File Management**: eza (modern ls), bat (syntax-highlighted cat)
 - **Git**: Advanced configuration with delta for enhanced diffs
 - **Package Manager**: Homebrew with curated formula list
 
 ### **Development Tools**
-- **Version Managers**: rbenv (Ruby), pyenv (Python), nvm (Node.js)
+- **Version Managers**: rbenv (Ruby), nodenv (Node.js), pyenv (Python)
 - **iOS Development**: Xcode themes, SwiftLint, xcbeautify, xclogparser
 - **Code Editor**: VS Code with optimal settings
 - **CI/CD**: Fastlane for iOS automation
@@ -81,7 +81,7 @@ The dotfiles now use a modular architecture. You can run individual components:
 | Category | Tools |
 |----------|-------|
 | **CLI Tools** | eza, bat, jq, gh, git-delta |
-| **Development** | rbenv, pyenv, powerlevel10k, zsh-autosuggestions |
+| **Development** | rbenv, nodenv, node-build, pyenv, powerlevel10k, zsh-autosuggestions |
 | **iOS/Swift** | fastlane, xclogparser, xcbeautify, swiftlint |
 | **Network** | aircrack-ng |
 | **UI** | janky borders (window borders) |
@@ -90,7 +90,7 @@ The dotfiles now use a modular architecture. You can run individual components:
 | Category | Applications |
 |----------|-------------|
 | **Development** | Visual Studio Code, Xcode (via xcodes), Docker |
-| **Terminal** | iTerm2 |
+| **Terminal** | Ghostty, iTerm2 |
 | **Productivity** | KeepingYouAwake |
 | **Network** | Proxyman |
 | **Window Management** | AeroSpace |
@@ -102,6 +102,7 @@ The dotfiles now use a modular architecture. You can run individual components:
 ~/.p10k.zsh           # Powerlevel10k theme settings
 ~/.vimrc              # Vim configuration
 ~/.aerospace.toml     # Window manager settings
+~/Library/Application Support/com.mitchellh.ghostty/config.ghostty  # Ghostty terminal config
 ```
 
 ## 🎯 Customization
@@ -179,6 +180,8 @@ vscode-sync
 │   ├── CodeSnippets/      # Xcode code snippets
 │   ├── KeyBindings/       # Xcode key bindings
 │   └── snippets.md        # Snippet documentation
+├── ghostty/
+│   └── config.ghostty     # Ghostty settings
 ├── iterm/
 │   └── com.googlecode.iterm2.plist  # iTerm2 settings
 ├── vscode/                # VS Code settings
