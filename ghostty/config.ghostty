@@ -33,7 +33,9 @@ palette = 14=#9affe6
 palette = 15=#ffffff
 
 scrollback-limit = 10000000
-copy-on-select = false
+copy-on-select = clipboard
+selection-clear-on-copy = false
+right-click-action = copy-or-paste
 confirm-close-surface = false
 shell-integration = detect
 shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,path
@@ -47,7 +49,21 @@ split-inherit-working-directory = true
 background-opacity = 1
 background-blur = false
 macos-option-as-alt = true
+mouse-hide-while-typing = true
 
 # Fill the gap between Ghostty defaults and your iTerm key mappings.
+keybind = cmd+left=text:\x01
+keybind = cmd+right=text:\x05
+keybind = cmd+backspace=text:\x15
+keybind = alt+left=text:\x1bb
+keybind = alt+right=text:\x1bf
 keybind = alt+backspace=esc:\x7f
 keybind = alt+delete=esc:d
+
+unfocused-split-opacity = 1.0
+keybind = shift+left=text:\x1b[1;2D
+keybind = shift+right=text:\x1b[1;2C
+keybind = alt+shift+left=text:\x1b[1;4D
+keybind = alt+shift+right=text:\x1b[1;4C
+keybind = cmd+shift+left=text:\x1b[1;2H
+keybind = cmd+shift+right=text:\x1b[1;2F
