@@ -31,6 +31,9 @@ export PATH="$HOME/.nodenv/shims:$PATH"
 # Add rbenv shims to PATH for consistent Ruby version
 export PATH="$HOME/.rbenv/shims:$PATH"
 
+# Add pyenv shims to PATH for consistent Python version
+export PATH="$HOME/.pyenv/shims:$PATH"
+
 # RBENV, NODENV & PYENV - Lazy loading for faster startup
 rbenv() {
   unset -f rbenv
