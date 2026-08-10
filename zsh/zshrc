@@ -31,6 +31,9 @@ export PATH="$HOME/.nodenv/shims:$PATH"
 # Add rbenv shims to PATH for consistent Ruby version
 export PATH="$HOME/.rbenv/shims:$PATH"
 
+# Add pyenv shims to PATH for consistent Python version
+export PATH="$HOME/.pyenv/shims:$PATH"
+
 # RBENV, NODENV & PYENV - Lazy loading for faster startup
 rbenv() {
   unset -f rbenv
@@ -86,6 +89,153 @@ setopt HIST_IGNORE_SPACE
 
 # OH-MY-ZSH
 source $ZSH/oh-my-zsh.sh
+
+# MACOS-STYLE ZLE SELECTION
+autoload -Uz select-word-style
+select-word-style bash
+
+_select_backward_char() {
+  (( REGION_ACTIVE )) || zle set-mark-command
+  zle backward-char
+}
+zle -N _select_backward_char
+
+_select_forward_char() {
+  (( REGION_ACTIVE )) || zle set-mark-command
+  zle forward-char
+}
+zle -N _select_forward_char
+
+_select_backward_word() {
+  (( REGION_ACTIVE )) || zle set-mark-command
+  zle backward-word
+}
+zle -N _select_backward_word
+
+_select_forward_word() {
+  (( REGION_ACTIVE )) || zle set-mark-command
+  zle forward-word
+}
+zle -N _select_forward_word
+
+_select_beginning_of_line() {
+  (( REGION_ACTIVE )) || zle set-mark-command
+  zle beginning-of-line
+}
+zle -N _select_beginning_of_line
+
+_select_end_of_line() {
+  (( REGION_ACTIVE )) || zle set-mark-command
+  zle end-of-line
+}
+zle -N _select_end_of_line
+
+_backward_delete_char_or_kill_region() {
+  if (( REGION_ACTIVE )); then
+    zle kill-region
+  else
+    zle backward-delete-char
+  fi
+}
+zle -N _backward_delete_char_or_kill_region
+
+_delete_char_or_kill_region() {
+  if (( REGION_ACTIVE )); then
+    zle kill-region
+  else
+    zle delete-char
+  fi
+}
+zle -N _delete_char_or_kill_region
+
+_backward_kill_word_or_kill_region() {
+  if (( REGION_ACTIVE )); then
+    zle kill-region
+  else
+    zle backward-kill-word
+  fi
+}
+zle -N _backward_kill_word_or_kill_region
+
+_kill_word_or_kill_region() {
+  if (( REGION_ACTIVE )); then
+    zle kill-region
+  else
+    zle kill-word
+  fi
+}
+zle -N _kill_word_or_kill_region
+
+_self_insert_or_kill_region() {
+  (( REGION_ACTIVE )) && zle kill-region
+  zle .self-insert
+}
+zle -N self-insert _self_insert_or_kill_region
+
+_collapse_region_left() {
+  if (( REGION_ACTIVE )); then
+    (( CURSOR > MARK )) && CURSOR=$MARK
+    zle deactivate-region
+  else
+    zle backward-char
+  fi
+}
+zle -N _collapse_region_left
+
+_collapse_region_right() {
+  if (( REGION_ACTIVE )); then
+    (( CURSOR < MARK )) && CURSOR=$MARK
+    zle deactivate-region
+  else
+    zle forward-char
+  fi
+}
+zle -N _collapse_region_right
+
+_history_search_backward_or_deselect() {
+  (( REGION_ACTIVE )) && zle deactivate-region
+  zle history-search-backward
+}
+zle -N _history_search_backward_or_deselect
+
+_history_search_forward_or_deselect() {
+  (( REGION_ACTIVE )) && zle deactivate-region
+  zle history-search-forward
+}
+zle -N _history_search_forward_or_deselect
+
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey '^U' backward-kill-line
+bindkey '^K' kill-line
+
+bindkey '\e[1;2D' _select_backward_char
+bindkey '\e[1;2C' _select_forward_char
+bindkey '\e[1;4D' _select_backward_word
+bindkey '\e[1;4C' _select_forward_word
+bindkey '\e[1;2H' _select_beginning_of_line
+bindkey '\e[1;2F' _select_end_of_line
+
+bindkey '\e[D' _collapse_region_left
+bindkey '\e[C' _collapse_region_right
+bindkey '\e[A' _history_search_backward_or_deselect
+bindkey '\e[B' _history_search_forward_or_deselect
+bindkey '\eOD' _collapse_region_left
+bindkey '\eOC' _collapse_region_right
+bindkey '\eOA' _history_search_backward_or_deselect
+bindkey '\eOB' _history_search_forward_or_deselect
+
+bindkey '^?' _backward_delete_char_or_kill_region
+bindkey '^H' _backward_delete_char_or_kill_region
+bindkey '\e[3~' _delete_char_or_kill_region
+bindkey '\eb' backward-word
+bindkey '\ef' forward-word
+bindkey '\e[1;3D' backward-word
+bindkey '\e[1;3C' forward-word
+bindkey '\e[3;3D' backward-word
+bindkey '\e[3;3C' forward-word
+bindkey '\e^?' _backward_kill_word_or_kill_region
+bindkey '\ed' _kill_word_or_kill_region
 
 # CUSTOM FUNCTIONS
 fpath=($HOME/.dotfiles/zsh/functions $fpath)
