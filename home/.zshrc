@@ -4,39 +4,27 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# OH-MY-ZSH
-export ZSH="$HOME/.oh-my-zsh"
-
-# HOMEBREW PREFIX DETECTION
-if [[ -d "/opt/homebrew" ]]; then
-  # Apple Silicon
-  export HOMEBREW_PREFIX="/opt/homebrew"
-elif [[ -d "/usr/local/Homebrew" ]]; then
-  # Intel Mac
-  export HOMEBREW_PREFIX="/usr/local"
-else
-  # Fallback
-  export HOMEBREW_PREFIX="/usr/local"
-fi
-
 # PATH EXPORTS
-export PATH="$HOMEBREW_PREFIX/bin:$HOME/bin:$HOME/.dotfiles/bin:/usr/local/sbin:$PATH"
-
-# Add uv/uvx to PATH
-export PATH="$HOME/.local/bin:$PATH"
-
-# Add nodenv shims to PATH for consistent Node.js version
-export PATH="$HOME/.nodenv/shims:$PATH"
-
-# Add rbenv shims to PATH for consistent Ruby version
-export PATH="$HOME/.rbenv/shims:$PATH"
-
-# Add pyenv shims to PATH for consistent Python version
-export PATH="$HOME/.pyenv/shims:$PATH"
+typeset -U path
+path=(
+  "$HOME/.nodenv/shims"
+  "$HOME/.pyenv/shims"
+  "$HOME/.rbenv/shims"
+  "$HOME/.local/bin"
+  "$HOME/bin"
+  "$HOME/.dotfiles/bin"
+  /usr/local/sbin
+  $path
+)
 
 # HOME MANAGER SESSION
 if [[ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
   source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+fi
+
+# NIX-MANAGED SHELL SOURCES
+if [[ -f "$HOME/.config/zsh/nix-sources.zsh" ]]; then
+  source "$HOME/.config/zsh/nix-sources.zsh"
 fi
 
 # RBENV, NODENV & PYENV - Lazy loading for faster startup
@@ -94,11 +82,13 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 
 # OH-MY-ZSH
-source $ZSH/oh-my-zsh.sh
+if [[ -n "${ZSH:-}" && -f "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
+fi
 
 # CUSTOM FUNCTIONS
-fpath=($HOME/.dotfiles/zsh/functions $fpath)
-autoload -U $HOME/.dotfiles/zsh/functions/*(:t)
+fpath=($HOME/.dotfiles/home/.zsh/functions $fpath)
+autoload -U $HOME/.dotfiles/home/.zsh/functions/*(:t)
 
 # Set personal aliases, overriding those provided by oh-my-`zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -156,18 +146,19 @@ if command -v fzf &> /dev/null; then
     --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284'
 
   # Load fzf key bindings and completion
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  [[ -n "${FZF_KEY_BINDINGS_FILE:-}" && -f "$FZF_KEY_BINDINGS_FILE" ]] && source "$FZF_KEY_BINDINGS_FILE"
+  [[ -n "${FZF_COMPLETION_FILE:-}" && -f "$FZF_COMPLETION_FILE" ]] && source "$FZF_COMPLETION_FILE"
 fi
 
 # POWERLEVEL10K
-source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+[[ -n "${POWERLEVEL10K_THEME:-}" && -f "$POWERLEVEL10K_THEME" ]] && source "$POWERLEVEL10K_THEME"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ZSH AUTOSUGGESTIONS
-source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -n "${ZSH_AUTOSUGGESTIONS_SOURCE:-}" && -f "$ZSH_AUTOSUGGESTIONS_SOURCE" ]] && source "$ZSH_AUTOSUGGESTIONS_SOURCE"
 
 # ZSH SYNTAX HIGHLIGHTING (must be last)
-source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -n "${ZSH_SYNTAX_HIGHLIGHTING_SOURCE:-}" && -f "$ZSH_SYNTAX_HIGHLIGHTING_SOURCE" ]] && source "$ZSH_SYNTAX_HIGHLIGHTING_SOURCE"
 
 # CLAUDE TERMINAL WINDOW WRAPPER
 [[ -f ~/.config/zsh/terminal-title-wrapper.zsh ]] && source ~/.config/zsh/terminal-title-wrapper.zsh

@@ -34,7 +34,7 @@ backup_and_merge_xcode_settings() {
     
     local xcode_userdata="$HOME/Library/Developer/Xcode/UserData"
     local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)/xcode"
-    local dotfiles_xcode="$DOTFILES_DIR/xcode"
+    local dotfiles_xcode="$DOTFILES_DIR/home/Library/Developer/Xcode/UserData"
     
     # Ensure Xcode UserData directory exists
     if [[ ! -d "$xcode_userdata" ]]; then
@@ -110,7 +110,7 @@ handle_xcode_themes() {
     log_step "Handling Xcode color themes..."
     
     local xcode_themes="$HOME/Library/Developer/Xcode/UserData/FontAndColorThemes"
-    local dotfiles_themes="$DOTFILES_DIR/xcode/FontAndColorThemes"
+    local dotfiles_themes="$DOTFILES_DIR/home/Library/Developer/Xcode/UserData/FontAndColorThemes"
     
     # Ensure both directories exist
     mkdir -p "$xcode_themes" "$dotfiles_themes"
@@ -154,14 +154,14 @@ handle_xcode_themes() {
 install_xcode_sync_function() {
     log_step "Setting up Xcode sync function..."
     
-    local sync_script="$DOTFILES_DIR/zsh/functions/xcode-sync"
+    local sync_script="$DOTFILES_DIR/home/.zsh/functions/xcode-sync"
     
     if [[ -f "$sync_script" ]]; then
         log_success "xcode-sync function already exists"
         log_info "You can use 'xcode-sync' to sync snippets to git"
     else
         log_warning "xcode-sync function not found"
-        log_info "Run './dotfiles link' to set up the sync function"
+        log_info "Run './rebuild.sh' to set up the sync function"
     fi
 }
 
@@ -204,9 +204,9 @@ main() {
     # Backup and merge Xcode settings
     backup_and_merge_xcode_settings
     
-    # Note about symlinks
+    # Note about activation
     log_info ""
-    log_info "Note: Xcode directories will be symlinked when you run './dotfiles link'"
+    log_info "Note: Xcode directories are linked by Home Manager when you run './rebuild.sh'"
     log_info ""
     
     # Setup sync function
@@ -220,7 +220,7 @@ main() {
     # Summary
     echo ""
     log_info "${BOLD}Summary:${NC}"
-    log_info "• Xcode settings backed up and ready for symlinking"
+    log_info "• Xcode settings backed up and ready for Home Manager"
     log_info "• Use 'xcode-sync' to sync snippets to git"
     log_info "• iTerm2 color schemes available for import"
 }

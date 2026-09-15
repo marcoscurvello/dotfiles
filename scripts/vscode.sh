@@ -15,10 +15,21 @@ VSCODE_SETTINGS="$VSCODE_USER_DIR/settings.json"
 VSCODE_KEYBINDINGS="$VSCODE_USER_DIR/keybindings.json"
 
 # Dotfiles VSCode paths
-DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
+DOTFILES_VSCODE_DIR="$DOTFILES_DIR/home/Library/Application Support/Code/User"
 DOTFILES_VSCODE_SETTINGS="$DOTFILES_VSCODE_DIR/settings.json"
 DOTFILES_VSCODE_KEYBINDINGS="$DOTFILES_VSCODE_DIR/keybindings.json"
-DOTFILES_VSCODE_EXTENSIONS="$DOTFILES_VSCODE_DIR/extensions.txt"
+DOTFILES_VSCODE_EXTENSIONS="$DOTFILES_DIR/home/Library/Application Support/Code/extensions.txt"
+
+copy_if_different() {
+    local source="$1"
+    local target="$2"
+
+    if [ -e "$source" ] && [ -e "$target" ] && [ "$source" -ef "$target" ]; then
+        return 0
+    fi
+
+    cp "$source" "$target"
+}
 
 # Function to check if VSCode is installed
 check_vscode() {
@@ -37,7 +48,7 @@ backup_vscode_settings() {
     
     # Backup settings.json
     if [ -f "$VSCODE_SETTINGS" ]; then
-        cp "$VSCODE_SETTINGS" "$DOTFILES_VSCODE_SETTINGS"
+        copy_if_different "$VSCODE_SETTINGS" "$DOTFILES_VSCODE_SETTINGS"
         log_success "Backed up settings.json"
     else
         log_warning "No settings.json found at $VSCODE_SETTINGS"
@@ -45,7 +56,7 @@ backup_vscode_settings() {
     
     # Backup keybindings.json
     if [ -f "$VSCODE_KEYBINDINGS" ]; then
-        cp "$VSCODE_KEYBINDINGS" "$DOTFILES_VSCODE_KEYBINDINGS"
+        copy_if_different "$VSCODE_KEYBINDINGS" "$DOTFILES_VSCODE_KEYBINDINGS"
         log_success "Backed up keybindings.json"
     else
         log_warning "No keybindings.json found at $VSCODE_KEYBINDINGS"
@@ -63,7 +74,7 @@ restore_vscode_settings() {
     
     # Restore settings.json
     if [ -f "$DOTFILES_VSCODE_SETTINGS" ]; then
-        cp "$DOTFILES_VSCODE_SETTINGS" "$VSCODE_SETTINGS"
+        copy_if_different "$DOTFILES_VSCODE_SETTINGS" "$VSCODE_SETTINGS"
         log_success "Restored settings.json"
     else
         log_warning "No settings.json found in dotfiles"
@@ -71,7 +82,7 @@ restore_vscode_settings() {
     
     # Restore keybindings.json
     if [ -f "$DOTFILES_VSCODE_KEYBINDINGS" ]; then
-        cp "$DOTFILES_VSCODE_KEYBINDINGS" "$VSCODE_KEYBINDINGS"
+        copy_if_different "$DOTFILES_VSCODE_KEYBINDINGS" "$VSCODE_KEYBINDINGS"
         log_success "Restored keybindings.json"
     else
         log_warning "No keybindings.json found in dotfiles"
