@@ -7,6 +7,7 @@
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,10 +15,10 @@
   };
 
   outputs =
-    inputs@{ self, nixpkgs, nix-darwin, home-manager }:
+    inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, home-manager }:
     let
       username = "marcoscurvello";
-      hostname = "MacBookPro";
+      hostname = "mothership";
       darwinSystem = "aarch64-darwin";
       forDarwinSystems =
         function:
@@ -44,7 +45,16 @@
         system = darwinSystem;
         specialArgs = { inherit inputs username; };
         modules = [
-          ./darwin.nix
+          ./configuration.nix
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = false;
+              user = username;
+              autoMigrate = true;
+            };
+          }
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -56,35 +66,15 @@
 
       apps = forDarwinSystems (
         system: pkgs: {
-          switch = {
+          rebuild = {
             type = "app";
-            program =
-              let
-                home-manager-bin = home-manager.packages.${system}.home-manager;
-              in
-              toString (
-                pkgs.writeShellScript "dotfiles-switch" ''
-                  set -euo pipefail
-
-                  if [[ ! -f flake.nix ]]; then
-                    echo "Run this from the dotfiles repository root." >&2
-                    exit 1
-                  fi
-
-                  export NIX_CONFIG="experimental-features = nix-command flakes"
-                  exec ${home-manager-bin}/bin/home-manager switch --flake ".#marcoscurvello"
-                ''
-              );
-          };
-
-          darwin-switch = {
-            type = "app";
+            meta.description = "Apply nix-darwin and Home Manager configuration";
             program =
               let
                 darwin-rebuild = nix-darwin.packages.${system}.darwin-rebuild;
               in
               toString (
-                pkgs.writeShellScript "dotfiles-darwin-switch" ''
+                pkgs.writeShellScript "dotfiles-rebuild" ''
                   set -euo pipefail
 
                   if [[ ! -f flake.nix ]]; then
@@ -98,7 +88,29 @@
               );
           };
 
-          default = self.apps.${system}.switch;
+          check = {
+            type = "app";
+            meta.description = "Validate the dotfiles flake and dry-run the system build";
+            program =
+              toString (
+                pkgs.writeShellScript "dotfiles-check" ''
+                  set -euo pipefail
+
+                  if [[ ! -f flake.nix ]]; then
+                    echo "Run this from the dotfiles repository root." >&2
+                    exit 1
+                  fi
+
+                  export NIX_CONFIG="experimental-features = nix-command flakes"
+                  ${pkgs.nix}/bin/nix flake check
+                  ${pkgs.nix}/bin/nix build ".#darwinConfigurations.${hostname}.system" --dry-run
+                ''
+              );
+          };
+
+          switch = self.apps.${system}.rebuild;
+          darwin-switch = self.apps.${system}.rebuild;
+          default = self.apps.${system}.rebuild;
         }
       );
     };
