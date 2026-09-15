@@ -10,8 +10,7 @@ Usage: ./dotfiles <command>
 
 Commands:
   nix       Install/verify Nix
-  xcode     Run Xcode setup helper
-  vscode    Run VS Code sync helper
+  vscode    Install VS Code extensions
 
 Use either command for rebuilds:
   ./rebuild.sh
@@ -25,10 +24,6 @@ EOF
 case "${1:-help}" in
   nix)
     exec bash "$DOTFILES_DIR/scripts/nix.sh"
-    ;;
-  xcode)
-    shift
-    exec "$DOTFILES_DIR/scripts/xcode.sh" "$@"
     ;;
   vscode)
     shift
