@@ -1,7 +1,7 @@
 # Managed by dotfiles. Reload from Ghostty after edits.
 
-# Match the current iTerm2 profile as closely as Ghostty allows.
-font-family = MesloLGS NF
+# Terminal appearance.
+font-family = Hack Nerd Font
 font-style = bold
 font-size = 14
 term = xterm-256color

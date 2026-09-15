@@ -3,30 +3,6 @@
 let
   dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
   homeTree = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/home/${path}";
-  managedFonts = [
-    "Hack-Regular.ttf"
-    "Hack-Italic.ttf"
-    "Hack-Bold.ttf"
-    "Hack-BoldItalic.ttf"
-    "MesloLGS NF Regular.ttf"
-    "MesloLGS NF Italic.ttf"
-    "MesloLGS NF Bold.ttf"
-    "MesloLGS NF Bold Italic.ttf"
-    "Inconsolata-dz-Powerline.otf"
-    "Inconsolata XL.otf"
-    "Inconsolata XL Bold.otf"
-    "Menlo-Powerline.otf"
-    "mensch-Powerline.otf"
-  ];
-  fontLinks = builtins.listToAttrs (
-    map (font: {
-      name = "Library/Fonts/${font}";
-      value = {
-        source = homeTree "Library/Fonts/${font}";
-        force = true;
-      };
-    }) managedFonts
-  );
   defaultNodeVersion = "24.21.0";
   defaultPythonVersion = "3.14.7";
   defaultRubyVersion = "4.0.6";
@@ -37,6 +13,7 @@ in
   home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
+  fonts.fontconfig.enable = true;
 
   home.activation.ensureLanguageRuntimes = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
@@ -77,6 +54,7 @@ in
     httpie
     jq
     neovim
+    nerd-fonts.hack
     oh-my-zsh
     ripgrep
     procs
@@ -166,5 +144,5 @@ in
       export ZSH_SYNTAX_HIGHLIGHTING_SOURCE="${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     '';
 
-  } // fontLinks;
+  };
 }
