@@ -5,7 +5,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/utils.sh"
 
-set +e
+set -euo pipefail
 
 load_nix_profile() {
     if [[ -e "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ]]; then
@@ -31,7 +31,7 @@ install_nix() {
     log_info "Nix not found. Installing Nix with the official macOS installer..."
     log_info "This may prompt for your password and may require opening a new terminal after installation."
 
-    if curl -L https://nixos.org/nix/install | sh -s -- --daemon; then
+    if curl -fsSL https://nixos.org/nix/install | sh -s -- --daemon; then
         load_nix_profile
     else
         log_error "Nix installer failed"

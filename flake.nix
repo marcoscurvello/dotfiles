@@ -90,7 +90,7 @@
 
           check = {
             type = "app";
-            meta.description = "Validate the dotfiles flake and dry-run the system build";
+            meta.description = "Validate the dotfiles flake and build the Darwin system without activating";
             program =
               toString (
                 pkgs.writeShellScript "dotfiles-check" ''
@@ -103,7 +103,7 @@
 
                   export NIX_CONFIG="experimental-features = nix-command flakes"
                   ${pkgs.nix}/bin/nix flake check
-                  ${pkgs.nix}/bin/nix build ".#darwinConfigurations.${hostname}.system" --dry-run
+                  ${pkgs.nix}/bin/nix build ".#darwinConfigurations.${hostname}.system" --no-link
                 ''
               );
           };
