@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Install and verify Nix for Home Manager based dotfile activation.
+# Install and verify Nix for flake based dotfile activation.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/utils.sh"
@@ -43,7 +43,7 @@ install_nix() {
         log_info "Nix version: $(nix --version)"
     else
         log_warning "Nix installed, but this shell cannot see it yet"
-        log_info "Open a new terminal, then run: ./dotfiles link"
+        log_info "Open a new terminal, then run: ./rebuild.sh"
     fi
 }
 
