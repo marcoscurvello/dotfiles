@@ -1,4 +1,4 @@
-# Marcos Curvello's dotfiles
+# dotfiles
 
 My personal machine setup, managed with [`nix-darwin`](https://github.com/nix-darwin/nix-darwin) and [`home-manager`](https://github.com/nix-community/home-manager).
 
