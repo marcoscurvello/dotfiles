@@ -31,6 +31,10 @@ brew 'powerlevel10k'             # Zsh theme
 brew 'zsh-autosuggestions'       # Zsh autosuggestions
 brew 'zsh-syntax-highlighting'   # Zsh syntax highlighting
 
+# Fonts
+cask "font-jetbrains-mono-nerd-font"  # Programming font with icons
+cask "font-fira-code-nerd-font"       # Alternative programming font
+
 # iOS Development
 brew 'xclogparser'      # Xcode log parser
 brew 'xcbeautify'       # Xcode output formatter
@@ -53,16 +57,16 @@ cask "iterm2"                     # Terminal emulator
 cask "ghostty"                    # Terminal emulator
 
 # Productivity
-cask "keepingyouawake"            # Prevent sleep
 brew 'borders'                    # JankyBorders window borders
-cask "nikitabobko/tap/aerospace"  # Tiling window manager
+cask 'keepingyouawake'            # Prevent sleep
+cask 'nikitabobko/tap/aerospace'  # Tiling window manager
 
 # Media
-cask "imagemagick"
+cask 'imagemagick'
 
 # Network & API
-cask "proxyman"                   # HTTP debugging
+cask 'proxyman'                   # HTTP debugging
 
-# Fonts for Development
-cask "font-jetbrains-mono-nerd-font"  # Programming font with icons
-cask "font-fira-code-nerd-font"       # Alternative programming font
+# AI & Machine Learning
+brew 'opensuperwhisper'    # Voice to text transcription
+brew 'herdr'
