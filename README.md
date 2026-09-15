@@ -46,12 +46,14 @@ Experienced Nix users can run `nix run .#rebuild` directly; `rebuild.sh` just lo
 This repo is personal. If you fork or clone it for another machine, review these before the first rebuild:
 
 - Username: change `username = "marcoscurvello"` in `flake.nix`, and update `home.username` / `home.homeDirectory` in `home.nix`.
-- Host label: change `hostname = "MacBookPro"` in `flake.nix`. This controls the `darwinConfigurations` name used by `nix run .#rebuild`.
+- Host label: this repo uses `hostname = "mothership"` in `flake.nix`. Change that value if you want a different `darwinConfigurations` name.
 - CPU architecture: change `darwinSystem = "aarch64-darwin"` in `flake.nix` and `nixpkgs.hostPlatform = "aarch64-darwin"` in `configuration.nix` if this is not an Apple Silicon Mac.
 - Homebrew cleanup: `configuration.nix` currently uses `homebrew.onActivation.cleanup = "none"`, so rebuilds will not remove manually installed Homebrew packages. If you later switch this to `"zap"`, anything not listed in `brews` or `casks` can be removed during rebuild.
 - Git identity: this repo links `home/.gitconfig`. Review it before using this setup on another machine.
 - Language defaults: `home.nix` installs and selects default Node, Python, and Ruby versions through `nodenv`, `pyenv`, and `rbenv`.
-- Home files: files under `home/` mirror their destination under `$HOME`. For example, `home/.zshrc` becomes `~/.zshrc`, and `home/Library/Fonts` maps to `~/Library/Fonts`.
+- Home files: files under `home/` use destination-shaped paths, but only paths declared in `home.nix` are linked into `$HOME`.
+- Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild.
+- Font: `home.nix` installs Hack Nerd Font from Nix.
 
 ## Managed Files
 
@@ -68,7 +70,6 @@ Home Manager links the main configs from this repo into:
 ~/Library/Application Support/Code/User/settings.json
 ~/Library/Application Support/Code/User/keybindings.json
 ~/Library/Application Support/com.mitchellh.ghostty/config.ghostty
-~/Library/Fonts
 ~/Library/Developer/Xcode/UserData/CodeSnippets
 ~/Library/Developer/Xcode/UserData/FontAndColorThemes
 ~/Library/Developer/Xcode/UserData/KeyBindings
@@ -80,7 +81,7 @@ Home Manager links the main configs from this repo into:
 flake.nix          # Nix flake entry point
 configuration.nix  # nix-darwin system defaults and Homebrew packages
 home.nix           # Home Manager packages and dotfile links
-home/              # files mirrored into $HOME
+home/              # source files for explicitly declared Home Manager links
 docs/              # generated/reference docs
 rebuild.sh         # daily rebuild helper
 dotfiles           # installer/app helper
@@ -92,4 +93,5 @@ scripts/           # Nix installer and app-specific helpers
 - Edit files in `~/.dotfiles`, then run `./rebuild.sh`.
 - Private shell config can live in `~/.zsh_private_aliases`.
 - VS Code extensions can be installed with `./dotfiles vscode extensions`.
-- Xcode snippets can be synced with `xcode-sync`.
+- Xcode snippets can be synced into the repo with `xcode-sync`.
+- Xcode DerivedData can be cleared with `derivedd`.
