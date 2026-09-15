@@ -67,72 +67,58 @@ in
   home.file = {
     "Library/Developer/Xcode/UserData/CodeSnippets" = {
       source = homeTree "Library/Developer/Xcode/UserData/CodeSnippets";
-      force = true;
     };
 
     "Library/Developer/Xcode/UserData/KeyBindings" = {
       source = homeTree "Library/Developer/Xcode/UserData/KeyBindings";
-      force = true;
     };
 
     "Library/Developer/Xcode/UserData/FontAndColorThemes" = {
       source = homeTree "Library/Developer/Xcode/UserData/FontAndColorThemes";
-      force = true;
     };
 
     "Library/Application Support/com.mitchellh.ghostty/config.ghostty" = {
       source = homeTree "Library/Application Support/com.mitchellh.ghostty/config.ghostty";
-      force = true;
     };
 
     "Library/Application Support/Code/User/settings.json" = {
       source = homeTree "Library/Application Support/Code/User/settings.json";
-      force = true;
     };
 
     "Library/Application Support/Code/User/keybindings.json" = {
       source = homeTree "Library/Application Support/Code/User/keybindings.json";
-      force = true;
     };
 
     ".config/herdr/config.toml" = {
       source = homeTree ".config/herdr/config.toml";
-      force = true;
     };
 
     ".p10k.zsh" = {
       source = homeTree ".p10k.zsh";
-      force = true;
     };
 
     ".aerospace.toml" = {
       source = homeTree ".aerospace.toml";
-      force = true;
     };
 
     ".gitconfig" = {
       source = homeTree ".gitconfig";
-      force = true;
     };
 
     ".vimrc" = {
       source = homeTree ".vimrc";
-      force = true;
     };
 
     ".config/nvim" = {
       source = homeTree ".config/nvim";
-      force = true;
     };
 
     ".zshrc" = {
       source = homeTree ".zshrc";
-      force = true;
     };
 
     ".zsh/functions" = {
       source = homeTree ".zsh/functions";
-      force = true;
     };
 
     ".config/zsh/nix-sources.zsh".text = ''
