@@ -1,0 +1,11 @@
+vscode-sync() {
+  local dotfiles_dir="$HOME/.dotfiles"
+  local vscode_script="$dotfiles_dir/scripts/vscode.sh"
+
+  if [[ ! -f "$vscode_script" ]]; then
+    echo "VS Code helper not found: $vscode_script"
+    return 1
+  fi
+
+  bash "$vscode_script" status
+}

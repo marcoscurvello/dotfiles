@@ -1,0 +1,50 @@
+derivedd() {
+  local developer_dir
+  developer_dir="$(xcode-select -p 2>/dev/null)" || {
+    echo "No Xcode developer directory is selected."
+    echo "Run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
+    return 1
+  }
+
+  local selected_xcode="$developer_dir"
+  if [[ "$developer_dir" == */Contents/Developer ]]; then
+    selected_xcode="${developer_dir:h:h}"
+  fi
+
+  local derived_data_dir
+  derived_data_dir="$(defaults read com.apple.dt.Xcode IDECustomDerivedDataLocation 2>/dev/null)"
+  if [[ -z "$derived_data_dir" ]]; then
+    derived_data_dir="$HOME/Library/Developer/Xcode/DerivedData"
+  fi
+  derived_data_dir="${derived_data_dir/#\~/$HOME}"
+
+  echo "Selected Xcode: $selected_xcode"
+  echo "Developer dir:  $developer_dir"
+  echo "DerivedData:    $derived_data_dir"
+  echo
+  echo "This will permanently empty the DerivedData directory above."
+  echo "Type y to proceed or n to abort."
+
+  if [[ ! -d "$derived_data_dir" ]]; then
+    echo "DerivedData directory does not exist."
+    return 0
+  fi
+
+  local entries=("$derived_data_dir"/*(N))
+  if (( ${#entries[@]} == 0 )); then
+    echo "DerivedData is already empty."
+    return 0
+  fi
+
+  local response
+  read -q "response?Proceed? (y/n) "
+  echo
+
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    echo "Cancelled."
+    return 0
+  fi
+
+  command rm -rf -- "${entries[@]}"
+  echo "DerivedData emptied."
+}

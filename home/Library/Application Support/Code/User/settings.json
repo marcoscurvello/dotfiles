@@ -1,0 +1,13 @@
+{
+    "workbench.colorTheme": "OpenCode",
+    "editor.minimap.enabled": false,
+    "editor.cursorStyle": "block",
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ]
+}

@@ -1,221 +1,97 @@
 # Marcos Curvello's dotfiles
 
-![screenshot of my shell prompt](https://i.imgur.com/MmA4D9A.png)
+My personal machine setup, managed with [`nix-darwin`](https://github.com/nix-darwin/nix-darwin) and [`home-manager`](https://github.com/nix-community/home-manager).
 
+## Setup
 
-
-## 🛠️ What's Included
-
-### **Core Tools & CLI**
-- **Shell**: Zsh with Oh My Zsh framework
-- **Terminal**: iTerm2 as the default terminal, with a managed Ghostty alternative
-- **Theme**: Powerlevel10k for beautiful, informative prompts
-- **File Management**: eza (modern ls), bat (syntax-highlighted cat)
-- **Git**: Advanced configuration with delta for enhanced diffs
-- **Package Manager**: Homebrew with curated formula list
-
-### **Development Tools**
-- **Version Managers**: rbenv (Ruby), nodenv (Node.js), pyenv (Python)
-- **iOS Development**: Xcode themes, SwiftLint, xcbeautify, xclogparser
-- **Code Editor**: VS Code with optimal settings
-- **CI/CD**: Fastlane for iOS automation
-- **API Testing**: Proxyman for network debugging
-- **Containerization**: Docker Desktop
-
-### **macOS Productivity**
-- **Window Manager**: Aerospace (tiling window manager)
-- **Borders**: JankyBorders for visual window focus
-- **Stay Awake**: KeepingYouAwake (caffeine alternative)
-
-### **Security & Privacy**
-- **Private configurations** support via `~/.zsh_private_aliases`
-- **Git credentials** kept separate from public configs
-- **SSH configurations** excluded from version control
-
-## 🚀 Quick Setup
-
-### One-Command Installation
-```bash
-# Complete setup for a new machine - installs everything
-curl -fsSL https://raw.githubusercontent.com/marcoscurvello/dotfiles/main/scripts/bootstrap.sh | bash
-```
-
-### Manual Installation
-If you prefer more control:
+Before running this on a different machine, read "Make It Yours" below.
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/marcoscurvello/dotfiles.git ~/.dotfiles
-
-# 2. Navigate to dotfiles directory
 cd ~/.dotfiles
-
-# 3. Run interactive menu (recommended)
-./dotfiles
-
-# OR run specific commands:
-./dotfiles bootstrap    # Full setup (same as curl command)
-./dotfiles update       # Update existing installation
-./dotfiles link         # Just update symlinks
+./dotfiles nix      # install/verify Nix
 ```
 
-### 🎯 Modular System
-
-The dotfiles now use a modular architecture. You can run individual components:
+After the first Nix install, open a new terminal or run:
 
 ```bash
-./dotfiles menu         # Interactive selection menu (default)
-./dotfiles bootstrap    # Complete setup for new machine
-./dotfiles update       # Update everything (git pull + brew upgrade)
-./dotfiles link         # Update configuration symlinks only
-./dotfiles brew         # Install/update Homebrew packages
-./dotfiles macos        # Apply macOS system preferences
-./dotfiles shell        # Configure shell (Zsh/Oh-My-Zsh)
-./dotfiles xcode        # Setup Xcode themes and snippets
-./dotfiles vscode       # Backup/restore VS Code settings
+source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 ```
 
-## 📋 What Gets Installed
+Then apply the system:
 
-### Homebrew Packages
-| Category | Tools |
-|----------|-------|
-| **CLI Tools** | eza, bat, jq, gh, git-delta |
-| **Development** | rbenv, nodenv, node-build, pyenv, powerlevel10k, zsh-autosuggestions |
-| **iOS/Swift** | fastlane, xclogparser, xcbeautify, swiftlint |
-| **Network** | aircrack-ng |
-| **UI** | janky borders (window borders) |
-
-### Applications (Casks)
-| Category | Applications |
-|----------|-------------|
-| **Development** | Visual Studio Code, Xcode (via xcodes), Docker |
-| **Terminal** | Ghostty, iTerm2 |
-| **Productivity** | KeepingYouAwake |
-| **Network** | Proxyman |
-| **Window Management** | AeroSpace |
-
-### Configuration Files
-```
-~/.gitconfig          # Git configuration with delta
-~/.zshrc              # Zsh shell configuration
-~/.p10k.zsh           # Powerlevel10k theme settings
-~/.vimrc              # Vim configuration
-~/.aerospace.toml     # Window manager settings
-~/Library/Application Support/com.mitchellh.ghostty/config.ghostty  # Ghostty terminal config
-```
-
-## 🎯 Customization
-
-### Adding Private Configurations
-Create `~/.zsh_private_aliases` for personal aliases and sensitive configurations:
 ```bash
-# Example private aliases
-alias work="cd ~/work/super-secret-project"
-export API_KEY="your-secret-key"
+./rebuild.sh
 ```
 
-### Custom Functions
-Add new shell functions to `~/.dotfiles/zsh/functions/`. Examples included:
-- `weather` - Get weather for any city
-- `fkill` - Fuzzy process killing
-- `cleanxcode` - Clean Xcode derived data
-- `ip` - Get your IP address
+## Validate
 
-### Customizing Configurations
-1. Edit files in the `~/.dotfiles` directory
-2. Run `./dotfiles link` to update symlinks
-3. Restart your terminal or source configs
-
-### Development Tools Sync
-
-#### Xcode
-Sync your Xcode code snippets and themes with git:
 ```bash
-# After creating/modifying snippets in Xcode
-xcode-sync
-
-# This will sync snippets to git and optionally commit them
+nix run .#check
 ```
 
-#### VS Code
-Backup and restore VS Code settings without symlinks:
+## Daily Use
+
 ```bash
-# Sync current VS Code settings to dotfiles
-vscode-sync
-
-# Or use the dotfiles command
-./dotfiles vscode status   # Check sync status
-./dotfiles vscode backup   # Backup current settings
-./dotfiles vscode restore  # Restore settings from dotfiles
+./rebuild.sh       # apply nix-darwin and Home Manager
+nix run .#check    # validate without applying
+nix flake update   # update pinned inputs
+./rebuild.sh       # apply updated inputs
 ```
 
-## 🗂️ Repository Structure
+Experienced Nix users can run `nix run .#rebuild` directly; `rebuild.sh` just loads Nix into the current shell when needed and delegates to that flake app.
 
-```
-~/.dotfiles/
-├── dotfiles               # Main entry point (interactive menu + commands)
-├── scripts/               # Modular setup scripts
-│   ├── bootstrap.sh       # Complete setup for new machines
-│   ├── update.sh          # Update existing installation
-│   ├── link.sh            # Symlink management
-│   ├── brew.sh            # Homebrew package management
-│   ├── macos.sh           # macOS system preferences
-│   ├── shell.sh           # Shell configuration
-│   ├── xcode.sh           # Xcode setup
-│   └── vscode.sh          # VS Code backup/restore
-├── lib/                   # Shared libraries
-│   ├── utils.sh           # Common functions and logging
-│   └── menu.sh            # Interactive menu system
-├── install                # Dotbot runner for symlink management
-├── install.conf.yaml      # Dotbot configuration
-├── Brewfile               # Homebrew dependencies
-├── zsh/
-│   ├── zshrc              # Main Zsh configuration
-│   └── functions/         # Custom shell functions
-│       ├── xcode-sync     # Sync Xcode snippets to git
-│       └── vscode-sync    # Sync VS Code settings to git
-├── xcode/
-│   ├── FontAndColorThemes/# Xcode color themes
-│   ├── CodeSnippets/      # Xcode code snippets
-│   ├── KeyBindings/       # Xcode key bindings
-│   └── snippets.md        # Snippet documentation
-├── ghostty/
-│   └── config.ghostty     # Ghostty settings
-├── iterm/
-│   └── com.googlecode.iterm2.plist  # iTerm2 settings
-├── vscode/                # VS Code settings
-│   ├── settings.json
-│   └── keybindings.json
-├── gitconfig              # Git configuration
-├── vimrc                  # Vim configuration
-├── p10kzsh                # Powerlevel10k configuration
-└── aerospace.toml         # Window manager configuration
+## Make It Yours
+
+This repo is personal. If you fork or clone it for another machine, review these before the first rebuild:
+
+- Username: change `username = "marcoscurvello"` in `flake.nix`, and update `home.username` / `home.homeDirectory` in `home.nix`.
+- Host label: this repo uses `hostname = "mothership"` in `flake.nix`. Change that value if you want a different `darwinConfigurations` name.
+- CPU architecture: change `darwinSystem = "aarch64-darwin"` in `flake.nix` and `nixpkgs.hostPlatform = "aarch64-darwin"` in `configuration.nix` if this is not an Apple Silicon Mac.
+- Homebrew cleanup: `configuration.nix` currently uses `homebrew.onActivation.cleanup = "none"`, so rebuilds will not remove manually installed Homebrew packages. If you later switch this to `"zap"`, anything not listed in `brews` or `casks` can be removed during rebuild.
+- Git identity: this repo links `home/.gitconfig`. Review it before using this setup on another machine.
+- Language defaults: `home.nix` installs Node, Python, and Ruby from Nix.
+- Home files: files under `home/` use destination-shaped paths, but only paths declared in `home.nix` are linked into `$HOME`.
+- Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild.
+- Font: `home.nix` installs Hack Nerd Font from Nix.
+
+## Managed Files
+
+Home Manager links the main configs from this repo into:
+
+```text
+~/.zshrc
+~/.gitconfig
+~/.vimrc
+~/.p10k.zsh
+~/.aerospace.toml
+~/.config/herdr/config.toml
+~/.config/nvim
+~/Library/Application Support/Code/User/settings.json
+~/Library/Application Support/Code/User/keybindings.json
+~/Library/Application Support/com.mitchellh.ghostty/config.ghostty
+~/Library/Developer/Xcode/UserData/CodeSnippets
+~/Library/Developer/Xcode/UserData/FontAndColorThemes
+~/Library/Developer/Xcode/UserData/KeyBindings
 ```
 
+## Repo Layout
 
-## 📚 Resources
+```text
+flake.nix          # Nix flake entry point
+configuration.nix  # nix-darwin system defaults and Homebrew packages
+home.nix           # Home Manager packages and dotfile links
+home/              # source files for explicitly declared Home Manager links
+docs/              # generated/reference docs
+rebuild.sh         # daily rebuild helper
+dotfiles           # installer/app helper
+scripts/           # Nix installer and app-specific helpers
+```
 
-### Tools
-- [Oh My Zsh Guide](https://github.com/ohmyzsh/ohmyzsh/wiki)
-- [Powerlevel10k Configuration](https://github.com/romkatv/powerlevel10k)
-- [AeroSpace Window Manager](https://github.com/nikitabobko/AeroSpace)
+## Notes
 
-### Advanced Configuration
-- [Dotbot Documentation](https://github.com/anishathalye/dotbot)
-- [Git Delta Features](https://github.com/dandavison/delta)
-- [iTerm2 Customization](https://iterm2.com/documentation.html)
-
-## 🙏 Acknowledgements
-
-- [Dotbot](https://github.com/anishathalye/dotbot) - Dotfiles installation framework
-- [Homebrew](https://brew.sh) - Package manager for macOS
-- [Oh My Zsh](https://ohmyz.sh/) - Zsh configuration framework
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) - Zsh theme
-- [AeroSpace](https://github.com/nikitabobko/AeroSpace) - Tiling window manager
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
+- Edit files in `~/.dotfiles`, then run `./rebuild.sh`.
+- Private shell config can live in `~/.zsh_private_aliases`.
+- VS Code extensions can be installed with `./dotfiles vscode extensions`.
+- Xcode snippets can be synced into the repo with `xcode-sync`.
+- Xcode DerivedData can be cleared with `derivedd`.

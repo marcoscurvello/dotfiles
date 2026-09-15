@@ -1,7 +1,7 @@
 # Ghostty Configuration
 
 Ghostty is managed like the rest of this repo: the versioned source of truth
-lives in `ghostty/config.ghostty`, and Dotbot links it to:
+lives in `home/Library/Application Support/com.mitchellh.ghostty/config.ghostty`, and Home Manager links it to:
 
 `~/Library/Application Support/com.mitchellh.ghostty/config.ghostty`
 
@@ -12,7 +12,7 @@ split-brain of keeping a second copy under `~/.config`.
 
 ```bash
 cd ~/.dotfiles
-./dotfiles link
+./rebuild.sh
 ```
 
 Then reload Ghostty from the app menu or restart it.
