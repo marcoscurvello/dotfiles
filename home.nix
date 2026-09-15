@@ -3,9 +3,6 @@
 let
   dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
   homeTree = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/home/${path}";
-  defaultNodeVersion = "24.21.0";
-  defaultPythonVersion = "3.14.7";
-  defaultRubyVersion = "4.0.6";
 in
 {
   home.username = "marcoscurvello";
@@ -14,33 +11,6 @@ in
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
-
-  home.activation.ensureLanguageRuntimes = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
-
-    if command -v nodenv >/dev/null 2>&1; then
-      if ! nodenv versions --bare | grep -Fxq "${defaultNodeVersion}"; then
-        nodenv install -s "${defaultNodeVersion}"
-      fi
-      nodenv global "${defaultNodeVersion}"
-      nodenv rehash
-    fi
-
-    if command -v pyenv >/dev/null 2>&1; then
-      if ! pyenv versions --bare | grep -Fxq "${defaultPythonVersion}"; then
-        pyenv install -s "${defaultPythonVersion}"
-      fi
-      pyenv global "${defaultPythonVersion}"
-    fi
-
-    if command -v rbenv >/dev/null 2>&1; then
-      if ! rbenv versions --bare | grep -Fxq "${defaultRubyVersion}"; then
-        rbenv install -s "${defaultRubyVersion}"
-      fi
-      rbenv global "${defaultRubyVersion}"
-      rbenv rehash
-    fi
-  '';
 
   home.packages = with pkgs; [
     bat
@@ -55,9 +25,12 @@ in
     jq
     neovim
     nerd-fonts.hack
+    nodejs
     oh-my-zsh
+    python3
     ripgrep
     procs
+    ruby
     tree
     zsh-autosuggestions
     zsh-powerlevel10k

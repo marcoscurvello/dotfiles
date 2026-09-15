@@ -7,9 +7,6 @@ fi
 # PATH EXPORTS
 typeset -U path
 path=(
-  "$HOME/.nodenv/shims"
-  "$HOME/.pyenv/shims"
-  "$HOME/.rbenv/shims"
   "$HOME/.local/bin"
   "$HOME/bin"
   "$HOME/.dotfiles/bin"
@@ -26,25 +23,6 @@ fi
 if [[ -f "$HOME/.config/zsh/nix-sources.zsh" ]]; then
   source "$HOME/.config/zsh/nix-sources.zsh"
 fi
-
-# RBENV, NODENV & PYENV - Lazy loading for faster startup
-rbenv() {
-  unset -f rbenv
-  eval "$(command rbenv init - --no-rehash)"
-  rbenv "$@"
-}
-
-nodenv() {
-  unset -f nodenv
-  eval "$(command nodenv init - --no-rehash)"
-  nodenv "$@"
-}
-
-pyenv() {
-  unset -f pyenv
-  eval "$(command pyenv init -)"
-  pyenv "$@"
-}
 
 # CLAUDE - Direct execution since Node is in PATH
 # Claude Code is installed globally via Homebrew npm

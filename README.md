@@ -50,7 +50,7 @@ This repo is personal. If you fork or clone it for another machine, review these
 - CPU architecture: change `darwinSystem = "aarch64-darwin"` in `flake.nix` and `nixpkgs.hostPlatform = "aarch64-darwin"` in `configuration.nix` if this is not an Apple Silicon Mac.
 - Homebrew cleanup: `configuration.nix` currently uses `homebrew.onActivation.cleanup = "none"`, so rebuilds will not remove manually installed Homebrew packages. If you later switch this to `"zap"`, anything not listed in `brews` or `casks` can be removed during rebuild.
 - Git identity: this repo links `home/.gitconfig`. Review it before using this setup on another machine.
-- Language defaults: `home.nix` installs and selects default Node, Python, and Ruby versions through `nodenv`, `pyenv`, and `rbenv`.
+- Language defaults: `home.nix` installs Node, Python, and Ruby from Nix.
 - Home files: files under `home/` use destination-shaped paths, but only paths declared in `home.nix` are linked into `$HOME`.
 - Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild.
 - Font: `home.nix` installs Hack Nerd Font from Nix.
