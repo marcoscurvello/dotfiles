@@ -69,7 +69,8 @@ run_setup() {
     local scripts=(
         "shell"     # Configure shell first (installs Oh My Zsh)
         "brew"      # Install Homebrew and packages
-        "link"      # Create symlinks
+        "nix"       # Install Nix for Home Manager
+        "link"      # Activate Home Manager symlinks
         "macos"     # Configure macOS settings
         "xcode"     # Setup Xcode environment
     )

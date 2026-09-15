@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Create/update configuration file symlinks
-# This is the equivalent of the old "install" script
+# Create/update configuration file symlinks via Home Manager.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../lib/utils.sh"
@@ -10,7 +9,7 @@ source "$SCRIPT_DIR/../lib/utils.sh"
 set +e
 
 main() {
-    show_header "Updating Configuration Symlinks"
+    show_header "Activating Dotfiles"
     
     # Change to dotfiles directory
     cd "$DOTFILES_DIR" || {
@@ -18,21 +17,22 @@ main() {
         exit 1
     }
     
-    # Check if Dotbot install script exists
+    # Check if the Nix-backed install script exists
     if [[ ! -f "install" ]]; then
-        log_error "Dotbot install script not found"
+        log_error "Install script not found"
         log_info "This is likely a configuration issue with the repository"
         exit 1
     fi
     
-    log_step "Running Dotbot to create symlinks..."
+    log_step "Running Home Manager to activate symlinks..."
     
-    # Run dotbot
+    local activation_status=0
     if ./install; then
-        log_success "Symlinks created/updated successfully"
+        log_success "Dotfiles activated successfully"
     else
-        log_error "Dotbot encountered errors (see above)"
-        log_info "Some symlinks may have been created despite errors"
+        activation_status=1
+        log_error "Home Manager activation failed (see above)"
+        log_info "If Nix is missing, run: ./dotfiles nix"
     fi
     
     # Verify key symlinks
@@ -44,9 +44,11 @@ main() {
         "$HOME/.vimrc"
         "$HOME/.p10k.zsh"
         "$HOME/.aerospace.toml"
+        "$HOME/.config/herdr/config.toml"
+        "$HOME/.config/nvim"
+        "$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
         "$HOME/Library/Developer/Xcode/UserData/CodeSnippets"
         "$HOME/Library/Developer/Xcode/UserData/KeyBindings"
-        "$HOME/Library/Application Support/Code/User/settings.json"
     )
     
     local success_count=0
@@ -65,7 +67,9 @@ main() {
     
     log_info "Symlinks verified: $success_count/$total_count"
     
-    show_footer "Symlink Update Complete"
+    show_footer "Dotfiles Activation Complete"
+
+    return "$activation_status"
 }
 
 # Run main function

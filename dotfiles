@@ -23,6 +23,8 @@ ${BOLD}COMMANDS:${NC}
     ${CYAN}bootstrap${NC}   Run full system setup (first time)
     ${CYAN}update${NC}      Update everything (git pull + brew upgrade + links)
     ${CYAN}link${NC}        Create/update symlinks only
+    ${CYAN}nix${NC}         Install/verify Nix for Home Manager activation
+    ${CYAN}darwin${NC}      Activate nix-darwin system configuration
     ${CYAN}brew${NC}        Install/update Homebrew packages
     ${CYAN}macos${NC}       Apply macOS settings
     ${CYAN}shell${NC}       Configure shell (Zsh/Oh-My-Zsh)
@@ -38,6 +40,7 @@ ${BOLD}EXAMPLES:${NC}
     ./dotfiles bootstrap    # Full setup for new machine
     ./dotfiles update       # Update existing setup
     ./dotfiles link         # Just refresh symlinks
+    ./dotfiles darwin       # Activate nix-darwin configuration
     ./dotfiles brew         # Just install/update packages
 
 ${BOLD}DIRECT SCRIPT ACCESS:${NC}
@@ -53,7 +56,7 @@ EOF
 # Validate command
 validate_command() {
     local cmd="$1"
-    local valid_commands=("menu" "bootstrap" "update" "link" "brew" "macos" "shell" "xcode" "vscode")
+    local valid_commands=("menu" "bootstrap" "update" "link" "nix" "darwin" "brew" "macos" "shell" "xcode" "vscode")
     
     for valid_cmd in "${valid_commands[@]}"; do
         if [[ "$cmd" == "$valid_cmd" ]]; then
@@ -127,7 +130,7 @@ main() {
                 exit 1
             fi
             ;;
-        bootstrap|update|link|brew|macos|shell|xcode|vscode)
+        bootstrap|update|link|nix|darwin|brew|macos|shell|xcode|vscode)
             # Run specific script
             shift  # Remove command from arguments
             run_script "$command" "$@"

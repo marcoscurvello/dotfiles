@@ -34,6 +34,11 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 # Add pyenv shims to PATH for consistent Python version
 export PATH="$HOME/.pyenv/shims:$PATH"
 
+# HOME MANAGER SESSION
+if [[ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
+  source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+fi
+
 # RBENV, NODENV & PYENV - Lazy loading for faster startup
 rbenv() {
   unset -f rbenv

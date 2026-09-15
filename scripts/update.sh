@@ -136,15 +136,15 @@ update_oh_my_zsh() {
     fi
 }
 
-# Update symlinks
-update_symlinks() {
-    log_step "Updating configuration symlinks..."
+# Activate dotfile links
+update_dotfile_links() {
+    log_step "Activating configuration links..."
     
     # Run link script
     if bash "$SCRIPT_DIR/link.sh"; then
-        log_success "Symlinks updated"
+        log_success "Configuration links activated"
     else
-        log_warning "Some symlinks failed to update"
+        log_warning "Some configuration links failed to activate"
     fi
 }
 
@@ -173,8 +173,8 @@ main() {
         exit 1
     fi
     
-    # Update symlinks (in case config structure changed)
-    update_symlinks
+    # Activate links (in case config structure changed)
+    update_dotfile_links
     
     # Update Homebrew
     update_homebrew
