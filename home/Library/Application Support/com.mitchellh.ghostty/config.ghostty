@@ -61,7 +61,13 @@ split-inherit-working-directory = true
 # mouse
 mouse-hide-while-typing = true
 right-click-action = copy-or-paste
+mouse-shift-capture = never
+
+# links
+link-url = true
+link-previews = true
 
 # keybinds
 keybind = cmd+shift+[=unbind
 keybind = cmd+shift+]=unbind
+keybind = cmd+shift+m=toggle_mouse_reporting
