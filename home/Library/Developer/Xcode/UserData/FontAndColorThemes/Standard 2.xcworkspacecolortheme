@@ -5,74 +5,19 @@
     "colorScheme" : "dark",
     "palette" : {
       "colorOverrides" : {
-        "currentLineHighlight" : {
-          "hue" : {
-            "radians" : 2.548180707911721
-          }
-        },
         "insertionPointColor" : {
           "hue" : {
-            "radians" : 2.8623399732707
+            "radians" : 3.2637657012293966
           }
         },
         "number" : {
-          "color" : {
-            "chroma" : {
-              "exact" : 0.1655475208090521
-            },
-            "gamut" : "P3",
-            "hue" : {
-              "radians" : 1.6375412894610708
-            },
-            "lightness" : {
-              "exact" : 0.8975214071006012
-            },
-            "opacity" : 1
-          }
-        },
-        "otherMember" : {
           "hue" : {
-            "radians" : 5.288347633542818
+            "radians" : 1.413716694115407
           }
         },
         "preprocessor" : {
           "hue" : {
             "radians" : 1.413716694115407
-          }
-        },
-        "projectMember" : {
-          "color" : {
-            "chroma" : {
-              "exact" : 0.1295597912275665
-            },
-            "gamut" : "P3",
-            "hue" : {
-              "radians" : 3.2723657274595923
-            },
-            "lightness" : {
-              "exact" : 0.7809125653830984
-            },
-            "opacity" : 1
-          }
-        },
-        "projectType" : {
-          "color" : {
-            "chroma" : {
-              "exact" : 0.1867918865335153
-            },
-            "gamut" : "P3",
-            "hue" : {
-              "radians" : 2.736388062877343
-            },
-            "lightness" : {
-              "exact" : 0.7814226727584197
-            },
-            "opacity" : 1
-          }
-        },
-        "selectedTextBackgroundColor" : {
-          "hue" : {
-            "radians" : 2.8623399732707
           }
         },
         "string" : {
