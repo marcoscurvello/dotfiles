@@ -46,10 +46,6 @@ in
       source = homeTree "Library/Developer/Xcode/UserData/KeyBindings";
     };
 
-    "Library/Developer/Xcode/UserData/FontAndColorThemes" = {
-      source = homeTree "Library/Developer/Xcode/UserData/FontAndColorThemes";
-    };
-
     "Library/Application Support/com.mitchellh.ghostty/config.ghostty" = {
       source = homeTree "Library/Application Support/com.mitchellh.ghostty/config.ghostty";
     };

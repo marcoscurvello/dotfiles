@@ -71,7 +71,6 @@ Home Manager links the main configs from this repo into:
 ~/Library/Application Support/Code/User/keybindings.json
 ~/Library/Application Support/com.mitchellh.ghostty/config.ghostty
 ~/Library/Developer/Xcode/UserData/CodeSnippets
-~/Library/Developer/Xcode/UserData/FontAndColorThemes
 ~/Library/Developer/Xcode/UserData/KeyBindings
 ```
 
@@ -93,5 +92,5 @@ scripts/           # Nix installer and app-specific helpers
 - Edit files in `~/.dotfiles`, then run `./rebuild.sh`.
 - Private shell config can live in `~/.zsh_private_aliases`.
 - VS Code extensions can be installed with `./dotfiles vscode extensions`.
-- Xcode snippets can be synced into the repo with `xcode-sync`.
+- Xcode color themes are intentionally app-managed because Xcode 27 stores theme recipes in mutable preferences.
 - Xcode DerivedData can be cleared with `derivedd`.
