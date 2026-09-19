@@ -12,7 +12,7 @@
 [mergetool "vscode"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [delta]
-    features = line-numbers decorations side-by-side
+    features = line-numbers decorations
     syntax-theme = Dracula
     plus-style = syntax "#003800"
     minus-style = syntax "#3f0001"
