@@ -102,6 +102,8 @@
       "imagemagick"
       "mas"
       "mosh"
+      "node-build"
+      "nodenv"
       "ollama"
       "pnpm"
       "sourcery"
