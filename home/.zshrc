@@ -7,6 +7,7 @@ fi
 # PATH EXPORTS
 typeset -U path
 path=(
+  "$HOME/.nodenv/shims"
   "$HOME/.local/bin"
   "$HOME/bin"
   "$HOME/.dotfiles/bin"
