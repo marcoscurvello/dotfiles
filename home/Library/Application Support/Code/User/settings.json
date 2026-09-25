@@ -1,6 +1,5 @@
 {
     "workbench.colorTheme": "OpenCode",
-    "editor.minimap.enabled": false,
     "editor.cursorStyle": "block",
     "yaml.disableSchemaDetection": [
         "**/.github/workflows/*.yml",
@@ -12,5 +11,6 @@
     ],
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "explorer.confirmDelete": false
 }
