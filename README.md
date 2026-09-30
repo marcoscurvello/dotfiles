@@ -8,6 +8,7 @@ Before running this on a different machine, read "Make It Yours" below.
 
 ```bash
 git clone https://github.com/marcoscurvello/dotfiles.git ~/.dotfiles
+git clone git@github.com:marcoscurvello/agents.git ~/Developer/agents
 cd ~/.dotfiles
 ./dotfiles nix      # install/verify Nix
 ```
@@ -52,7 +53,8 @@ This repo is personal. If you fork or clone it for another machine, review these
 - Git identity: this repo links `home/.gitconfig`. Review it before using this setup on another machine.
 - Language defaults: `home.nix` installs Node, Python, and Ruby from Nix.
 - Home files: files under `home/` use destination-shaped paths, but only paths declared in `home.nix` are linked into `$HOME`.
-- Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild.
+- Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild. The agent-configuration files are an intentional exception: they use `force = true` because their canonical copies live in the private `~/Developer/agents` checkout.
+- Private agent config: clone `marcoscurvello/agents` to `~/Developer/agents` before rebuilding. Home Manager links the shared agent policy and Claude configuration directly from that writable checkout with `mkOutOfStoreSymlink`.
 - Font: `home.nix` installs Hack Nerd Font from Nix.
 
 ## Managed Files
@@ -65,6 +67,11 @@ Home Manager links the main configs from this repo into:
 ~/.vimrc
 ~/.p10k.zsh
 ~/.aerospace.toml
+~/AGENTS.md
+~/.codex/AGENTS.md
+~/.claude/CLAUDE.md
+~/.claude/settings.json
+~/.claude/statusline-command.sh
 ~/.config/herdr/config.toml
 ~/.config/nvim
 ~/Library/Application Support/Code/User/settings.json
@@ -89,7 +96,8 @@ scripts/           # Nix installer and app-specific helpers
 
 ## Notes
 
-- Edit files in `~/.dotfiles`, then run `./rebuild.sh`.
+- Edit machine topology/settings in `~/.dotfiles`, then run `./rebuild.sh`.
+- Agent policy/config content lives in `~/Developer/agents`. Changes to already-linked files take effect through the out-of-store symlinks and do not require a rebuild; changing which files Home Manager manages still requires `./rebuild.sh`.
 - Private shell config can live in `~/.zsh_private_aliases`.
 - VS Code extensions can be installed with `./dotfiles vscode extensions`.
 - Xcode color themes are intentionally app-managed because Xcode 27 stores theme recipes in mutable preferences.
