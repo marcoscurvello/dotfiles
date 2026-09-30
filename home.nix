@@ -2,7 +2,10 @@
 
 let
   dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
+  agentsDir = "${config.home.homeDirectory}/Developer/agents";
+
   homeTree = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/home/${path}";
+  agentTree = path: config.lib.file.mkOutOfStoreSymlink "${agentsDir}/${path}";
 in
 {
   home.username = "marcoscurvello";
@@ -38,6 +41,34 @@ in
   ];
 
   home.file = {
+    # The private agents checkout is the canonical source for AI-agent policy
+    # and stable user configuration. force = true intentionally migrates the
+    # pre-existing unmanaged files to these out-of-store symlinks.
+    "AGENTS.md" = {
+      source = agentTree "shared/AGENTS.md";
+      force = true;
+    };
+
+    ".codex/AGENTS.md" = {
+      source = agentTree "shared/AGENTS.md";
+      force = true;
+    };
+
+    ".claude/CLAUDE.md" = {
+      source = agentTree "claude/CLAUDE.md";
+      force = true;
+    };
+
+    ".claude/settings.json" = {
+      source = agentTree "claude/settings.json";
+      force = true;
+    };
+
+    ".claude/statusline-command.sh" = {
+      source = agentTree "claude/statusline-command.sh";
+      force = true;
+    };
+
     "Library/Developer/Xcode/UserData/CodeSnippets" = {
       source = homeTree "Library/Developer/Xcode/UserData/CodeSnippets";
     };
