@@ -3,9 +3,49 @@
 let
   dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
   agentsDir = "${config.home.homeDirectory}/Developer/agents";
+  globalSkillsDir = "${config.home.homeDirectory}/.agents/skills";
 
   homeTree = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/home/${path}";
   agentTree = path: config.lib.file.mkOutOfStoreSymlink "${agentsDir}/${path}";
+
+  # Keep Claude's skill root as a real directory so Claude can continue to
+  # manage .claude/skills/synced. Individual links also avoid requiring an
+  # impure Nix evaluation of the external skills directory.
+  sharedClaudeSkillNames = [
+    "find-skills"
+    "herdr"
+    "jevgrep"
+    "lavish"
+    "typesafe-ai"
+  ];
+
+  xcodeClaudeSkillNames = [
+    "adopt-c-bounds-safety"
+    "app-intents-specialist"
+    "app-intents-whats-new-27"
+    "audit-xcode-security-settings"
+    "building-document-based-swiftui-applications"
+    "device-interaction"
+    "modernize-tests"
+    "swiftui-specialist"
+    "swiftui-whats-new-27"
+    "uikit-app-modernization"
+  ];
+
+  mkClaudeSkillLinks =
+    sourceDir: names:
+    builtins.listToAttrs (
+      map (name: {
+        name = ".claude/skills/${name}";
+        value = {
+          source = config.lib.file.mkOutOfStoreSymlink "${sourceDir}/${name}";
+        };
+      }) names
+    );
+
+  claudeSkillLinks =
+    mkClaudeSkillLinks globalSkillsDir sharedClaudeSkillNames
+    // mkClaudeSkillLinks "${globalSkillsDir}/xcode-skills" xcodeClaudeSkillNames;
 in
 {
   home.username = "marcoscurvello";
@@ -136,5 +176,5 @@ in
       export ZSH_SYNTAX_HIGHLIGHTING_SOURCE="${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     '';
 
-  };
+  } // claudeSkillLinks;
 }
