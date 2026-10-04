@@ -93,6 +93,12 @@ in
       source = homeTree ".config/herdr/config.toml";
     };
 
+    # OpenCode's stable configuration lives in the private agent control plane.
+    ".config/opencode/opencode.json" = {
+      source = agentTree "opencode/opencode.json";
+      force = true;
+    };
+
     ".p10k.zsh" = {
       source = homeTree ".p10k.zsh";
     };
