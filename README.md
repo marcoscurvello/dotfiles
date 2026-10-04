@@ -54,7 +54,7 @@ This repo is personal. If you fork or clone it for another machine, review these
 - Language defaults: `home.nix` installs Node, Python, and Ruby from Nix.
 - Home files: files under `home/` use destination-shaped paths, but only paths declared in `home.nix` are linked into `$HOME`.
 - Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild. The agent-configuration files are an intentional exception: they use `force = true` because their canonical copies live in the private `~/Developer/agents` checkout.
-- Private agent config: clone `marcoscurvello/agents` to `~/Developer/agents` before rebuilding. Home Manager links the shared agent policy and Claude configuration directly from that writable checkout with `mkOutOfStoreSymlink`.
+- Private agent config: clone `marcoscurvello/agents` to `~/Developer/agents` before rebuilding. Home Manager links the shared agent policy, Claude configuration, and OpenCode configuration directly from that writable checkout with `mkOutOfStoreSymlink`.
 - Font: `home.nix` installs Hack Nerd Font from Nix.
 
 ## Managed Files
@@ -74,6 +74,7 @@ Home Manager links the main configs from this repo into:
 ~/.claude/statusline-command.sh
 ~/.config/herdr/config.toml
 ~/.config/nvim
+~/.config/opencode/opencode.json
 ~/Library/Application Support/Code/User/settings.json
 ~/Library/Application Support/Code/User/keybindings.json
 ~/Library/Application Support/com.mitchellh.ghostty/config.ghostty
