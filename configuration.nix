@@ -117,7 +117,7 @@
     ];
     casks = [
       "bruno"
-      "claude-code"
+      "claude-code@latest"
       "codex"
       "docker-desktop"
       "font-fira-code-nerd-font"
