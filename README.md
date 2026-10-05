@@ -55,6 +55,7 @@ This repo is personal. If you fork or clone it for another machine, review these
 - Home files: files under `home/` use destination-shaped paths, but only paths declared in `home.nix` are linked into `$HOME`.
 - Existing files: Home Manager will stop if a managed destination already exists as an unmanaged file or directory. Move anything you want to preserve into `home/` before the first rebuild. The agent-configuration files are an intentional exception: they use `force = true` because their canonical copies live in the private `~/Developer/agents` checkout.
 - Private agent config: clone `marcoscurvello/agents` to `~/Developer/agents` before rebuilding. Home Manager links the shared agent policy, Claude configuration, and OpenCode configuration directly from that writable checkout with `mkOutOfStoreSymlink`.
+- Agent skills: install the curated shared skills under `~/.agents/skills` before rebuilding. Home Manager exposes each one to Claude as an individual link under `~/.claude/skills`, while leaving Claude's runtime-managed `synced/` directory alone. The Xcode skills remain grouped at `~/.agents/skills/xcode-skills` in their canonical layout.
 - Font: `home.nix` installs Hack Nerd Font from Nix.
 
 ## Managed Files
@@ -72,6 +73,7 @@ Home Manager links the main configs from this repo into:
 ~/.claude/CLAUDE.md
 ~/.claude/settings.json
 ~/.claude/statusline-command.sh
+~/.claude/skills/<curated-skill>
 ~/.config/herdr/config.toml
 ~/.config/nvim
 ~/.config/opencode/opencode.json
@@ -99,6 +101,7 @@ scripts/           # Nix installer and app-specific helpers
 
 - Edit machine topology/settings in `~/.dotfiles`, then run `./rebuild.sh`.
 - Agent policy/config content lives in `~/Developer/agents`. Changes to already-linked files take effect through the out-of-store symlinks and do not require a rebuild; changing which files Home Manager manages still requires `./rebuild.sh`.
+- Curated Claude skills are declared explicitly in `home.nix`. Skill content updates take effect immediately through the out-of-store links; adding or removing a skill requires updating the allowlist and rebuilding.
 - Private shell config can live in `~/.zsh_private_aliases`.
 - VS Code extensions can be installed with `./dotfiles vscode extensions`.
 - Xcode color themes are intentionally app-managed because Xcode 27 stores theme recipes in mutable preferences.
