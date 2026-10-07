@@ -25,8 +25,8 @@ if [[ -f "$HOME/.config/zsh/nix-sources.zsh" ]]; then
   source "$HOME/.config/zsh/nix-sources.zsh"
 fi
 
-# CLAUDE - Direct execution since Node is in PATH
-# Claude Code is installed globally via Homebrew npm
+# CLAUDE
+# Claude Code is installed via the Homebrew cask managed by nix-darwin
 
 # ZSH THEME - Empty since we manually source powerlevel10k
 ZSH_THEME=""
